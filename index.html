@@ -93,7 +93,7 @@
                             <li>❌ Installation par vos soins</li>
                         </ul>
                         <div class="text-center">
-                            <a href="https://paypal.me/assakourc?amount=15.00&currency=EUR&locale.x=fr_FR" target="_blank" 
+                            <a href="https://www.paypal.com/donate/?business=assakourc%40gmail.com&amount=15&currency_code=EUR&item_name=Site+Web+Seul+-+IA+WebGen" target="_blank" 
                                class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-lg transition-colors text-lg">
                                 💳 PAYER 15€ MAINTENANT
                             </a>
@@ -123,7 +123,7 @@
                             🤖 100% automatisé par intelligence artificielle
                         </div>
                         <div class="text-center">
-                            <a href="https://paypal.me/assakourc?amount=49.00&currency=EUR&locale.x=fr_FR" target="_blank" 
+                            <a href="https://www.paypal.com/donate/?business=assakourc%40gmail.com&amount=49&currency_code=EUR&item_name=Service+Conciergerie+Automatise+-+IA+WebGen" target="_blank" 
                                class="inline-block bg-yellow-400 hover:bg-yellow-300 text-gray-800 font-bold py-3 px-8 rounded-lg transition-colors text-lg">
                                 🚀 PAYER 49€ MAINTENANT
                             </a>
@@ -221,14 +221,27 @@
                     }
                     
                     const message = `🎉 Parfait ! Site "${businessValue}" en cours de création !\n\n` +
-                                  `🤖 Notre intelligence artificielle génère votre site professionnel...\n` +
-                                  `💳 Prix : 15€ (site seul) ou 49€ (service conciergerie)\n\n` +
-                                  `✨ Recommandation : 78% choisissent le service conciergerie pour avoir leur site en ligne en 2-4h !\n\n` +
-                                  `Souhaitez-vous procéder au paiement de 15€ ?`;
+                                  `🤖 Notre intelligence artificielle génère votre site professionnel...\n\n` +
+                                  `Choisissez votre offre :\n` +
+                                  `• 15€ - Site seul (téléchargement)\n` +
+                                  `• 49€ - Service conciergerie (en ligne en 2-4h) ⭐\n\n` +
+                                  `✨ 78% choisissent le service conciergerie !`;
                     
-                    if (confirm(message)) {
-                        const paypalUrl = 'https://paypal.me/assakourc?amount=15.00&currency=EUR&locale.x=fr_FR';
-                        window.open(paypalUrl, '_blank');
+                    alert(message);
+                    
+                    // Afficher les boutons de choix
+                    const choice = confirm(`Choisissez votre offre :\n\n` +
+                                         `✅ OK = Service Conciergerie (49€) - RECOMMANDÉ\n` +
+                                         `❌ Annuler = Site Seul (15€)`);
+                    
+                    if (choice) {
+                        // Service conciergerie 49€
+                        const paypalUrl49 = 'https://www.paypal.com/donate/?business=assakourc%40gmail.com&amount=49&currency_code=EUR&item_name=Service+Conciergerie+Automatise+-+IA+WebGen';
+                        window.open(paypalUrl49, '_blank');
+                    } else {
+                        // Site seul 15€
+                        const paypalUrl15 = 'https://www.paypal.com/donate/?business=assakourc%40gmail.com&amount=15&currency_code=EUR&item_name=Site+Web+Seul+-+IA+WebGen';
+                        window.open(paypalUrl15, '_blank');
                     }
                 });
             }
