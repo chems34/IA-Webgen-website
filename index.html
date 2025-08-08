@@ -113,7 +113,7 @@ Intelligence artificielle avancée + Sites multi-pages + Templates professionnel
 </p>
 <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-6 sm:p-8 max-w-4xl mx-auto">
 <h3 class="text-xl sm:text-2xl font-bold mb-6">🎯 Créer mon site professionnel complet</h3>
-<form id="websiteForm" class="space-y-6">
+<form id="websiteForm" class="space-y-6" onsubmit="handleFormSubmit(event)">
 <!-- Informations de base -->
 <div class="grid md:grid-cols-2 gap-4">
 <input type="text" id="businessName" placeholder="Nom de votre entreprise"
@@ -589,91 +589,66 @@ gradient: 'from-slate-400 to-slate-700'
 }
 ];
 
-// Initialisation
+// =========== FONCTION CORRIGÉE POUR LE BUG ===========
+// Gestion du formulaire avec vérification totale
+function handleFormSubmit(event) {
+console.log('🔥 DEBUT TRAITEMENT FORMULAIRE');
+event.preventDefault();
+event.stopPropagation();
+
+try {
+generateCompleteWebsite();
+} catch (error) {
+console.error('❌ ERREUR:', error);
+showNotification('❌ Erreur lors de la génération. Veuillez réessayer.');
+}
+}
+
+// Initialisation robuste
 document.addEventListener('DOMContentLoaded', function() {
-console.log('🚀 IA WebGen Pro démarrée');
+console.log('🚀 IA WebGen Pro - Initialisation démarrée');
+
+// Vérifier que tous les éléments existent
+const form = document.getElementById('websiteForm');
+const mainSection = document.getElementById('mainSection');
+const templateSection = document.getElementById('qualityTemplates');
+const previewSection = document.getElementById('previewSection');
+const templateGrid = document.getElementById('templateGrid');
+
+console.log('✅ Éléments trouvés:', {
+form: !!form,
+mainSection: !!mainSection,
+templateSection: !!templateSection,
+previewSection: !!previewSection,
+templateGrid: !!templateGrid
+});
+
 if (currentUser) {
 showUserMenu();
 }
-const form = document.getElementById('websiteForm');
-if (form) {
-form.addEventListener('submit', function(e) {
-e.preventDefault();
-console.log('📝 Génération du site complet...');
-generateCompleteWebsite();
-});
-}
+
 setupPhotoUpload();
 allTemplates = TEMPLATES;
-console.log('✅ Initialisation terminée');
+
+console.log('✅ Initialisation terminée - Templates:', TEMPLATES.length);
 });
 
-// Configuration upload photos
-function setupPhotoUpload() {
-const uploadArea = document.getElementById('photoUploadArea');
-const photoInput = document.getElementById('photoInput');
-if (!uploadArea || !photoInput) return;
-
-uploadArea.addEventListener('dragover', (e) => {
-e.preventDefault();
-uploadArea.classList.add('drag-over');
-});
-uploadArea.addEventListener('dragleave', () => {
-uploadArea.classList.remove('drag-over');
-});
-uploadArea.addEventListener('drop', (e) => {
-e.preventDefault();
-uploadArea.classList.remove('drag-over');
-handleFiles(e.dataTransfer.files);
-});
-photoInput.addEventListener('change', (e) => {
-handleFiles(e.target.files);
-});
-}
-
-function handleFiles(files) {
-for (let file of files) {
-if (file.type.startsWith('image/') && file.size <= 5 * 1024 * 1024) {
-const reader = new FileReader();
-reader.onload = (e) => {
-uploadedPhotos.push({
-name: file.name,
-data: e.target.result
-});
-displayPhotoPreview();
-};
-reader.readAsDataURL(file);
-}
-}
-}
-
-function displayPhotoPreview() {
-const preview = document.getElementById('photoPreview');
-if (!preview) return;
-preview.innerHTML = '';
-preview.classList.remove('hidden');
-uploadedPhotos.forEach((photo, index) => {
-const div = document.createElement('div');
-div.className = 'relative';
-div.innerHTML = `
-<img src="${photo.data}" alt="${photo.name}" class="w-full h-24 object-cover rounded">
-<button onclick="removePhoto(${index})" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 text-xs">×</button>
-`;
-preview.appendChild(div);
-});
-}
-
-function removePhoto(index) {
-uploadedPhotos.splice(index, 1);
-displayPhotoPreview();
-if (uploadedPhotos.length === 0) {
-document.getElementById('photoPreview').classList.add('hidden');
-}
-}
-
-// FONCTION PRINCIPALE : Génération complète du site
+// FONCTION PRINCIPALE CORRIGÉE
 function generateCompleteWebsite() {
-console.log('🎨 Génération du site complet...');
+console.log('🎨 ==> GÉNÉRATION DU SITE COMPLET COMMENCÉE');
+
+// Vérification des éléments DOM critiques
+const mainSection = document.getElementById('mainSection');
+const templateSection = document.getElementById('qualityTemplates');
+const previewSection = document.getElementById('previewSection');
+
+if (!mainSection || !templateSection || !previewSection) {
+console.error('❌ ERREUR: Éléments DOM manquants');
+showNotification('❌ Erreur technique. Rechargez la page.');
+return;
+}
+
+try {
 // Récupérer toutes les données du formulaire
 const businessName = document.getElementById('businessName').value.trim();
 const description = document.getElementById('description').value.trim();
@@ -685,6 +660,13 @@ const website = document.getElementById('website').value.trim();
 const slogan = document.getElementById('slogan').value.trim();
 const teamInfo = document.getElementById('teamInfo').value.trim();
 const servicesDetail = document.getElementById('servicesDetail').value.trim();
+
+console.log('📋 Données récupérées:', {
+businessName, 
+siteType, 
+userEmail,
+description: description.substring(0, 50) + '...'
+});
 
 // Réseaux sociaux
 const facebook = document.getElementById('facebook').value.trim();
@@ -698,11 +680,31 @@ document.querySelectorAll('input[id^="page-"]:checked').forEach(checkbox => {
 selectedPages.push(checkbox.id.replace('page-', ''));
 });
 
-// Validation des données
-if (!businessName || !description || !siteType || !userEmail) {
-showNotification('❌ Veuillez remplir tous les champs obligatoires !');
+console.log('📄 Pages sélectionnées:', selectedPages);
+
+// Validation stricte
+if (!businessName || businessName.length < 2) {
+showNotification('❌ Le nom de votre entreprise est requis (minimum 2 caractères)');
 return;
 }
+if (!description || description.length < 10) {
+showNotification('❌ Veuillez décrire votre activité (minimum 10 caractères)');
+return;
+}
+if (!siteType) {
+showNotification('❌ Veuillez sélectionner le type de site');
+return;
+}
+if (!userEmail || !userEmail.includes('@')) {
+showNotification('❌ Veuillez saisir un email valide');
+return;
+}
+if (selectedPages.length === 0) {
+showNotification('❌ Au moins une page doit être sélectionnée');
+return;
+}
+
+console.log('✅ Validation passée');
 
 // Stocker toutes les données
 websiteData = {
@@ -725,28 +727,38 @@ primaryColor: '#3b82f6',
 secondaryColor: '#1e40af'
 };
 
-console.log('📋 Données complètes du site:', websiteData);
+console.log('💾 Données stockées dans websiteData');
 
-// Afficher les templates
+// Générer et afficher les templates
+console.log('🎨 Génération des templates...');
 displayTemplates();
 
-// Naviguer vers la section des templates
-document.getElementById('mainSection').style.display = 'none';
-document.getElementById('qualityTemplates').style.display = 'block';
-document.getElementById('previewSection').style.display = 'none';
+// Navigation avec vérification
+console.log('🔀 Navigation vers les templates...');
+mainSection.style.display = 'none';
+templateSection.style.display = 'block';
+previewSection.style.display = 'none';
 window.scrollTo(0, 0);
 
 showNotification(`✅ Site ${websiteData.selectedPages.length} pages prêt ! Choisissez votre thème.`);
+console.log('🎉 GÉNÉRATION TERMINÉE AVEC SUCCÈS');
+
+} catch (error) {
+console.error('❌ ERREUR DANS GÉNÉRATION:', error);
+showNotification('❌ Erreur technique. Veuillez réessayer.');
+}
 }
 
-// Affichage des templates
+// Affichage des templates CORRIGÉ
 function displayTemplates() {
 console.log('🖼️ Affichage des templates...');
 const templateGrid = document.getElementById('templateGrid');
 if (!templateGrid) {
 console.error('❌ Template grid introuvable');
+showNotification('❌ Erreur technique lors du chargement des thèmes');
 return;
 }
+
 templateGrid.innerHTML = '';
 
 allTemplates.forEach((template, index) => {
@@ -780,6 +792,7 @@ ${template.isPremium ? '💎 Premium +5€' : '✨ Gratuit'}
 `;
 templateGrid.appendChild(templateCard);
 });
+
 console.log('✅ Templates affichés:', allTemplates.length);
 }
 
@@ -829,6 +842,7 @@ showNotification('❌ Veuillez sélectionner un thème !');
 return;
 }
 
+try {
 // Générer toutes les pages
 generateAllPages();
 
@@ -840,6 +854,10 @@ document.getElementById('mainSection').style.display = 'none';
 // Initialiser la prévisualisation
 initializeCompletePreview();
 window.scrollTo(0, 0);
+} catch (error) {
+console.error('❌ Erreur prévisualisation:', error);
+showNotification('❌ Erreur lors de la prévisualisation');
+}
 }
 
 // Génération de toutes les pages
@@ -914,7 +932,10 @@ currentPage = page;
 document.querySelectorAll('.page-tab').forEach(tab => {
 tab.classList.remove('active');
 });
-document.querySelector(`.page-tab:nth-child(${websiteData.selectedPages.indexOf(page) + 1})`).classList.add('active');
+const activeTab = document.querySelector(`.page-tab:nth-child(${websiteData.selectedPages.indexOf(page) + 1})`);
+if (activeTab) {
+activeTab.classList.add('active');
+}
 
 // Afficher le contenu de la page
 const previewEl = document.getElementById('websitePreview');
@@ -974,9 +995,9 @@ const { businessName, primaryColor, secondaryColor } = websiteData;
 return `
 <div style="background: linear-gradient(135deg, ${primaryColor}, ${secondaryColor}); color: white; padding: 20px; text-align: center; margin: 0;">
 <nav style="margin-bottom: 20px;">
-<div style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto;">
+<div style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; flex-wrap: wrap;">
 <h1 style="font-size: 1.5rem; font-weight: bold; margin: 0;">${businessName}</h1>
-<div style="display: flex; gap: 20px; font-size: 0.9rem;">
+<div style="display: flex; gap: 15px; font-size: 0.8rem; flex-wrap: wrap;">
 ${websiteData.selectedPages.map(page => {
 const pageNames = {
 'accueil': 'Accueil', 'apropos': 'À propos', 'services': 'Services',
@@ -1227,6 +1248,200 @@ const services = {
 return services[siteType] || services['default'];
 }
 
+// Génération contenu Portfolio
+function generatePortfolioContent() {
+const { businessName, photos, primaryColor } = websiteData;
+return `
+<div style="padding: 60px 20px; background: white;">
+<div style="max-width: 1200px; margin: 0 auto;">
+<h1 style="color: ${primaryColor}; font-size: 3rem; font-weight: bold; text-align: center; margin-bottom: 20px;">Portfolio</h1>
+<p style="text-align: center; color: #6b7280; font-size: 1.1rem; margin-bottom: 50px;">Découvrez quelques-unes de nos plus belles réalisations</p>
+
+${photos.length > 0 ? `
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+${photos.map((photo, index) => `
+<div style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.1); transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='translateY(0)'">
+<img src="${photo.data}" alt="${photo.name}" style="width: 100%; height: 250px; object-fit: cover;">
+<div style="padding: 20px;">
+<h3 style="color: ${primaryColor}; font-weight: bold; margin-bottom: 10px;">Réalisation ${index + 1}</h3>
+<p style="color: #6b7280; line-height: 1.6;">Une réalisation qui témoigne de notre expertise et de notre attention aux détails.</p>
+</div>
+</div>
+`).join('')}
+</div>
+` : `
+<div style="text-align: center; padding: 60px 20px; background: #f8fafc; border-radius: 15px;">
+<h2 style="color: ${primaryColor}; font-size: 2rem; font-weight: bold; margin-bottom: 20px;">Portfolio en cours de constitution</h2>
+<p style="color: #6b7280; font-size: 1.1rem;">Nous travaillons actuellement sur la présentation de nos plus belles réalisations. Revenez bientôt pour découvrir notre travail !</p>
+</div>
+`}
+</div>
+</div>
+`;
+}
+
+// Génération contenu Équipe
+function generateEquipeContent() {
+const { businessName, teamInfo, primaryColor } = websiteData;
+return `
+<div style="padding: 60px 20px; background: white;">
+<div style="max-width: 1000px; margin: 0 auto;">
+<h1 style="color: ${primaryColor}; font-size: 3rem; font-weight: bold; text-align: center; margin-bottom: 50px;">Notre Équipe</h1>
+
+${teamInfo ? `
+<div style="background: linear-gradient(135deg, ${primaryColor}, ${websiteData.secondaryColor}); color: white; padding: 40px; border-radius: 15px; margin-bottom: 50px; text-align: center;">
+<h2 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 20px;">👥 Rencontrez Notre Équipe</h2>
+<p style="font-size: 1.1rem; line-height: 1.8; opacity: 0.95;">${teamInfo}</p>
+</div>
+` : ''}
+
+<div style="display: grid; md:grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
+${generateTeamMembers()}
+</div>
+</div>
+</div>
+`;
+}
+
+function generateTeamMembers() {
+const { primaryColor } = websiteData;
+const defaultMembers = [
+{name: "Direction", role: "Leadership & Vision", description: "Pilotage stratégique et développement de l'entreprise."},
+{name: "Équipe Technique", role: "Expertise & Savoir-faire", description: "Professionnels expérimentés pour des prestations de qualité."},
+{name: "Service Client", role: "Accueil & Conseil", description: "À votre écoute pour vous accompagner et vous conseiller."},
+];
+
+return defaultMembers.map(member => `
+<div style="text-align: center; padding: 30px; background: #f8fafc; border-radius: 12px; border-top: 4px solid ${primaryColor};">
+<div style="width: 80px; height: 80px; background: ${primaryColor}; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.8rem;">
+👤
+</div>
+<h3 style="color: ${primaryColor}; font-size: 1.3rem; font-weight: bold; margin-bottom: 8px;">${member.name}</h3>
+<h4 style="color: #6b7280; font-size: 1rem; margin-bottom: 15px; font-weight: 600;">${member.role}</h4>
+<p style="color: #6b7280; line-height: 1.6; font-size: 0.9rem;">${member.description}</p>
+</div>
+`).join('');
+}
+
+// Génération contenu Témoignages
+function generateTemoignagesContent() {
+const { businessName, primaryColor } = websiteData;
+return `
+<div style="padding: 60px 20px; background: white;">
+<div style="max-width: 1000px; margin: 0 auto;">
+<h1 style="color: ${primaryColor}; font-size: 3rem; font-weight: bold; text-align: center; margin-bottom: 20px;">Témoignages Clients</h1>
+<p style="text-align: center; color: #6b7280; font-size: 1.1rem; margin-bottom: 50px;">Ce que nos clients disent de nous</p>
+
+<div style="display: grid; md:grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+${generateTestimonials()}
+</div>
+</div>
+</div>
+`;
+}
+
+function generateTestimonials() {
+const { primaryColor, siteType } = websiteData;
+const testimonials = getSectorTestimonials(siteType);
+
+return testimonials.map(testimonial => `
+<div style="background: #f8fafc; padding: 30px; border-radius: 12px; border-left: 4px solid ${primaryColor}; position: relative;">
+<div style="color: ${primaryColor}; font-size: 3rem; position: absolute; top: 10px; right: 20px; opacity: 0.3;">"</div>
+<p style="color: #6b7280; line-height: 1.6; margin-bottom: 20px; font-style: italic;">${testimonial.text}</p>
+<div style="display: flex; align-items: center;">
+<div style="width: 50px; height: 50px; background: ${primaryColor}; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; margin-right: 15px;">
+${testimonial.name.charAt(0)}
+</div>
+<div>
+<h4 style="color: ${primaryColor}; font-weight: bold; margin-bottom: 2px;">${testimonial.name}</h4>
+<p style="color: #9ca3af; font-size: 0.9rem;">${testimonial.role}</p>
+</div>
+</div>
+<div style="margin-top: 15px; color: #fbbf24;">
+${'⭐'.repeat(5)}
+</div>
+</div>
+`).join('');
+}
+
+function getSectorTestimonials(siteType) {
+const testimonials = {
+'restaurant': [
+{name: "Marie L.", role: "Cliente régulière", text: "Une cuisine exceptionnelle ! Chaque plat est un délice et le service est toujours au top. Mon restaurant préféré !"},
+{name: "Thomas B.", role: "Organisateur d'événements", text: "Parfait pour nos événements d'entreprise. L'équipe est professionnelle et la qualité est constante."},
+{name: "Sophie M.", role: "Famille nombreuse", text: "L'accueil est chaleureux et les portions généreuses. Nos enfants adorent venir ici !"}
+],
+'salon': [
+{name: "Emma D.", role: "Cliente fidèle", text: "Des professionnels à l'écoute qui subliment ma beauté naturelle. Je ressors toujours rayonnante !"},
+{name: "Lucas P.", role: "Nouveau client", text: "Première visite réussie ! Conseils personnalisés et résultat parfait. Je recommande vivement."},
+{name: "Julie R.", role: "Mariée", text: "Merci pour avoir rendu ma journée de mariage encore plus belle. Un travail exceptionnel !"}
+],
+'default': [
+{name: "Claire M.", role: "Cliente satisfaite", text: "Un service professionnel et de qualité. L'équipe est compétente et à l'écoute de nos besoins."},
+{name: "Pierre L.", role: "Client entreprise", text: "Collaboration excellente avec des résultats qui dépassent nos attentes. Très professionnel."},
+{name: "Anne B.", role: "Particulier", text: "Je recommande sans hésiter ! Qualité, rapidité et prix compétitifs."}
+]
+};
+return testimonials[siteType] || testimonials['default'];
+}
+
+// Génération contenu Blog
+function generateBlogContent() {
+const { businessName, primaryColor } = websiteData;
+return `
+<div style="padding: 60px 20px; background: white;">
+<div style="max-width: 1000px; margin: 0 auto;">
+<h1 style="color: ${primaryColor}; font-size: 3rem; font-weight: bold; text-align: center; margin-bottom: 20px;">Blog & Actualités</h1>
+<p style="text-align: center; color: #6b7280; font-size: 1.1rem; margin-bottom: 50px;">Restez informé de nos dernières actualités et conseils</p>
+
+<div style="display: grid; gap: 40px;">
+${generateBlogPosts()}
+</div>
+</div>
+</div>
+`;
+}
+
+function generateBlogPosts() {
+const { primaryColor, siteType, businessName } = websiteData;
+const posts = getSectorBlogPosts(siteType, businessName);
+
+return posts.map(post => `
+<article style="background: #f8fafc; padding: 40px; border-radius: 12px; border-left: 4px solid ${primaryColor};">
+<div style="display: flex; justify-content: between; align-items: start; margin-bottom: 20px;">
+<h2 style="color: ${primaryColor}; font-size: 1.8rem; font-weight: bold; margin-bottom: 10px; flex-grow: 1;">${post.title}</h2>
+<span style="background: ${primaryColor}; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; white-space: nowrap; margin-left: 20px;">${post.date}</span>
+</div>
+<p style="color: #6b7280; line-height: 1.7; margin-bottom: 20px;">${post.excerpt}</p>
+<div style="display: flex; align-items: center; justify-content: between;">
+<span style="color: ${primaryColor}; font-size: 0.9rem; background: white; padding: 6px 12px; border-radius: 15px;">📖 ${post.category}</span>
+<button style="background: ${primaryColor}; color: white; padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem; margin-left: auto;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Lire la suite</button>
+</div>
+</article>
+`).join('');
+}
+
+function getSectorBlogPosts(siteType, businessName) {
+const posts = {
+'restaurant': [
+{title: "Les secrets d'une cuisine de qualité", date: "15 Mars 2024", category: "Cuisine", excerpt: `Découvrez les techniques et astuces que nos chefs utilisent chez ${businessName} pour créer des plats exceptionnels. De la sélection des ingrédients aux méthodes de cuisson, nous partageons notre savoir-faire.`},
+{title: "Nos nouveautés de saison", date: "8 Mars 2024", category: "Menu", excerpt: "Le printemps apporte de nouvelles saveurs ! Découvrez notre nouveau menu saisonnier avec des plats frais et colorés qui célèbrent les produits de saison."},
+{title: "L'art de recevoir : organiser votre événement", date: "1 Mars 2024", category: "Événements", excerpt: "Conseils et astuces pour réussir vos événements privés. Comment choisir le menu, organiser l'espace et créer une ambiance mémorable pour vos invités."}
+],
+'salon': [
+{title: "Tendances coiffure printemps 2024", date: "12 Mars 2024", category: "Coiffure", excerpt: `Les experts de ${businessName} vous présentent les tendances capillaires de la saison : couleurs naturelles, coupes structurées et soins nourrissants pour sublimer vos cheveux.`},
+{title: "Prendre soin de sa peau au quotidien", date: "5 Mars 2024", category: "Soins", excerpt: "Routine beauté matinale et nocturne, choix des produits selon votre type de peau, nos esthéticiennes vous livrent leurs secrets pour une peau éclatante."},
+{title: "Bien-être et relaxation : nos conseils", date: "25 Février 2024", category: "Bien-être", excerpt: "Stress, fatigue, tensions... Découvrez nos conseils pour vous détendre et prendre soin de vous. Massages, aromathérapie et techniques de relaxation."}
+],
+'default': [
+{title: `Les nouveautés chez ${businessName}`, date: "10 Mars 2024", category: "Actualités", excerpt: "Découvrez les dernières innovations et améliorations que nous avons apportées à nos services pour mieux vous satisfaire."},
+{title: "Conseils d'experts pour faire le bon choix", date: "3 Mars 2024", category: "Conseils", excerpt: "Nos professionnels partagent leur expertise pour vous aider à prendre les meilleures décisions selon vos besoins spécifiques."},
+{title: "Qualité et excellence : notre engagement", date: "20 Février 2024", category: "Qualité", excerpt: "Découvrez les standards de qualité que nous appliquons au quotidien pour vous garantir des prestations d'excellence."}
+]
+};
+return posts[siteType] || posts['default'];
+}
+
 // Génération contenu Contact
 function generateContactContent() {
 const { businessName, phone, address, userEmail, primaryColor } = websiteData;
@@ -1307,195 +1522,67 @@ Envoyer le message
 `;
 }
 
-// Génération des autres pages (Portfolio, Équipe, Témoignages, Blog)
-function generatePortfolioContent() {
-const { businessName, photos, primaryColor } = websiteData;
-return `
-<div style="padding: 60px 20px; background: white;">
-<div style="max-width: 1200px; margin: 0 auto;">
-<h1 style="color: ${primaryColor}; font-size: 3rem; font-weight: bold; text-align: center; margin-bottom: 20px;">Portfolio</h1>
-<p style="text-align: center; color: #6b7280; font-size: 1.1rem; margin-bottom: 50px;">Découvrez quelques-unes de nos plus belles réalisations</p>
+// Configuration upload photos
+function setupPhotoUpload() {
+const uploadArea = document.getElementById('photoUploadArea');
+const photoInput = document.getElementById('photoInput');
+if (!uploadArea || !photoInput) return;
 
-${photos.length > 0 ? `
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
-${photos.map((photo, index) => `
-<div style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.1); transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='translateY(0)'">
-<img src="${photo.data}" alt="${photo.name}" style="width: 100%; height: 250px; object-fit: cover;">
-<div style="padding: 20px;">
-<h3 style="color: ${primaryColor}; font-weight: bold; margin-bottom: 10px;">Réalisation ${index + 1}</h3>
-<p style="color: #6b7280; line-height: 1.6;">Une réalisation qui témoigne de notre expertise et de notre attention aux détails.</p>
-</div>
-</div>
-`).join('')}
-</div>
-` : `
-<div style="text-align: center; padding: 60px 20px; background: #f8fafc; border-radius: 15px;">
-<h2 style="color: ${primaryColor}; font-size: 2rem; font-weight: bold; margin-bottom: 20px;">Portfolio en cours de constitution</h2>
-<p style="color: #6b7280; font-size: 1.1rem;">Nous travaillons actuellement sur la présentation de nos plus belles réalisations. Revenez bientôt pour découvrir notre travail !</p>
-</div>
-`}
-</div>
-</div>
-`;
+uploadArea.addEventListener('dragover', (e) => {
+e.preventDefault();
+uploadArea.classList.add('drag-over');
+});
+uploadArea.addEventListener('dragleave', () => {
+uploadArea.classList.remove('drag-over');
+});
+uploadArea.addEventListener('drop', (e) => {
+e.preventDefault();
+uploadArea.classList.remove('drag-over');
+handleFiles(e.dataTransfer.files);
+});
+photoInput.addEventListener('change', (e) => {
+handleFiles(e.target.files);
+});
 }
 
-function generateEquipeContent() {
-const { businessName, teamInfo, primaryColor } = websiteData;
-return `
-<div style="padding: 60px 20px; background: white;">
-<div style="max-width: 1000px; margin: 0 auto;">
-<h1 style="color: ${primaryColor}; font-size: 3rem; font-weight: bold; text-align: center; margin-bottom: 50px;">Notre Équipe</h1>
-
-${teamInfo ? `
-<div style="background: linear-gradient(135deg, ${primaryColor}, ${websiteData.secondaryColor}); color: white; padding: 40px; border-radius: 15px; margin-bottom: 50px; text-align: center;">
-<h2 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 20px;">👥 Rencontrez Notre Équipe</h2>
-<p style="font-size: 1.1rem; line-height: 1.8; opacity: 0.95;">${teamInfo}</p>
-</div>
-` : ''}
-
-<div style="display: grid; md:grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
-${generateTeamMembers()}
-</div>
-</div>
-</div>
-`;
-}
-
-function generateTeamMembers() {
-const { primaryColor } = websiteData;
-const defaultMembers = [
-{name: "Direction", role: "Leadership & Vision", description: "Pilotage stratégique et développement de l'entreprise."},
-{name: "Équipe Technique", role: "Expertise & Savoir-faire", description: "Professionnels expérimentés pour des prestations de qualité."},
-{name: "Service Client", role: "Accueil & Conseil", description: "À votre écoute pour vous accompagner et vous conseiller."},
-];
-
-return defaultMembers.map(member => `
-<div style="text-align: center; padding: 30px; background: #f8fafc; border-radius: 12px; border-top: 4px solid ${primaryColor};">
-<div style="width: 80px; height: 80px; background: ${primaryColor}; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.8rem;">
-👤
-</div>
-<h3 style="color: ${primaryColor}; font-size: 1.3rem; font-weight: bold; margin-bottom: 8px;">${member.name}</h3>
-<h4 style="color: #6b7280; font-size: 1rem; margin-bottom: 15px; font-weight: 600;">${member.role}</h4>
-<p style="color: #6b7280; line-height: 1.6; font-size: 0.9rem;">${member.description}</p>
-</div>
-`).join('');
-}
-
-function generateTemoignagesContent() {
-const { businessName, primaryColor } = websiteData;
-return `
-<div style="padding: 60px 20px; background: white;">
-<div style="max-width: 1000px; margin: 0 auto;">
-<h1 style="color: ${primaryColor}; font-size: 3rem; font-weight: bold; text-align: center; margin-bottom: 20px;">Témoignages Clients</h1>
-<p style="text-align: center; color: #6b7280; font-size: 1.1rem; margin-bottom: 50px;">Ce que nos clients disent de nous</p>
-
-<div style="display: grid; md:grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
-${generateTestimonials()}
-</div>
-</div>
-</div>
-`;
-}
-
-function generateTestimonials() {
-const { primaryColor, siteType } = websiteData;
-const testimonials = getSectorTestimonials(siteType);
-
-return testimonials.map(testimonial => `
-<div style="background: #f8fafc; padding: 30px; border-radius: 12px; border-left: 4px solid ${primaryColor}; position: relative;">
-<div style="color: ${primaryColor}; font-size: 3rem; position: absolute; top: 10px; right: 20px; opacity: 0.3;">"</div>
-<p style="color: #6b7280; line-height: 1.6; margin-bottom: 20px; font-style: italic;">${testimonial.text}</p>
-<div style="display: flex; align-items: center;">
-<div style="width: 50px; height: 50px; background: ${primaryColor}; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; margin-right: 15px;">
-${testimonial.name.charAt(0)}
-</div>
-<div>
-<h4 style="color: ${primaryColor}; font-weight: bold; margin-bottom: 2px;">${testimonial.name}</h4>
-<p style="color: #9ca3af; font-size: 0.9rem;">${testimonial.role}</p>
-</div>
-</div>
-<div style="margin-top: 15px; color: #fbbf24;">
-${'⭐'.repeat(5)}
-</div>
-</div>
-`).join('');
-}
-
-function getSectorTestimonials(siteType) {
-const testimonials = {
-'restaurant': [
-{name: "Marie L.", role: "Cliente régulière", text: "Une cuisine exceptionnelle ! Chaque plat est un délice et le service est toujours au top. Mon restaurant préféré !"},
-{name: "Thomas B.", role: "Organisateur d'événements", text: "Parfait pour nos événements d'entreprise. L'équipe est professionnelle et la qualité est constante."},
-{name: "Sophie M.", role: "Famille nombreuse", text: "L'accueil est chaleureux et les portions généreuses. Nos enfants adorent venir ici !"}
-],
-'salon': [
-{name: "Emma D.", role: "Cliente fidèle", text: "Des professionnels à l'écoute qui subliment ma beauté naturelle. Je ressors toujours rayonnante !"},
-{name: "Lucas P.", role: "Nouveau client", text: "Première visite réussie ! Conseils personnalisés et résultat parfait. Je recommande vivement."},
-{name: "Julie R.", role: "Mariée", text: "Merci pour avoir rendu ma journée de mariage encore plus belle. Un travail exceptionnel !"}
-],
-'default': [
-{name: "Claire M.", role: "Cliente satisfaite", text: "Un service professionnel et de qualité. L'équipe est compétente et à l'écoute de nos besoins."},
-{name: "Pierre L.", role: "Client entreprise", text: "Collaboration excellente avec des résultats qui dépassent nos attentes. Très professionnel."},
-{name: "Anne B.", role: "Particulier", text: "Je recommande sans hésiter ! Qualité, rapidité et prix compétitifs."}
-]
+function handleFiles(files) {
+for (let file of files) {
+if (file.type.startsWith('image/') && file.size <= 5 * 1024 * 1024) {
+const reader = new FileReader();
+reader.onload = (e) => {
+uploadedPhotos.push({
+name: file.name,
+data: e.target.result
+});
+displayPhotoPreview();
 };
-return testimonials[siteType] || testimonials['default'];
+reader.readAsDataURL(file);
+}
+}
 }
 
-function generateBlogContent() {
-const { businessName, primaryColor } = websiteData;
-return `
-<div style="padding: 60px 20px; background: white;">
-<div style="max-width: 1000px; margin: 0 auto;">
-<h1 style="color: ${primaryColor}; font-size: 3rem; font-weight: bold; text-align: center; margin-bottom: 20px;">Blog & Actualités</h1>
-<p style="text-align: center; color: #6b7280; font-size: 1.1rem; margin-bottom: 50px;">Restez informé de nos dernières actualités et conseils</p>
-
-<div style="display: grid; gap: 40px;">
-${generateBlogPosts()}
-</div>
-</div>
-</div>
+function displayPhotoPreview() {
+const preview = document.getElementById('photoPreview');
+if (!preview) return;
+preview.innerHTML = '';
+preview.classList.remove('hidden');
+uploadedPhotos.forEach((photo, index) => {
+const div = document.createElement('div');
+div.className = 'relative';
+div.innerHTML = `
+<img src="${photo.data}" alt="${photo.name}" class="w-full h-24 object-cover rounded">
+<button onclick="removePhoto(${index})" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 text-xs">×</button>
 `;
+preview.appendChild(div);
+});
 }
 
-function generateBlogPosts() {
-const { primaryColor, siteType, businessName } = websiteData;
-const posts = getSectorBlogPosts(siteType, businessName);
-
-return posts.map(post => `
-<article style="background: #f8fafc; padding: 40px; border-radius: 12px; border-left: 4px solid ${primaryColor};">
-<div style="display: flex; justify-content: between; align-items: start; margin-bottom: 20px;">
-<h2 style="color: ${primaryColor}; font-size: 1.8rem; font-weight: bold; margin-bottom: 10px; flex-grow: 1;">${post.title}</h2>
-<span style="background: ${primaryColor}; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; white-space: nowrap; margin-left: 20px;">${post.date}</span>
-</div>
-<p style="color: #6b7280; line-height: 1.7; margin-bottom: 20px;">${post.excerpt}</p>
-<div style="display: flex; align-items: center; justify-content: between;">
-<span style="color: ${primaryColor}; font-size: 0.9rem; background: white; padding: 6px 12px; border-radius: 15px;">📖 ${post.category}</span>
-<button style="background: ${primaryColor}; color: white; padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem; margin-left: auto;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Lire la suite</button>
-</div>
-</article>
-`).join('');
+function removePhoto(index) {
+uploadedPhotos.splice(index, 1);
+displayPhotoPreview();
+if (uploadedPhotos.length === 0) {
+document.getElementById('photoPreview').classList.add('hidden');
 }
-
-function getSectorBlogPosts(siteType, businessName) {
-const posts = {
-'restaurant': [
-{title: "Les secrets d'une cuisine de qualité", date: "15 Mars 2024", category: "Cuisine", excerpt: `Découvrez les techniques et astuces que nos chefs utilisent chez ${businessName} pour créer des plats exceptionnels. De la sélection des ingrédients aux méthodes de cuisson, nous partageons notre savoir-faire.`},
-{title: "Nos nouveautés de saison", date: "8 Mars 2024", category: "Menu", excerpt: "Le printemps apporte de nouvelles saveurs ! Découvrez notre nouveau menu saisonnier avec des plats frais et colorés qui célèbrent les produits de saison."},
-{title: "L'art de recevoir : organiser votre événement", date: "1 Mars 2024", category: "Événements", excerpt: "Conseils et astuces pour réussir vos événements privés. Comment choisir le menu, organiser l'espace et créer une ambiance mémorable pour vos invités."}
-],
-'salon': [
-{title: "Tendances coiffure printemps 2024", date: "12 Mars 2024", category: "Coiffure", excerpt: `Les experts de ${businessName} vous présentent les tendances capillaires de la saison : couleurs naturelles, coupes structurées et soins nourrissants pour sublimer vos cheveux.`},
-{title: "Prendre soin de sa peau au quotidien", date: "5 Mars 2024", category: "Soins", excerpt: "Routine beauté matinale et nocturne, choix des produits selon votre type de peau, nos esthéticiennes vous livrent leurs secrets pour une peau éclatante."},
-{title: "Bien-être et relaxation : nos conseils", date: "25 Février 2024", category: "Bien-être", excerpt: "Stress, fatigue, tensions... Découvrez nos conseils pour vous détendre et prendre soin de vous. Massages, aromathérapie et techniques de relaxation."}
-],
-'default': [
-{title: `Les nouveautés chez ${businessName}`, date: "10 Mars 2024", category: "Actualités", excerpt: "Découvrez les dernières innovations et améliorations que nous avons apportées à nos services pour mieux vous satisfaire."},
-{title: "Conseils d'experts pour faire le bon choix", date: "3 Mars 2024", category: "Conseils", excerpt: "Nos professionnels partagent leur expertise pour vous aider à prendre les meilleures décisions selon vos besoins spécifiques."},
-{title: "Qualité et excellence : notre engagement", date: "20 Février 2024", category: "Qualité", excerpt: "Découvrez les standards de qualité que nous appliquons au quotidien pour vous garantir des prestations d'excellence."}
-]
-};
-return posts[siteType] || posts['default'];
 }
 
 // Mise à jour de la prévisualisation
@@ -1626,7 +1713,7 @@ showNotification(`🎉 Redirection PayPal... Site ${pages} pages en commande !`)
 }
 }
 
-// Fonctions d'authentification (inchangées)
+// Fonctions d'authentification
 function showLogin() {
 document.getElementById('authModalTitle').textContent = 'Connexion';
 document.getElementById('loginForm').style.display = 'block';
@@ -1682,7 +1769,7 @@ document.getElementById('userMenu').style.display = 'block';
 document.getElementById('userName').textContent = `👋 ${currentUser.name}`;
 }
 
-// Fonctions de partage (inchangées)
+// Fonctions de partage
 function toggleShareMenu() {
 const menu = document.getElementById('shareMenu');
 menu.classList.toggle('hidden');
