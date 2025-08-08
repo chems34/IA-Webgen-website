@@ -14,27 +14,17 @@
         .preview-section { display: none; }
         .quality-templates { display: none; }
         .smart-requirements { display: none; }
-        .photo-upload-area { border: 2px dashed #cbd5e0; border-radius: 8px; padding: 20px; text-align: center; transition: all 0.3s; }
-        .photo-upload-area:hover { border-color: #3b82f6; background-color: #f0f9ff; }
-        .photo-upload-area.drag-over { border-color: #10b981; background-color: #f0fdf4; }
         .template-card { cursor: pointer; transition: all 0.3s; border: 3px solid transparent; }
         .template-card:hover { transform: scale(1.02); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
         .template-card.selected { border: 3px solid #10b981; background: #f0fdf4; }
-        .site-nav { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(10px); }
-        .page-content { display: none; }
-        .page-content.active { display: block; }
-        .nav-link { cursor: pointer; transition: all 0.3s; }
-        .nav-link:hover { transform: translateY(-2px); }
-        .nav-link.active { font-weight: bold; }
-        .notification { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1001; display: none; }
         .requirement-card { border: 2px solid #e5e7eb; border-radius: 12px; padding: 20px; transition: all 0.3s; cursor: pointer; }
         .requirement-card:hover { border-color: #3b82f6; transform: translateY(-2px); }
         .requirement-card.selected { border-color: #10b981; background: #f0fdf4; }
-        .tab-button { padding: 12px 20px; border-radius: 8px; margin-right: 10px; cursor: pointer; transition: all 0.3s; }
-        .tab-button.active { background: #3b82f6; color: white; }
-        .tab-button:not(.active) { background: #f3f4f6; color: #6b7280; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        .notification { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1001; display: none; }
+        .nav-link { cursor: pointer; transition: all 0.3s; }
+        .nav-link:hover { transform: translateY(-2px); }
+        .page-content { display: none; }
+        .page-content.active { display: block; }
     </style>
 </head>
 <body class="font-sans">
@@ -50,11 +40,9 @@
             <div class="flex justify-between items-center flex-wrap">
                 <h1 class="text-2xl font-bold">🤖 IA WebGen</h1>
                 <div class="flex items-center gap-4">
-                    <div class="text-sm">
-                        <span class="bg-green-500 px-3 py-1 rounded-full text-xs sm:text-sm">
-                            ✨ IA qui génère EXACTEMENT ce que vous voulez !
-                        </span>
-                    </div>
+                    <span class="bg-green-500 px-3 py-1 rounded-full text-xs sm:text-sm">
+                        ✨ Créez votre site exactement comme vous le voulez !
+                    </span>
                 </div>
             </div>
         </div>
@@ -62,18 +50,17 @@
 
     <!-- Section principale -->
     <div id="mainSection">
-        <!-- Hero Section -->
         <section class="gradient-bg text-white py-20 fade-in">
             <div class="container mx-auto px-4 text-center">
                 <h2 class="text-3xl sm:text-5xl font-bold mb-6">
-                    🎯 Décrivez votre site, l'IA le crée à la lettre !
+                    🎯 Décrivez votre site, nous le créons !
                 </h2>
                 <p class="text-lg sm:text-xl mb-8 opacity-90">
-                    Notre IA comprend vos besoins exacts et génère un site professionnel personnalisé
+                    Notre système comprend vos besoins et génère un site professionnel personnalisé
                 </p>
                 
                 <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-6 sm:p-8 max-w-2xl mx-auto">
-                    <h3 class="text-xl sm:text-2xl font-bold mb-6">🚀 Commencer la création</h3>
+                    <h3 class="text-xl sm:text-2xl font-bold mb-6">🚀 Créer mon site</h3>
                     
                     <form id="websiteForm" class="space-y-4">
                         <div class="grid md:grid-cols-2 gap-4">
@@ -83,17 +70,9 @@
                             <select id="siteType" class="w-full p-3 rounded-lg text-gray-800 font-medium" required>
                                 <option value="">Type d'activité</option>
                                 <option value="restaurant">🍽️ Restaurant</option>
-                                <option value="ecommerce">🛍️ E-commerce/Boutique</option>
-                                <option value="salon">💇 Salon de beauté</option>
+                                <option value="ecommerce">🛍️ E-commerce</option>
                                 <option value="service">🔧 Service professionnel</option>
                                 <option value="medical">🏥 Cabinet médical</option>
-                                <option value="immobilier">🏠 Immobilier</option>
-                                <option value="hotel">🏨 Hôtel</option>
-                                <option value="fitness">💪 Salle de sport</option>
-                                <option value="location-voiture">🚗 Location de voiture</option>
-                                <option value="avocat">⚖️ Cabinet d'avocat</option>
-                                <option value="photographe">📸 Photographe</option>
-                                <option value="artisan">🔧 Artisan</option>
                                 <option value="autre">✨ Autre activité</option>
                             </select>
                         </div>
@@ -113,49 +92,38 @@
         </section>
     </div>
 
-    <!-- Section Besoins Intelligents -->
+    <!-- Section Besoins -->
     <section id="smartRequirements" class="smart-requirements py-16 bg-gray-50">
         <div class="container mx-auto px-4">
             <div class="text-center mb-12">
-                <h3 class="text-3xl font-bold text-gray-800 mb-4">🎯 Personnalisez votre site exactement</h3>
-                <p class="text-xl text-gray-600">Sélectionnez EXACTEMENT ce que vous voulez</p>
+                <h3 class="text-3xl font-bold text-gray-800 mb-4">🎯 Choisissez vos pages</h3>
+                <p class="text-xl text-gray-600">Sélectionnez ce que vous voulez sur votre site</p>
                 <button onclick="goBackToMain()" class="mt-4 bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600">
-                    <i class="fas fa-arrow-left mr-2"></i>Modifier les informations
+                    <i class="fas fa-arrow-left mr-2"></i>Retour
                 </button>
             </div>
             
             <div class="max-w-6xl mx-auto">
-                <!-- Pages de base -->
                 <div class="mb-8">
-                    <h4 class="text-2xl font-bold text-gray-800 mb-6">📄 Pages essentielles</h4>
+                    <h4 class="text-2xl font-bold text-gray-800 mb-6">📄 Pages disponibles</h4>
                     <div id="basicPages" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <!-- Généré dynamiquement -->
+                        <!-- Généré par JS -->
                     </div>
                 </div>
 
-                <!-- Fonctionnalités avancées -->
                 <div class="mb-8">
-                    <h4 class="text-2xl font-bold text-gray-800 mb-6">🚀 Fonctionnalités avancées</h4>
-                    <div id="advancedFeatures" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <!-- Généré dynamiquement -->
-                    </div>
-                </div>
-
-                <!-- Demandes personnalisées -->
-                <div class="mb-8">
-                    <h4 class="text-2xl font-bold text-gray-800 mb-6">💬 Demandes spécifiques</h4>
+                    <h4 class="text-2xl font-bold text-gray-800 mb-6">💬 Demandes spéciales</h4>
                     <div class="bg-white rounded-lg p-6 shadow-lg">
                         <textarea id="customRequests" 
-                                  placeholder="Décrivez exactement ce que vous voulez (ex: 'Je veux un système de réservation avec calendrier', 'Je veux une boutique avec panier d'achat', 'Je veux un blog avec commentaires')..." 
+                                  placeholder="Décrivez exactement ce que vous voulez sur votre site..." 
                                   class="w-full p-4 border rounded-lg h-32 resize-none"></textarea>
                     </div>
                 </div>
             </div>
             
             <div class="text-center mt-8">
-                <button onclick="generateCustomSite()" id="generateBtn" 
-                        class="bg-green-500 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-green-600 transform hover:scale-105 transition-all">
-                    <i class="fas fa-magic mr-2"></i>GÉNÉRER MON SITE PERSONNALISÉ
+                <button onclick="generateCustomSite()" class="bg-green-500 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-green-600">
+                    <i class="fas fa-magic mr-2"></i>CRÉER MON SITE
                 </button>
             </div>
         </div>
@@ -166,20 +134,20 @@
         <div class="container mx-auto px-4">
             <div class="text-center mb-12">
                 <h3 class="text-3xl font-bold text-gray-800 mb-4">🎨 Choisissez votre design</h3>
-                <p class="text-xl text-gray-600">Sélectionnez le thème qui correspond à votre style</p>
+                <p class="text-xl text-gray-600">Sélectionnez le style qui vous plaît</p>
                 <button onclick="goBackToRequirements()" class="mt-4 bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600">
-                    <i class="fas fa-arrow-left mr-2"></i>Modifier les besoins
+                    <i class="fas fa-arrow-left mr-2"></i>Retour
                 </button>
             </div>
             
-            <div id="templateGrid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-                <!-- Les templates seront générés ici -->
+            <div id="templateGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                <!-- Généré par JS -->
             </div>
             
             <div class="text-center mt-8">
                 <button onclick="proceedWithSelectedTemplate()" id="continueBtn" 
-                        class="bg-green-500 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-                    <i class="fas fa-eye mr-2"></i>GÉNÉRER LA PRÉVISUALISATION
+                        class="bg-green-500 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-green-600 disabled:opacity-50" disabled>
+                    <i class="fas fa-eye mr-2"></i>VOIR MON SITE
                 </button>
             </div>
         </div>
@@ -188,41 +156,37 @@
     <!-- Section Prévisualisation -->
     <section id="previewSection" class="preview-section min-h-screen bg-gray-100 py-8">
         <div class="container mx-auto px-4">
-            <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <div class="bg-white rounded-lg shadow-lg p-6">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-2xl font-bold text-gray-800">
-                        🎉 Votre site personnalisé : <span id="previewBusinessName"></span>
+                        🎉 Votre site : <span id="previewBusinessName"></span>
                     </h2>
                     <div class="flex gap-3">
                         <button onclick="goBackToTemplates()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                            <i class="fas fa-palette mr-2"></i>Changer de design
+                            <i class="fas fa-palette mr-2"></i>Changer design
                         </button>
                         <button onclick="goBackToRequirements()" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
-                            <i class="fas fa-edit mr-2"></i>Modifier les besoins
+                            <i class="fas fa-edit mr-2"></i>Modifier
                         </button>
                     </div>
                 </div>
                 
                 <div class="grid lg:grid-cols-2 gap-8">
-                    <!-- Aperçu du site -->
                     <div>
-                        <h3 class="text-lg font-bold mb-4">🖥️ Votre site web</h3>
-                        <p class="text-sm text-gray-600 mb-4">Naviguez entre toutes les pages générées :</p>
+                        <h3 class="text-lg font-bold mb-4">🖥️ Aperçu</h3>
                         <div id="websitePreview" class="border-2 border-gray-300 rounded-lg bg-white overflow-auto" style="height: 600px;">
                             <div style="padding: 20px; text-align: center; color: #6b7280;">
                                 <i class="fas fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 10px;"></i>
-                                <p>Génération intelligente en cours...</p>
+                                <p>Génération en cours...</p>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Panneau de modifications -->
                     <div>
                         <h3 class="text-lg font-bold mb-4">⚙️ Personnalisation</h3>
-                        
                         <div class="space-y-4">
                             <div>
-                                <label class="block text-sm font-bold mb-2">Nom de l'entreprise</label>
+                                <label class="block text-sm font-bold mb-2">Nom entreprise</label>
                                 <input type="text" id="mainTitle" class="w-full p-3 border rounded-lg" onchange="updatePreview()">
                             </div>
                             <div>
@@ -230,36 +194,26 @@
                                 <textarea id="subtitle" class="w-full p-3 border rounded-lg h-20" onchange="updatePreview()"></textarea>
                             </div>
                             <div>
-                                <label class="block text-sm font-bold mb-2">Couleur principale</label>
+                                <label class="block text-sm font-bold mb-2">Couleur</label>
                                 <input type="color" id="primaryColor" value="#3b82f6" class="w-full h-10 rounded" onchange="updatePreview()">
                             </div>
                             <div>
                                 <label class="block text-sm font-bold mb-2">Téléphone</label>
-                                <input type="tel" id="phone" class="w-full p-3 border rounded-lg" placeholder="01 23 45 67 89" onchange="updatePreview()">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-bold mb-2">Adresse</label>
-                                <input type="text" id="address" class="w-full p-3 border rounded-lg" placeholder="123 Rue Example, Paris" onchange="updatePreview()">
+                                <input type="tel" id="phone" class="w-full p-3 border rounded-lg" onchange="updatePreview()">
                             </div>
                             <div>
                                 <label class="block text-sm font-bold mb-2">Email</label>
-                                <input type="email" id="businessEmail" class="w-full p-3 border rounded-lg" placeholder="contact@entreprise.fr" onchange="updatePreview()">
+                                <input type="email" id="businessEmail" class="w-full p-3 border rounded-lg" onchange="updatePreview()">
                             </div>
                             <button onclick="updatePreview()" class="w-full bg-blue-500 text-white py-3 rounded hover:bg-blue-600">
                                 🔄 Mettre à jour
                             </button>
                         </div>
                         
-                        <!-- Action finale -->
                         <div class="mt-8 border-t pt-6">
-                            <div class="space-y-4">
-                                <button onclick="downloadSite()" class="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-4 px-6 rounded-lg font-bold text-lg hover:from-purple-600 hover:to-pink-600 transform hover:scale-105 transition-all">
-                                    📥 TÉLÉCHARGER MON SITE (15€)
-                                </button>
-                                <button onclick="requestConcierge()" class="w-full bg-gradient-to-r from-green-500 to-blue-500 text-white py-4 px-6 rounded-lg font-bold text-lg hover:from-green-600 hover:to-blue-600 transform hover:scale-105 transition-all">
-                                    🤖 SERVICE CONCIERGERIE (49€)
-                                </button>
-                            </div>
+                            <button onclick="downloadSite()" class="w-full bg-gradient-to-r from-green-500 to-blue-500 text-white py-4 px-6 rounded-lg font-bold text-lg hover:from-green-600 hover:to-blue-600">
+                                📥 TÉLÉCHARGER MON SITE
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -268,635 +222,296 @@
     </section>
 
     <script>
-        // Variables globales
-        let websiteData = {};
-        let selectedTemplate = null;
-        let selectedRequirements = {
-            pages: [],
-            features: [],
-            customRequests: ''
+    // Variables
+    var websiteData = {};
+    var selectedTemplate = null;
+    var selectedRequirements = { pages: [], features: [], customRequests: '' };
+
+    // Templates
+    var TEMPLATES = [
+        { id: 'modern', name: 'Modern', colors: { primary: '#3b82f6', secondary: '#1e40af' }, gradient: 'from-blue-400 to-blue-600' },
+        { id: 'business', name: 'Business', colors: { primary: '#374151', secondary: '#111827' }, gradient: 'from-gray-600 to-gray-800' },
+        { id: 'creative', name: 'Creative', colors: { primary: '#f59e0b', secondary: '#dc2626' }, gradient: 'from-orange-400 to-red-500' },
+        { id: 'green', name: 'Nature', colors: { primary: '#10b981', secondary: '#047857' }, gradient: 'from-green-400 to-emerald-600' },
+        { id: 'tech', name: 'Tech', colors: { primary: '#8b5cf6', secondary: '#7c3aed' }, gradient: 'from-purple-500 to-cyan-500' },
+        { id: 'gold', name: 'Gold', colors: { primary: '#f59e0b', secondary: '#d97706' }, gradient: 'from-yellow-400 to-amber-600' }
+    ];
+
+    // Configuration secteurs
+    var SECTOR_CONFIG = {
+        restaurant: {
+            pages: [
+                { id: 'menu', name: 'Menu avec prix', icon: '🍽️', desc: 'Carte avec tarifs' },
+                { id: 'reservation', name: 'Réservation', icon: '📅', desc: 'Réserver une table' },
+                { id: 'gallery', name: 'Photos', icon: '📸', desc: 'Galerie du restaurant' }
+            ]
+        },
+        ecommerce: {
+            pages: [
+                { id: 'shop', name: 'Boutique', icon: '🛍️', desc: 'Catalogue produits' },
+                { id: 'cart', name: 'Panier', icon: '🛒', desc: 'Gestion panier' },
+                { id: 'account', name: 'Compte', icon: '👤', desc: 'Espace client' }
+            ]
+        },
+        service: {
+            pages: [
+                { id: 'services', name: 'Services', icon: '🔧', desc: 'Liste des services' },
+                { id: 'portfolio', name: 'Portfolio', icon: '💼', desc: 'Nos réalisations' },
+                { id: 'contact', name: 'Contact', icon: '📞', desc: 'Nous contacter' }
+            ]
+        }
+    };
+
+    // Init
+    document.addEventListener('DOMContentLoaded', function() {
+        var form = document.getElementById('websiteForm');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                analyzeNeeds();
+            });
+        }
+    });
+
+    function analyzeNeeds() {
+        var businessName = document.getElementById('businessName').value.trim();
+        var description = document.getElementById('description').value.trim();
+        var siteType = document.getElementById('siteType').value;
+        var userEmail = document.getElementById('userEmail').value.trim();
+
+        if (!businessName || !description || !siteType || !userEmail) {
+            showNotification('❌ Veuillez remplir tous les champs !');
+            return;
+        }
+
+        websiteData = {
+            businessName: businessName,
+            description: description,
+            siteType: siteType,
+            userEmail: userEmail,
+            mainTitle: businessName,
+            subtitle: description,
+            primaryColor: '#3b82f6',
+            phone: '',
+            businessEmail: ''
         };
 
-        // Templates disponibles
-        const TEMPLATES = [
-            {
-                id: 'modern-clean',
-                name: 'Modern Clean',
-                description: 'Design épuré et moderne',
-                colors: { primary: '#3b82f6', secondary: '#1e40af' },
-                gradient: 'from-blue-400 to-blue-600'
-            },
-            {
-                id: 'business-pro',
-                name: 'Business Pro',
-                description: 'Professionnel et élégant',
-                colors: { primary: '#374151', secondary: '#111827' },
-                gradient: 'from-gray-600 to-gray-800'
-            },
-            {
-                id: 'creative-studio',
-                name: 'Creative Studio',
-                description: 'Créatif et artistique',
-                colors: { primary: '#f59e0b', secondary: '#dc2626' },
-                gradient: 'from-orange-400 to-red-500'
-            },
-            {
-                id: 'fresh-green',
-                name: 'Fresh Green',
-                description: 'Nature et éco-responsable',
-                colors: { primary: '#10b981', secondary: '#047857' },
-                gradient: 'from-green-400 to-emerald-600'
-            },
-            {
-                id: 'tech-innovation',
-                name: 'Tech Innovation',
-                description: 'High-tech et futuriste',
-                colors: { primary: '#8b5cf6', secondary: '#7c3aed' },
-                gradient: 'from-purple-500 to-cyan-500'
-            },
-            {
-                id: 'elegant-gold',
-                name: 'Elegant Gold',
-                description: 'Luxueux et raffiné',
-                colors: { primary: '#f59e0b', secondary: '#d97706' },
-                gradient: 'from-yellow-400 to-amber-600'
-            }
-        ];
+        generateRequirementsPage();
+        document.getElementById('mainSection').style.display = 'none';
+        document.getElementById('smartRequirements').style.display = 'block';
+        window.scrollTo(0, 0);
+        showNotification('🎯 Choisissez maintenant vos pages !');
+    }
 
-        // Configuration par secteur
-        const SECTOR_CONFIG = {
-            restaurant: {
-                basicPages: [
-                    { id: 'menu', name: 'Menu avec prix', icon: '🍽️', description: 'Carte détaillée avec tarifs' },
-                    { id: 'reservation', name: 'Réservation', icon: '📅', description: 'Système de réservation de table' },
-                    { id: 'gallery', name: 'Galerie photos', icon: '📸', description: 'Photos des plats et du restaurant' },
-                    { id: 'reviews', name: 'Avis clients', icon: '⭐', description: 'Témoignages et évaluations' }
-                ],
-                features: [
-                    { id: 'delivery', name: 'Livraison/Commande', icon: '🚚', description: 'Système de commande en ligne' },
-                    { id: 'blog-recipes', name: 'Blog recettes', icon: '📝', description: 'Articles et recettes' },
-                    { id: 'loyalty', name: 'Programme fidélité', icon: '🎁', description: 'Points et récompenses' }
-                ]
-            },
-            ecommerce: {
-                basicPages: [
-                    { id: 'shop', name: 'Boutique', icon: '🛍️', description: 'Catalogue produits' },
-                    { id: 'cart', name: 'Panier d\'achat', icon: '🛒', description: 'Gestion du panier' },
-                    { id: 'checkout', name: 'Commande', icon: '💳', description: 'Processus d\'achat' },
-                    { id: 'account', name: 'Compte client', icon: '👤', description: 'Espace client' }
-                ],
-                features: [
-                    { id: 'payment', name: 'Paiement sécurisé', icon: '🔒', description: 'PayPal, Stripe, CB' },
-                    { id: 'inventory', name: 'Gestion stock', icon: '📦', description: 'Suivi des stocks' },
-                    { id: 'shipping', name: 'Expédition', icon: '📮', description: 'Calcul frais de port' }
-                ]
-            },
-            service: {
-                basicPages: [
-                    { id: 'services', name: 'Services détaillés', icon: '🔧', description: 'Liste complète des services' },
-                    { id: 'portfolio', name: 'Portfolio', icon: '💼', description: 'Réalisations et projets' },
-                    { id: 'testimonials', name: 'Témoignages', icon: '💬', description: 'Avis clients détaillés' },
-                    { id: 'quote', name: 'Devis en ligne', icon: '📋', description: 'Formulaire de devis' }
-                ],
-                features: [
-                    { id: 'booking', name: 'Prise de RDV', icon: '📅', description: 'Calendrier de rendez-vous' },
-                    { id: 'live-chat', name: 'Chat en direct', icon: '💬', description: 'Support client instantané' },
-                    { id: 'certification', name: 'Certifications', icon: '🏆', description: 'Diplômes et certifications' }
-                ]
-            }
-        };
+    function generateRequirementsPage() {
+        var config = SECTOR_CONFIG[websiteData.siteType] || SECTOR_CONFIG.service;
+        var container = document.getElementById('basicPages');
+        container.innerHTML = '';
+        
+        config.pages.forEach(function(page) {
+            var div = document.createElement('div');
+            div.className = 'requirement-card';
+            div.onclick = function() { toggleRequirement('page', page.id, div); };
+            div.innerHTML = '<div class="text-center"><div class="text-3xl mb-3">' + page.icon + '</div><h4 class="font-bold text-lg mb-2">' + page.name + '</h4><p class="text-gray-600 text-sm">' + page.desc + '</p></div>';
+            container.appendChild(div);
+        });
+    }
 
-        // Initialisation
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('websiteForm');
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    analyzeNeeds();
-                });
+    function toggleRequirement(type, id, element) {
+        var isSelected = element.classList.contains('selected');
+        if (isSelected) {
+            element.classList.remove('selected');
+            var arr = selectedRequirements[type === 'page' ? 'pages' : 'features'];
+            var index = arr.indexOf(id);
+            if (index > -1) arr.splice(index, 1);
+        } else {
+            element.classList.add('selected');
+            selectedRequirements[type === 'page' ? 'pages' : 'features'].push(id);
+        }
+    }
+
+    function generateCustomSite() {
+        selectedRequirements.customRequests = document.getElementById('customRequests').value;
+        displayTemplates();
+        document.getElementById('smartRequirements').style.display = 'none';
+        document.getElementById('qualityTemplates').style.display = 'block';
+        window.scrollTo(0, 0);
+        showNotification('🎨 Choisissez votre design !');
+    }
+
+    function displayTemplates() {
+        var container = document.getElementById('templateGrid');
+        container.innerHTML = '';
+        
+        TEMPLATES.forEach(function(template, index) {
+            var div = document.createElement('div');
+            div.className = 'template-card bg-white rounded-xl shadow-lg p-4 border-2 border-gray-200';
+            div.onclick = function() { selectTemplate(index); };
+            div.innerHTML = '<div class="mb-4"><div class="bg-gradient-to-br ' + template.gradient + ' h-20 rounded-lg flex items-center justify-center text-white font-bold">' + template.name + '</div></div><div class="text-center"><h4 class="font-bold">' + template.name + '</h4><p class="text-gray-600 text-xs">Design ' + template.name.toLowerCase() + '</p></div>';
+            container.appendChild(div);
+        });
+    }
+
+    function selectTemplate(index) {
+        document.querySelectorAll('.template-card').forEach(function(card) {
+            card.classList.remove('selected');
+        });
+        document.querySelectorAll('.template-card')[index].classList.add('selected');
+        selectedTemplate = index;
+        websiteData.primaryColor = TEMPLATES[index].colors.primary;
+        document.getElementById('continueBtn').disabled = false;
+        showNotification('✅ Design sélectionné !');
+    }
+
+    function proceedWithSelectedTemplate() {
+        if (selectedTemplate === null) {
+            showNotification('❌ Sélectionnez un design !');
+            return;
+        }
+        document.getElementById('qualityTemplates').style.display = 'none';
+        document.getElementById('previewSection').style.display = 'block';
+        initializePreview();
+        window.scrollTo(0, 0);
+    }
+
+    function initializePreview() {
+        document.getElementById('previewBusinessName').textContent = websiteData.businessName;
+        document.getElementById('mainTitle').value = websiteData.businessName;
+        document.getElementById('subtitle').value = websiteData.description;
+        document.getElementById('primaryColor').value = websiteData.primaryColor;
+        setTimeout(updatePreview, 100);
+        showNotification('✅ Votre site est prêt !');
+    }
+
+    function updatePreview() {
+        websiteData.mainTitle = document.getElementById('mainTitle').value || websiteData.businessName;
+        websiteData.subtitle = document.getElementById('subtitle').value || websiteData.description;
+        websiteData.primaryColor = document.getElementById('primaryColor').value;
+        websiteData.phone = document.getElementById('phone').value;
+        websiteData.businessEmail = document.getElementById('businessEmail').value;
+
+        var content = generateSiteContent();
+        document.getElementById('websitePreview').innerHTML = content;
+    }
+
+    function generateSiteContent() {
+        var template = TEMPLATES[selectedTemplate];
+        var color = websiteData.primaryColor;
+        var title = websiteData.mainTitle;
+        var subtitle = websiteData.subtitle;
+        
+        var navItems = ['Accueil'];
+        selectedRequirements.pages.forEach(function(pageId) {
+            var names = { menu: 'Menu', shop: 'Boutique', services: 'Services', portfolio: 'Portfolio' };
+            if (names[pageId]) navItems.push(names[pageId]);
+        });
+        navItems.push('Contact');
+        
+        var content = '<div style="background: rgba(255,255,255,0.95); border-bottom: 1px solid #e5e7eb; padding: 15px 20px; position: sticky; top: 0;">';
+        content += '<div style="display: flex; justify-content: space-between; align-items: center;">';
+        content += '<div style="font-size: 1.5rem; font-weight: bold; color: ' + color + ';">' + title + '</div>';
+        content += '<div style="display: flex; gap: 20px; font-size: 0.9rem;">';
+        navItems.forEach(function(item, index) {
+            var isFirst = index === 0;
+            content += '<span onclick="showPage(\'' + item.toLowerCase() + '\')" style="color: ' + (isFirst ? color : '#6b7280') + '; cursor: pointer;">' + item + '</span>';
+        });
+        content += '</div></div></div>';
+
+        content += '<div id="page-accueil" class="page-content active">';
+        content += '<div style="background: linear-gradient(135deg, ' + color + ', ' + template.colors.secondary + '); color: white; padding: 60px 20px; text-align: center;">';
+        content += '<h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 20px;">' + title + '</h1>';
+        content += '<p style="font-size: 1.2rem; margin-bottom: 30px;">' + subtitle + '</p>';
+        content += '<button style="background: rgba(255,255,255,0.2); padding: 15px 30px; border: none; border-radius: 25px; color: white; font-weight: bold;">Découvrir</button>';
+        content += '</div>';
+        content += '<div style="padding: 60px 20px; background: #f8fafc;">';
+        content += '<h2 style="font-size: 2rem; color: ' + color + '; text-align: center; margin-bottom: 40px;">Nos Avantages</h2>';
+        content += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; max-width: 800px; margin: 0 auto;">';
+        content += '<div style="text-align: center; padding: 20px;"><div style="font-size: 3rem; margin-bottom: 15px;">⚡</div><h3 style="color: ' + color + ';">Rapidité</h3><p style="color: #666;">Service rapide</p></div>';
+        content += '<div style="text-align: center; padding: 20px;"><div style="font-size: 3rem; margin-bottom: 15px;">🏆</div><h3 style="color: ' + color + ';">Qualité</h3><p style="color: #666;">Excellence</p></div>';
+        content += '<div style="text-align: center; padding: 20px;"><div style="font-size: 3rem; margin-bottom: 15px;">💯</div><h3 style="color: ' + color + ';">Satisfaction</h3><p style="color: #666;">Clients satisfaits</p></div>';
+        content += '</div></div></div>';
+
+        // Pages sélectionnées
+        selectedRequirements.pages.forEach(function(pageId) {
+            if (pageId === 'menu') {
+                content += '<div id="page-menu" class="page-content" style="display: none;"><div style="padding: 60px 20px; background: white;"><h1 style="font-size: 2.5rem; color: ' + color + '; text-align: center;">🍽️ Notre Menu</h1><div style="max-width: 600px; margin: 40px auto; background: #f8fafc; padding: 30px; border-radius: 15px;"><h3 style="color: ' + color + ';">Nos Spécialités</h3><div style="margin: 20px 0; display: flex; justify-content: space-between;"><span>Plat du jour</span><strong style="color: ' + color + ';">15€</strong></div></div></div></div>';
+            }
+            if (pageId === 'shop') {
+                content += '<div id="page-boutique" class="page-content" style="display: none;"><div style="padding: 60px 20px; background: white;"><h1 style="font-size: 2.5rem; color: ' + color + '; text-align: center;">🛍️ Boutique</h1><div style="max-width: 800px; margin: 40px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;"><div style="background: #f8fafc; padding: 20px; border-radius: 10px; text-align: center;"><div style="height: 120px; background: #e5e7eb; border-radius: 8px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center;">📦</div><h4 style="color: ' + color + ';">Produit 1</h4><p style="color: ' + color + '; font-weight: bold;">29€</p></div></div></div></div>';
+            }
+            if (pageId === 'services') {
+                content += '<div id="page-services" class="page-content" style="display: none;"><div style="padding: 60px 20px; background: white;"><h1 style="font-size: 2.5rem; color: ' + color + '; text-align: center;">🔧 Services</h1><div style="max-width: 800px; margin: 40px auto;"><div style="background: #f8fafc; padding: 30px; border-radius: 15px; text-align: center;"><div style="font-size: 3rem;">⚡</div><h3 style="color: ' + color + ';">Service Principal</h3><p>Description de notre service</p></div></div></div></div>';
             }
         });
 
-        // ANALYSE INTELLIGENTE DES BESOINS
-        function analyzeNeeds() {
-            const businessName = document.getElementById('businessName').value.trim();
-            const description = document.getElementById('description').value.trim();
-            const siteType = document.getElementById('siteType').value;
-            const userEmail = document.getElementById('userEmail').value.trim();
+        // Contact
+        content += '<div id="page-contact" class="page-content" style="display: none;"><div style="padding: 60px 20px; background: white;"><h1 style="font-size: 2.5rem; color: ' + color + '; text-align: center;">📞 Contact</h1><div style="max-width: 600px; margin: 40px auto; background: #f8fafc; padding: 30px; border-radius: 15px; text-align: center;">';
+        if (websiteData.phone) content += '<div style="margin: 20px 0;"><strong style="color: ' + color + ';">Téléphone:</strong> ' + websiteData.phone + '</div>';
+        if (websiteData.businessEmail) content += '<div style="margin: 20px 0;"><strong style="color: ' + color + ';">Email:</strong> ' + websiteData.businessEmail + '</div>';
+        content += '</div></div></div>';
 
-            if (!businessName || !description || !siteType || !userEmail) {
-                showNotification('❌ Veuillez remplir tous les champs !');
-                return;
-            }
+        content += '<footer style="background: #1f2937; color: white; padding: 40px 20px; text-align: center;"><h3 style="color: ' + color + ';">' + title + '</h3><p>© ' + new Date().getFullYear() + ' ' + title + '</p></footer>';
 
-            websiteData = {
-                businessName,
-                description,
-                siteType,
-                userEmail,
-                mainTitle: businessName,
-                subtitle: description,
-                primaryColor: '#3b82f6',
-                phone: '',
-                address: '',
-                businessEmail: ''
-            };
+        return content;
+    }
 
-            generateRequirementsPage();
-            
-            document.getElementById('mainSection').style.display = 'none';
-            document.getElementById('smartRequirements').style.display = 'block';
-            
-            window.scrollTo(0, 0);
-            showNotification('🎯 Personnalisez votre site selon vos besoins exacts !');
+    // Navigation
+    function goBackToMain() {
+        document.getElementById('previewSection').style.display = 'none';
+        document.getElementById('qualityTemplates').style.display = 'none';
+        document.getElementById('smartRequirements').style.display = 'none';
+        document.getElementById('mainSection').style.display = 'block';
+        window.scrollTo(0, 0);
+    }
+
+    function goBackToRequirements() {
+        document.getElementById('previewSection').style.display = 'none';
+        document.getElementById('qualityTemplates').style.display = 'none';
+        document.getElementById('smartRequirements').style.display = 'block';
+        window.scrollTo(0, 0);
+    }
+
+    function goBackToTemplates() {
+        document.getElementById('previewSection').style.display = 'none';
+        document.getElementById('qualityTemplates').style.display = 'block';
+        window.scrollTo(0, 0);
+    }
+
+    function downloadSite() {
+        showNotification('📥 Téléchargement...');
+        var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>' + websiteData.mainTitle + '</title><style>.nav-link{cursor:pointer}.page-content{display:none}.page-content.active{display:block}</style></head><body>' + generateSiteContent() + '<script>function showPage(p){document.querySelectorAll(".page-content").forEach(function(e){e.style.display="none"});var t=document.getElementById("page-"+p);t&&(t.style.display="block")}</script></body></html>';
+        var blob = new Blob([html], { type: 'text/html' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = websiteData.businessName.replace(/\s+/g, '-') + '-site.html';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showNotification('✅ Site téléchargé !');
+    }
+
+    function showNotification(message) {
+        var notification = document.getElementById('notification');
+        var text = document.getElementById('notificationText');
+        if (notification && text) {
+            text.textContent = message;
+            notification.style.display = 'block';
+            setTimeout(function() { notification.style.display = 'none'; }, 3000);
         }
+    }
 
-        function generateRequirementsPage() {
-            const siteType = websiteData.siteType;
-            const config = SECTOR_CONFIG[siteType] || SECTOR_CONFIG.service;
-
-            // Pages de base
-            const basicPagesContainer = document.getElementById('basicPages');
-            basicPagesContainer.innerHTML = '';
-            
-            config.basicPages.forEach(page => {
-                const pageCard = document.createElement('div');
-                pageCard.className = 'requirement-card';
-                pageCard.onclick = () => toggleRequirement('page', page.id, pageCard);
-                
-                pageCard.innerHTML = `
-                    <div class="text-center">
-                        <div class="text-3xl mb-3">${page.icon}</div>
-                        <h4 class="font-bold text-lg mb-2">${page.name}</h4>
-                        <p class="text-gray-600 text-sm">${page.description}</p>
-                        <div class="mt-3">
-                            <span class="inline-block bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold">
-                                ✨ Recommandé
-                            </span>
-                        </div>
-                    </div>
-                `;
-                
-                basicPagesContainer.appendChild(pageCard);
-            });
-
-            // Fonctionnalités avancées
-            const featuresContainer = document.getElementById('advancedFeatures');
-            featuresContainer.innerHTML = '';
-            
-            config.features.forEach(feature => {
-                const featureCard = document.createElement('div');
-                featureCard.className = 'requirement-card';
-                featureCard.onclick = () => toggleRequirement('feature', feature.id, featureCard);
-                
-                featureCard.innerHTML = `
-                    <div class="text-center">
-                        <div class="text-3xl mb-3">${feature.icon}</div>
-                        <h4 class="font-bold text-lg mb-2">${feature.name}</h4>
-                        <p class="text-gray-600 text-sm">${feature.description}</p>
-                        <div class="mt-3">
-                            <span class="inline-block bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold">
-                                🚀 Avancé
-                            </span>
-                        </div>
-                    </div>
-                `;
-                
-                featuresContainer.appendChild(featureCard);
-            });
+    // Navigation globale
+    window.showPage = function(pageId) {
+        document.querySelectorAll('.page-content').forEach(function(page) {
+            page.style.display = 'none';
+        });
+        var selectedPage = document.getElementById('page-' + pageId);
+        if (selectedPage) {
+            selectedPage.style.display = 'block';
         }
-
-        function toggleRequirement(type, id, element) {
-            const isSelected = element.classList.contains('selected');
-            
-            if (isSelected) {
-                element.classList.remove('selected');
-                selectedRequirements[type === 'page' ? 'pages' : 'features'] = 
-                    selectedRequirements[type === 'page' ? 'pages' : 'features'].filter(item => item !== id);
-            } else {
-                element.classList.add('selected');
-                selectedRequirements[type === 'page' ? 'pages' : 'features'].push(id);
-            }
-        }
-
-        function generateCustomSite() {
-            selectedRequirements.customRequests = document.getElementById('customRequests').value;
-            
-            displayTemplates();
-            
-            document.getElementById('smartRequirements').style.display = 'none';
-            document.getElementById('qualityTemplates').style.display = 'block';
-            
-            window.scrollTo(0, 0);
-            showNotification('🎨 Choisissez maintenant votre design !');
-        }
-
-        function displayTemplates() {
-            const templateGrid = document.getElementById('templateGrid');
-            if (!templateGrid) return;
-            
-            templateGrid.innerHTML = '';
-            
-            TEMPLATES.forEach((template, index) => {
-                const templateCard = document.createElement('div');
-                templateCard.className = 'template-card bg-white rounded-xl shadow-lg p-4 border-2 border-gray-200 relative hover:shadow-xl transition-all';
-                templateCard.onclick = () => selectTemplate(index);
-                
-                templateCard.innerHTML = `
-                    <div class="mb-4">
-                        <div class="bg-gradient-to-br ${template.gradient} h-20 rounded-lg flex items-center justify-center text-white font-bold text-sm">
-                            <div style="text-align: center;">
-                                <div style="font-weight: bold;">VOTRE SITE</div>
-                                <div style="font-size: 10px;">${template.name}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <h4 class="font-bold text-base mb-1">${template.name}</h4>
-                        <p class="text-gray-600 text-xs mb-2">${template.description}</p>
-                        <div class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">
-                            ✨ Gratuit
-                        </div>
-                    </div>
-                `;
-                
-                templateGrid.appendChild(templateCard);
-            });
-        }
-
-        function selectTemplate(index) {
-            document.querySelectorAll('.template-card').forEach(card => {
-                card.classList.remove('selected');
-            });
-            
-            const selectedCard = document.querySelectorAll('.template-card')[index];
-            if (selectedCard) {
-                selectedCard.classList.add('selected');
-            }
-            
-            selectedTemplate = index;
-            websiteData.primaryColor = TEMPLATES[index].colors.primary;
-            
-            const continueBtn = document.getElementById('continueBtn');
-            if (continueBtn) {
-                continueBtn.disabled = false;
-            }
-            
-            showNotification('✅ Design "' + TEMPLATES[index].name + '" sélectionné !');
-        }
-
-        function proceedWithSelectedTemplate() {
-            if (selectedTemplate === null) {
-                showNotification('❌ Veuillez sélectionner un design !');
-                return;
-            }
-            
-            document.getElementById('qualityTemplates').style.display = 'none';
-            document.getElementById('previewSection').style.display = 'block';
-            
-            initializePreview();
-            window.scrollTo(0, 0);
-        }
-
-        function initializePreview() {
-            const previewBusinessName = document.getElementById('previewBusinessName');
-            const mainTitle = document.getElementById('mainTitle');
-            const subtitle = document.getElementById('subtitle');
-            const primaryColor = document.getElementById('primaryColor');
-            
-            if (previewBusinessName) previewBusinessName.textContent = websiteData.businessName;
-            if (mainTitle) mainTitle.value = websiteData.businessName;
-            if (subtitle) subtitle.value = websiteData.description;
-            if (primaryColor) primaryColor.value = websiteData.primaryColor;
-            
-            setTimeout(() => {
-                updatePreview();
-            }, 100);
-            
-            showNotification('✅ Votre site personnalisé est prêt !');
-        }
-
-        function updatePreview() {
-            const mainTitleEl = document.getElementById('mainTitle');
-            const subtitleEl = document.getElementById('subtitle');
-            const primaryColorEl = document.getElementById('primaryColor');
-            const phoneEl = document.getElementById('phone');
-            const addressEl = document.getElementById('address');
-            const businessEmailEl = document.getElementById('businessEmail');
-            
-            if (!mainTitleEl || !subtitleEl || !primaryColorEl) return;
-            
-            const mainTitle = mainTitleEl.value || websiteData.businessName;
-            const subtitle = subtitleEl.value || websiteData.description;
-            const primaryColor = primaryColorEl.value;
-            const phone = phoneEl ? phoneEl.value : '';
-            const address = addressEl ? addressEl.value : '';
-            const businessEmail = businessEmailEl ? businessEmailEl.value : '';
-
-            websiteData.mainTitle = mainTitle;
-            websiteData.subtitle = subtitle;
-            websiteData.primaryColor = primaryColor;
-            websiteData.phone = phone;
-            websiteData.address = address;
-            websiteData.businessEmail = businessEmail;
-
-            const siteContent = generateSiteContent();
-            const previewEl = document.getElementById('websitePreview');
-            
-            if (previewEl && siteContent) {
-                previewEl.innerHTML = siteContent;
-            }
-        }
-
-        function generateSiteContent() {
-            const template = TEMPLATES[selectedTemplate];
-            const primaryColor = websiteData.primaryColor;
-            const mainTitle = websiteData.mainTitle;
-            const subtitle = websiteData.subtitle;
-            
-            if (!template) {
-                return '<div style="padding: 20px; text-align: center; color: red;">Erreur: Template non trouvé</div>';
-            }
-            
-            // Navigation intelligente
-            let navItems = ['Accueil'];
-            selectedRequirements.pages.forEach(pageId => {
-                const pageNames = {
-                    'menu': 'Menu',
-                    'reservation': 'Réservation',
-                    'gallery': 'Galerie',
-                    'reviews': 'Avis',
-                    'shop': 'Boutique',
-                    'cart': 'Panier',
-                    'services': 'Services',
-                    'portfolio': 'Portfolio',
-                    'testimonials': 'Témoignages',
-                    'quote': 'Devis'
-                };
-                if (pageNames[pageId]) {
-                    navItems.push(pageNames[pageId]);
-                }
-            });
-            navItems.push('Contact');
-            
-            let content = '<div class="site-nav" style="background: rgba(255,255,255,0.95); border-bottom: 1px solid #e5e7eb; padding: 15px 20px; position: sticky; top: 0;">';
-            content += '<div style="display: flex; justify-content: space-between; align-items: center;">';
-            content += '<div style="font-size: 1.5rem; font-weight: bold; color: ' + primaryColor + ';">' + mainTitle + '</div>';
-            content += '<div style="display: flex; gap: 20px; font-size: 0.9rem;">';
-            
-            navItems.forEach((item, index) => {
-                const isFirst = index === 0;
-                content += '<span class="nav-link ' + (isFirst ? 'active' : '') + '" onclick="showPage(\'' + item.toLowerCase() + '\')" style="color: ' + (isFirst ? primaryColor : '#6b7280') + '; font-weight: ' + (isFirst ? 'bold' : 'normal') + '; cursor: pointer;">' + item + '</span>';
-            });
-            
-            content += '</div></div></div>';
-
-            // Page d'accueil
-            content += '<div id="page-accueil" class="page-content active">';
-            content += '<div style="background: linear-gradient(135deg, ' + primaryColor + ', ' + template.colors.secondary + '); color: white; padding: 60px 20px; text-align: center;">';
-            content += '<h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 20px;">' + mainTitle + '</h1>';
-            content += '<p style="font-size: 1.2rem; margin-bottom: 30px;">' + subtitle + '</p>';
-            
-            if (selectedRequirements.pages.includes('reservation')) {
-                content += '<button style="background: rgba(255,255,255,0.2); padding: 15px 30px; border: none; border-radius: 25px; color: white; font-weight: bold; cursor: pointer;">Réserver maintenant</button>';
-            } else if (selectedRequirements.pages.includes('shop')) {
-                content += '<button style="background: rgba(255,255,255,0.2); padding: 15px 30px; border: none; border-radius: 25px; color: white; font-weight: bold; cursor: pointer;">Voir la boutique</button>';
-            } else {
-                content += '<button style="background: rgba(255,255,255,0.2); padding: 15px 30px; border: none; border-radius: 25px; color: white; font-weight: bold; cursor: pointer;">Nous contacter</button>';
-            }
-            
-            content += '</div>';
-            content += '<div style="padding: 60px 20px; background: #f8fafc;">';
-            content += '<h2 style="font-size: 2rem; color: ' + primaryColor + '; text-align: center; margin-bottom: 40px;">Pourquoi nous choisir ?</h2>';
-            content += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; max-width: 800px; margin: 0 auto;">';
-            content += '<div style="text-align: center; padding: 20px;"><div style="font-size: 3rem; margin-bottom: 15px;">⚡</div><h3 style="color: ' + primaryColor + '; margin-bottom: 10px;">Rapidité</h3><p style="color: #666;">Service rapide et efficace</p></div>';
-            content += '<div style="text-align: center; padding: 20px;"><div style="font-size: 3rem; margin-bottom: 15px;">🏆</div><h3 style="color: ' + primaryColor + '; margin-bottom: 10px;">Qualité</h3><p style="color: #666;">Excellence garantie</p></div>';
-            content += '<div style="text-align: center; padding: 20px;"><div style="font-size: 3rem; margin-bottom: 15px;">💯</div><h3 style="color: ' + primaryColor + '; margin-bottom: 10px;">Satisfaction</h3><p style="color: #666;">Clients satisfaits</p></div>';
-            content += '</div></div></div>';
-
-            // Pages sélectionnées
-            content += generateSelectedPages();
-
-            // Page contact
-            content += generateContactPage();
-
-            // Footer
-            content += '<footer style="background: #1f2937; color: white; padding: 40px 20px; text-align: center;">';
-            content += '<h3 style="color: ' + primaryColor + '; margin-bottom: 20px;">' + mainTitle + '</h3>';
-            content += '<p style="margin-bottom: 20px;">Votre partenaire de confiance</p>';
-            content += '<p style="color: #9ca3af;">© ' + new Date().getFullYear() + ' ' + mainTitle + '. Tous droits réservés.</p>';
-            content += '</footer>';
-
-            return content;
-        }
-
-        function generateSelectedPages() {
-            const primaryColor = websiteData.primaryColor;
-            let content = '';
-
-            selectedRequirements.pages.forEach(pageId => {
-                switch(pageId) {
-                    case 'menu':
-                        content += '<div id="page-menu" class="page-content" style="display: none;">';
-                        content += '<div style="padding: 60px 20px; background: white;">';
-                        content += '<h1 style="font-size: 2.5rem; color: ' + primaryColor + '; text-align: center; margin-bottom: 50px;">🍽️ Notre Menu</h1>';
-                        content += '<div style="max-width: 800px; margin: 0 auto;">';
-                        content += '<div style="background: #f8fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">';
-                        content += '<h3 style="color: ' + primaryColor + '; font-size: 1.5rem; margin-bottom: 20px;">🥗 Entrées</h3>';
-                        content += '<div style="display: flex; justify-content: space-between; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dotted #ccc;"><span>Salade César</span><strong style="color: ' + primaryColor + ';">12€</strong></div>';
-                        content += '<div style="display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px dotted #ccc;"><span>Carpaccio de saumon</span><strong style="color: ' + primaryColor + ';">15€</strong></div>';
-                        content += '</div></div></div></div>';
-                        break;
-
-                    case 'shop':
-                        content += '<div id="page-boutique" class="page-content" style="display: none;">';
-                        content += '<div style="padding: 60px 20px; background: white;">';
-                        content += '<h1 style="font-size: 2.5rem; color: ' + primaryColor + '; text-align: center; margin-bottom: 50px;">🛍️ Notre Boutique</h1>';
-                        content += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; max-width: 1000px; margin: 0 auto;">';
-                        content += '<div style="background: #f8fafc; padding: 20px; border-radius: 15px; text-align: center;">';
-                        content += '<div style="width: 100%; height: 150px; background: #e5e7eb; border-radius: 10px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; font-size: 3rem;">📦</div>';
-                        content += '<h3 style="color: ' + primaryColor + '; font-weight: bold; margin-bottom: 10px;">Produit 1</h3>';
-                        content += '<p style="color: #6b7280; margin-bottom: 15px;">Description du produit</p>';
-                        content += '<div style="font-size: 1.5rem; font-weight: bold; color: ' + primaryColor + '; margin-bottom: 15px;">29€</div>';
-                        content += '<button style="background: ' + primaryColor + '; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer;">Ajouter au panier</button>';
-                        content += '</div></div></div></div>';
-                        break;
-
-                    case 'services':
-                        content += '<div id="page-services" class="page-content" style="display: none;">';
-                        content += '<div style="padding: 60px 20px; background: white;">';
-                        content += '<h1 style="font-size: 2.5rem; color: ' + primaryColor + '; text-align: center; margin-bottom: 50px;">🔧 Nos Services</h1>';
-                        content += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1000px; margin: 0 auto;">';
-                        content += '<div style="background: #f8fafc; padding: 30px; border-radius: 15px; text-align: center;">';
-                        content += '<div style="font-size: 3rem; margin-bottom: 20px;">⚡</div>';
-                        content += '<h3 style="color: ' + primaryColor + '; font-weight: bold; margin-bottom: 15px;">Service Express</h3>';
-                        content += '<p style="color: #6b7280; margin-bottom: 20px;">Service rapide pour vos urgences</p>';
-                        content += '<div style="font-size: 1.5rem; font-weight: bold; color: ' + primaryColor + ';">À partir de 50€</div>';
-                        content += '</div></div></div></div>';
-                        break;
-                }
-            });
-
-            return content;
-        }
-
-        function generateContactPage() {
-            const primaryColor = websiteData.primaryColor;
-            const phone = websiteData.phone;
-            const address = websiteData.address;
-            const businessEmail = websiteData.businessEmail;
-            
-            let content = '<div id="page-contact" class="page-content" style="display: none;">';
-            content += '<div style="padding: 60px 20px; background: white;">';
-            content += '<div style="max-width: 1000px; margin: 0 auto;">';
-            content += '<h1 style="font-size: 2.5rem; color: ' + primaryColor + '; text-align: center; margin-bottom: 50px;">📞 Contact</h1>';
-            content += '<div style="background: #f8fafc; padding: 40px; border-radius: 15px; text-align: center;">';
-            content += '<h2 style="color: ' + primaryColor + '; font-size: 1.8rem; margin-bottom: 30px;">Contactez-nous</h2>';
-            content += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px;">';
-            
-            if (phone) {
-                content += '<div><div style="font-size: 2rem; margin-bottom: 10px;">📱</div><h3 style="color: ' + primaryColor + '; font-weight: bold;">Téléphone</h3><p>' + phone + '</p></div>';
-            }
-            if (businessEmail) {
-                content += '<div><div style="font-size: 2rem; margin-bottom: 10px;">📧</div><h3 style="color: ' + primaryColor + '; font-weight: bold;">Email</h3><p>' + businessEmail + '</p></div>';
-            }
-            if (address) {
-                content += '<div><div style="font-size: 2rem; margin-bottom: 10px;">📍</div><h3 style="color: ' + primaryColor + '; font-weight: bold;">Adresse</h3><p>' + address + '</p></div>';
-            }
-            
-            content += '<div><div style="font-size: 2rem; margin-bottom: 10px;">⏰</div><h3 style="color: ' + primaryColor + '; font-weight: bold;">Horaires</h3><p>Lun-Ven: 9h-18h</p></div>';
-            content += '</div></div></div></div></div>';
-            
-            return content;
-        }
-
-        // Navigation
-        function goBackToMain() {
-            document.getElementById('previewSection').style.display = 'none';
-            document.getElementById('qualityTemplates').style.display = 'none';
-            document.getElementById('smartRequirements').style.display = 'none';
-            document.getElementById('mainSection').style.display = 'block';
-            window.scrollTo(0, 0);
-        }
-
-        function goBackToRequirements() {
-            document.getElementById('previewSection').style.display = 'none';
-            document.getElementById('qualityTemplates').style.display = 'none';
-            document.getElementById('smartRequirements').style.display = 'block';
-            window.scrollTo(0, 0);
-        }
-
-        function goBackToTemplates() {
-            document.getElementById('previewSection').style.display = 'none';
-            document.getElementById('qualityTemplates').style.display = 'block';
-            window.scrollTo(0, 0);
-        }
-
-        // Actions finales
-        function downloadSite() {
-            showNotification('📥 Préparation du téléchargement...');
-            
-            const fullSiteHTML = generateFullSiteHTML();
-            
-            const blob = new Blob([fullSiteHTML], { type: 'text/html' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = websiteData.businessName.replace(/\s+/g, '-') + '-site-personnalise.html';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            
-            showNotification('✅ Site téléchargé avec succès !');
-        }
-
-        function requestConcierge() {
-            const message = '🤖 Demande de Service Conciergerie\n\n' +
-                          'Entreprise: ' + websiteData.businessName + '\n' +
-                          'Secteur: ' + websiteData.siteType + '\n' +
-                          'Pages demandées: ' + selectedRequirements.pages.join(', ') + '\n' +
-                          'Fonctionnalités: ' + selectedRequirements.features.join(', ') + '\n' +
-                          'Demandes spéciales: ' + selectedRequirements.customRequests + '\n\n' +
-                          'Nous nous occupons de tout : domaine, hébergement, mise en ligne !';
-            
-            alert(message);
-            showNotification('🤖 Demande de conciergerie envoyée !');
-        }
-
-        function generateFullSiteHTML() {
-            const template = TEMPLATES[selectedTemplate];
-            const mainTitle = websiteData.mainTitle;
-            
-            let html = '<!DOCTYPE html>\n<html lang="fr">\n<head>\n';
-            html += '<meta charset="UTF-8">\n';
-            html += '<meta name="viewport" content="width=device-width, initial-scale=1.0">\n';
-            html += '<title>' + mainTitle + '</title>\n';
-            html += '<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">\n';
-            html += '<style>\n';
-            html += '.nav-link { cursor: pointer; transition: all 0.3s; }\n';
-            html += '.nav-link:hover { transform: translateY(-2px); }\n';
-            html += '.page-content { display: none; }\n';
-            html += '.page-content.active { display: block; }\n';
-            html += '</style>\n';
-            html += '</head>\n<body>\n';
-            html += generateSiteContent();
-            html += '\n<script>\n';
-            html += 'function showPage(pageId) {\n';
-            html += '  document.querySelectorAll(".page-content").forEach(page => {\n';
-            html += '    page.style.display = "none";\n';
-            html += '  });\n';
-            html += '  const selectedPage = document.getElementById("page-" + pageId);\n';
-            html += '  if (selectedPage) {\n';
-            html += '    selectedPage.style.display = "block";\n';
-            html += '  }\n';
-            html += '  document.querySelectorAll(".nav-link").forEach(link => {\n';
-            html += '    link.style.color = "#6b7280";\n';
-            html += '    link.style.fontWeight = "normal";\n';
-            html += '  });\n';
-            html += '  event.target.style.color = "' + websiteData.primaryColor + '";\n';
-            html += '  event.target.style.fontWeight = "bold";\n';
-            html += '}\n';
-            html += '</script>\n';
-            html += '</body>\n</html>';
-            
-            return html;
-        }
-
-        function showNotification(message) {
-            const notification = document.getElementById('notification');
-            const text = document.getElementById('notificationText');
-            if (notification && text) {
-                text.textContent = message;
-                notification.style.display = 'block';
-                
-                setTimeout(() => {
-                    notification.style.display = 'none';
-                }, 4000);
-            }
-        }
-
-        // Fonction globale pour la navigation dans la prévisualisation
-        window.showPage = function(pageId) {
-            document.querySelectorAll('.page-content').forEach(page => {
-                page.style.display = 'none';
-            });
-            
-            const selectedPage = document.getElementById('page-' + pageId);
-            if (selectedPage) {
-                selectedPage.style.display = 'block';
-            }
-            
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.style.color = '#6b7280';
-                link.style.fontWeight = 'normal';
-            });
-            
-            if (event && event.target) {
-                event.target.style.color = websiteData.primaryColor;
-                event.target.style.fontWeight = 'bold';
-            }
-        };
+    };
     </script>
 </body>
 </html>
