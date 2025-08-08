@@ -23,7 +23,7 @@
         .photo-upload-area.drag-over { border-color: #10b981; background-color: #f0fdf4; }
         .template-card { cursor: pointer; transition: all 0.3s; border: 3px solid transparent; }
         .template-card:hover { transform: scale(1.02); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
-        .template-card.selected { border: 3px solid #10b981; }
+        .template-card.selected { border: 3px solid #10b981; background: #f0fdf4; }
         .premium-badge { position: absolute; top: -8px; right: -8px; background: linear-gradient(45deg, #ffd700, #ffed4e); color: #1f2937; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: bold; }
     </style>
 </head>
@@ -164,27 +164,6 @@
             </div>
         </section>
 
-        <!-- Templates de qualité -->
-        <section id="qualityTemplates" class="quality-templates py-16 bg-gray-50">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-12">
-                    <h3 class="text-3xl font-bold text-gray-800 mb-4">🎨 Choisissez votre thème professionnel</h3>
-                    <p class="text-xl text-gray-600">7 thèmes gratuits + 3 thèmes premium à 5€</p>
-                </div>
-                
-                <div id="templateGrid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-                    <!-- Les templates seront générés dynamiquement -->
-                </div>
-                
-                <div class="text-center mt-8">
-                    <button onclick="proceedWithSelectedTemplate()" id="continueBtn" 
-                            class="bg-green-500 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-green-600 disabled:opacity-50" disabled>
-                        <i class="fas fa-eye mr-2"></i>VOIR LA PRÉVISUALISATION
-                    </button>
-                </div>
-            </div>
-        </section>
-
         <!-- Service Conciergerie -->
         <section class="py-16 bg-gray-50 fade-in">
             <div class="container mx-auto px-4">
@@ -243,25 +222,57 @@
         </section>
     </div>
 
+    <!-- Section Templates -->
+    <section id="qualityTemplates" class="quality-templates py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-bold text-gray-800 mb-4">🎨 Choisissez votre thème professionnel</h3>
+                <p class="text-xl text-gray-600">7 thèmes gratuits + 3 thèmes premium à 5€</p>
+                <button onclick="goBackToMain()" class="mt-4 bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600">
+                    <i class="fas fa-arrow-left mr-2"></i>Modifier les informations
+                </button>
+            </div>
+            
+            <div id="templateGrid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+                <!-- Les templates seront générés ici -->
+            </div>
+            
+            <div class="text-center mt-8">
+                <button onclick="proceedWithSelectedTemplate()" id="continueBtn" 
+                        class="bg-green-500 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                    <i class="fas fa-eye mr-2"></i>VOIR LA PRÉVISUALISATION
+                </button>
+            </div>
+        </div>
+    </section>
+
     <!-- Section Prévisualisation -->
-    <div id="previewSection" class="preview-section min-h-screen bg-gray-100 py-8">
+    <section id="previewSection" class="preview-section min-h-screen bg-gray-100 py-8">
         <div class="container mx-auto px-4">
             <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-2xl font-bold text-gray-800">
                         🎉 Prévisualisation : <span id="previewBusinessName"></span>
                     </h2>
-                    <button onclick="goBackToTemplates()" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
-                        <i class="fas fa-arrow-left"></i> Changer de thème
-                    </button>
+                    <div class="flex gap-3">
+                        <button onclick="goBackToTemplates()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                            <i class="fas fa-palette mr-2"></i>Changer de thème
+                        </button>
+                        <button onclick="goBackToMain()" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+                            <i class="fas fa-edit mr-2"></i>Modifier infos
+                        </button>
+                    </div>
                 </div>
                 
                 <div class="grid lg:grid-cols-2 gap-8">
                     <!-- Aperçu du site -->
                     <div>
                         <h3 class="text-lg font-bold mb-4">📱 Aperçu de votre site</h3>
-                        <div id="websitePreview" class="border-2 border-gray-300 rounded-lg bg-white overflow-auto" style="height: 500px;">
-                            <!-- Le contenu sera généré dynamiquement -->
+                        <div id="websitePreview" class="border-2 border-gray-300 rounded-lg bg-white overflow-auto" style="height: 500px; padding: 0;">
+                            <div style="padding: 20px; text-align: center; color: #6b7280;">
+                                <i class="fas fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                                <p>Génération de votre site en cours...</p>
+                            </div>
                         </div>
                     </div>
                     
@@ -271,23 +282,23 @@
                         <div class="space-y-4">
                             <div>
                                 <label class="block text-sm font-bold mb-2">Couleur principale</label>
-                                <input type="color" id="primaryColor" value="#3b82f6" class="w-full h-10 rounded">
+                                <input type="color" id="primaryColor" value="#3b82f6" class="w-full h-10 rounded" onchange="updatePreview()">
                             </div>
                             <div>
                                 <label class="block text-sm font-bold mb-2">Titre principal</label>
-                                <input type="text" id="mainTitle" class="w-full p-3 border rounded-lg">
+                                <input type="text" id="mainTitle" class="w-full p-3 border rounded-lg" onchange="updatePreview()">
                             </div>
                             <div>
                                 <label class="block text-sm font-bold mb-2">Sous-titre</label>
-                                <textarea id="subtitle" class="w-full p-3 border rounded-lg h-20"></textarea>
+                                <textarea id="subtitle" class="w-full p-3 border rounded-lg h-20" onchange="updatePreview()"></textarea>
                             </div>
                             <div>
                                 <label class="block text-sm font-bold mb-2">Téléphone</label>
-                                <input type="tel" id="phone" class="w-full p-3 border rounded-lg" placeholder="01 23 45 67 89">
+                                <input type="tel" id="phone" class="w-full p-3 border rounded-lg" placeholder="01 23 45 67 89" onchange="updatePreview()">
                             </div>
                             <div>
                                 <label class="block text-sm font-bold mb-2">Adresse</label>
-                                <input type="text" id="address" class="w-full p-3 border rounded-lg" placeholder="123 Rue Example, Paris">
+                                <input type="text" id="address" class="w-full p-3 border rounded-lg" placeholder="123 Rue Example, Paris" onchange="updatePreview()">
                             </div>
                             <button onclick="updatePreview()" class="w-full bg-blue-500 text-white py-3 rounded hover:bg-blue-600">
                                 🔄 Mettre à jour l'aperçu
@@ -335,7 +346,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
     <!-- Modal d'authentification -->
     <div id="authModal" class="modal">
@@ -398,10 +409,99 @@
         let websiteData = {};
         let selectedTemplate = null;
         let uploadedPhotos = [];
-        let templates = [];
+        let allTemplates = [];
+
+        // Templates définis globalement
+        const TEMPLATES = [
+            // 7 THÈMES GRATUITS
+            {
+                id: 'modern-clean',
+                name: 'Modern Clean',
+                description: 'Design épuré et moderne',
+                isPremium: false,
+                colors: { primary: '#3b82f6', secondary: '#1e40af' },
+                gradient: 'from-blue-400 to-blue-600'
+            },
+            {
+                id: 'business-pro',
+                name: 'Business Pro',
+                description: 'Professionnel et élégant',
+                isPremium: false,
+                colors: { primary: '#374151', secondary: '#111827' },
+                gradient: 'from-gray-600 to-gray-800'
+            },
+            {
+                id: 'creative-studio',
+                name: 'Creative Studio',
+                description: 'Créatif et artistique',
+                isPremium: false,
+                colors: { primary: '#f59e0b', secondary: '#dc2626' },
+                gradient: 'from-orange-400 to-red-500'
+            },
+            {
+                id: 'fresh-green',
+                name: 'Fresh Green',
+                description: 'Nature et éco-responsable',
+                isPremium: false,
+                colors: { primary: '#10b981', secondary: '#047857' },
+                gradient: 'from-green-400 to-emerald-600'
+            },
+            {
+                id: 'tech-innovation',
+                name: 'Tech Innovation',
+                description: 'High-tech et futuriste',
+                isPremium: false,
+                colors: { primary: '#8b5cf6', secondary: '#7c3aed' },
+                gradient: 'from-purple-500 to-cyan-500'
+            },
+            {
+                id: 'warm-elegance',
+                name: 'Warm Elegance',
+                description: 'Chaleureux et accueillant',
+                isPremium: false,
+                colors: { primary: '#f97316', secondary: '#ea580c' },
+                gradient: 'from-orange-500 to-amber-600'
+            },
+            {
+                id: 'classic-minimal',
+                name: 'Classic Minimal',
+                description: 'Classique et minimaliste',
+                isPremium: false,
+                colors: { primary: '#6b7280', secondary: '#374151' },
+                gradient: 'from-slate-400 to-slate-600'
+            },
+            
+            // 3 THÈMES PREMIUM (+5€)
+            {
+                id: 'luxury-gold',
+                name: 'Luxury Gold',
+                description: 'Premium avec animations dorées',
+                isPremium: true,
+                colors: { primary: '#f59e0b', secondary: '#d97706' },
+                gradient: 'from-yellow-400 to-amber-600'
+            },
+            {
+                id: 'royal-purple',
+                name: 'Royal Purple',
+                description: 'Design royal avec effets premium',
+                isPremium: true,
+                colors: { primary: '#a855f7', secondary: '#7c3aed' },
+                gradient: 'from-purple-500 to-indigo-600'
+            },
+            {
+                id: 'diamond-elite',
+                name: 'Diamond Elite',
+                description: 'Ultra-premium avec cristaux',
+                isPremium: true,
+                colors: { primary: '#6b7280', secondary: '#374151' },
+                gradient: 'from-slate-400 to-slate-700'
+            }
+        ];
 
         // Initialisation
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Application démarrée');
+            
             if (currentUser) {
                 showUserMenu();
             }
@@ -410,17 +510,22 @@
             if (form) {
                 form.addEventListener('submit', function(e) {
                     e.preventDefault();
+                    console.log('📝 Formulaire soumis');
                     generateTemplates();
                 });
             }
 
             setupPhotoUpload();
+            allTemplates = TEMPLATES;
+            console.log('✅ Initialisation terminée');
         });
 
-        // Configuration de l'upload de photos
+        // Configuration upload photos
         function setupPhotoUpload() {
             const uploadArea = document.getElementById('photoUploadArea');
             const photoInput = document.getElementById('photoInput');
+            
+            if (!uploadArea || !photoInput) return;
             
             uploadArea.addEventListener('dragover', (e) => {
                 e.preventDefault();
@@ -460,6 +565,8 @@
 
         function displayPhotoPreview() {
             const preview = document.getElementById('photoPreview');
+            if (!preview) return;
+            
             preview.innerHTML = '';
             preview.classList.remove('hidden');
             
@@ -482,18 +589,23 @@
             }
         }
 
-        // Génération de templates
+        // FONCTION PRINCIPALE : Génération des templates
         function generateTemplates() {
+            console.log('🎨 Génération des templates...');
+            
+            // Récupérer les données du formulaire
             const businessName = document.getElementById('businessName').value.trim();
             const description = document.getElementById('description').value.trim();
             const siteType = document.getElementById('siteType').value;
             const userEmail = document.getElementById('userEmail').value.trim();
 
+            // Validation des données
             if (!businessName || !description || !siteType || !userEmail) {
                 showNotification('❌ Veuillez remplir tous les champs obligatoires !');
                 return;
             }
 
+            // Stocker les données du site
             websiteData = {
                 businessName,
                 description,
@@ -507,112 +619,35 @@
                 address: ''
             };
 
-            // Générer les templates immédiatement
-            templates = getAllTemplates();
+            console.log('📋 Données du site:', websiteData);
+
+            // Afficher les templates
             displayTemplates();
             
-            // Afficher la section des templates
+            // Naviguer vers la section des templates
             document.getElementById('mainSection').style.display = 'none';
             document.getElementById('qualityTemplates').style.display = 'block';
+            document.getElementById('previewSection').style.display = 'none';
             
+            window.scrollTo(0, 0);
             showNotification('✅ Choisissez votre thème parmi 10 options !');
         }
 
-        function getAllTemplates() {
-            return [
-                // 7 THÈMES GRATUITS
-                {
-                    name: 'Modern Clean',
-                    description: 'Design épuré et moderne',
-                    preview: '<div style="text-align: center; padding: 20px;"><div style="width: 60px; height: 4px; background: #3b82f6; margin: 0 auto 10px;"></div><div style="font-size: 16px; font-weight: bold;">MODERN</div><div style="font-size: 12px;">Clean & Simple</div></div>',
-                    gradient: 'from-blue-400 to-blue-600',
-                    isPremium: false,
-                    colors: { primary: '#3b82f6', secondary: '#1e40af' }
-                },
-                {
-                    name: 'Business Pro',
-                    description: 'Professionnel et élégant',
-                    preview: '<div style="text-align: center; padding: 20px;"><div style="width: 40px; height: 40px; border: 3px solid #374151; border-radius: 50%; margin: 0 auto 10px;"></div><div style="font-size: 16px; font-weight: bold;">BUSINESS</div><div style="font-size: 12px;">Professional</div></div>',
-                    gradient: 'from-gray-600 to-gray-800',
-                    isPremium: false,
-                    colors: { primary: '#374151', secondary: '#111827' }
-                },
-                {
-                    name: 'Creative Studio',
-                    description: 'Créatif et artistique',
-                    preview: '<div style="text-align: center; padding: 20px;"><div style="width: 50px; height: 30px; background: linear-gradient(45deg, #f59e0b, #ef4444); margin: 0 auto 10px; border-radius: 5px;"></div><div style="font-size: 16px; font-weight: bold;">CREATIVE</div><div style="font-size: 12px;">Artistic Design</div></div>',
-                    gradient: 'from-orange-400 to-red-500',
-                    isPremium: false,
-                    colors: { primary: '#f59e0b', secondary: '#dc2626' }
-                },
-                {
-                    name: 'Fresh Green',
-                    description: 'Nature et éco-responsable',
-                    preview: '<div style="text-align: center; padding: 20px;"><div style="width: 40px; height: 40px; background: #10b981; border-radius: 50%; margin: 0 auto 10px; position: relative;"><div style="position: absolute; top: 15px; left: 15px; width: 10px; height: 10px; background: white; border-radius: 50%;"></div></div><div style="font-size: 16px; font-weight: bold;">ECO</div><div style="font-size: 12px;">Green & Natural</div></div>',
-                    gradient: 'from-green-400 to-emerald-600',
-                    isPremium: false,
-                    colors: { primary: '#10b981', secondary: '#047857' }
-                },
-                {
-                    name: 'Tech Innovation',
-                    description: 'High-tech et futuriste',
-                    preview: '<div style="text-align: center; padding: 20px;"><div style="width: 50px; height: 20px; background: linear-gradient(90deg, #8b5cf6, #06b6d4); margin: 0 auto 10px; border-radius: 10px;"></div><div style="font-size: 16px; font-weight: bold;">TECH</div><div style="font-size: 12px;">Innovation</div></div>',
-                    gradient: 'from-purple-500 to-cyan-500',
-                    isPremium: false,
-                    colors: { primary: '#8b5cf6', secondary: '#7c3aed' }
-                },
-                {
-                    name: 'Warm Elegance',
-                    description: 'Chaleureux et accueillant',
-                    preview: '<div style="text-align: center; padding: 20px;"><div style="width: 45px; height: 45px; background: linear-gradient(135deg, #f97316, #ea580c); margin: 0 auto 10px; border-radius: 8px;"></div><div style="font-size: 16px; font-weight: bold;">WARM</div><div style="font-size: 12px;">Elegant & Cozy</div></div>',
-                    gradient: 'from-orange-500 to-amber-600',
-                    isPremium: false,
-                    colors: { primary: '#f97316', secondary: '#ea580c' }
-                },
-                {
-                    name: 'Classic Minimal',
-                    description: 'Classique et minimaliste',
-                    preview: '<div style="text-align: center; padding: 20px;"><div style="width: 60px; height: 2px; background: #6b7280; margin: 0 auto 5px;"></div><div style="width: 40px; height: 2px; background: #6b7280; margin: 0 auto 10px;"></div><div style="font-size: 16px; font-weight: bold;">MINIMAL</div><div style="font-size: 12px;">Less is More</div></div>',
-                    gradient: 'from-slate-400 to-slate-600',
-                    isPremium: false,
-                    colors: { primary: '#6b7280', secondary: '#374151' }
-                },
-                
-                // 3 THÈMES PREMIUM (+5€)
-                {
-                    name: 'Luxury Gold',
-                    description: 'Premium avec animations dorées',
-                    preview: '<div style="text-align: center; padding: 20px;"><div style="width: 50px; height: 50px; background: linear-gradient(45deg, #fbbf24, #f59e0b); margin: 0 auto 10px; border-radius: 50%; position: relative; box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);"><div style="position: absolute; top: 20px; left: 20px; width: 10px; height: 10px; background: white; border-radius: 50%;"></div></div><div style="font-size: 16px; font-weight: bold; color: #f59e0b;">LUXURY</div><div style="font-size: 12px;">Premium Gold</div></div>',
-                    gradient: 'from-yellow-400 to-amber-600',
-                    isPremium: true,
-                    colors: { primary: '#f59e0b', secondary: '#d97706' }
-                },
-                {
-                    name: 'Royal Purple',
-                    description: 'Design royal avec effets premium',
-                    preview: '<div style="text-align: center; padding: 20px;"><div style="width: 45px; height: 45px; background: linear-gradient(135deg, #a855f7, #7c3aed); margin: 0 auto 10px; border-radius: 12px; position: relative; box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);"><div style="position: absolute; top: 5px; right: 5px; width: 8px; height: 8px; background: white; border-radius: 50%;"></div></div><div style="font-size: 16px; font-weight: bold; color: #7c3aed;">ROYAL</div><div style="font-size: 12px;">Premium Purple</div></div>',
-                    gradient: 'from-purple-500 to-indigo-600',
-                    isPremium: true,
-                    colors: { primary: '#a855f7', secondary: '#7c3aed' }
-                },
-                {
-                    name: 'Diamond Elite',
-                    description: 'Ultra-premium avec cristaux',
-                    preview: '<div style="text-align: center; padding: 20px;"><div style="width: 50px; height: 30px; background: linear-gradient(45deg, #e5e7eb, #d1d5db, #9ca3af); margin: 0 auto 10px; border-radius: 5px; position: relative; box-shadow: 0 4px 25px rgba(156, 163, 175, 0.5);"><div style="position: absolute; top: 8px; left: 20px; width: 10px; height: 14px; background: white; clip-path: polygon(50% 0%, 0% 100%, 100% 100%);"></div></div><div style="font-size: 16px; font-weight: bold; background: linear-gradient(45deg, #6b7280, #374151); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">DIAMOND</div><div style="font-size: 12px;">Ultra Premium</div></div>',
-                    gradient: 'from-slate-400 to-slate-700',
-                    isPremium: true,
-                    colors: { primary: '#6b7280', secondary: '#374151' }
-                }
-            ];
-        }
-
+        // FONCTION ESSENTIELLE : Affichage des templates
         function displayTemplates() {
+            console.log('🖼️ Affichage des templates...');
+            
             const templateGrid = document.getElementById('templateGrid');
+            if (!templateGrid) {
+                console.error('❌ Template grid introuvable');
+                return;
+            }
+            
             templateGrid.innerHTML = '';
             
-            templates.forEach((template, index) => {
+            allTemplates.forEach((template, index) => {
                 const templateCard = document.createElement('div');
-                templateCard.className = 'template-card bg-white rounded-xl shadow-lg p-4 border-2 border-gray-200 relative';
+                templateCard.className = 'template-card bg-white rounded-xl shadow-lg p-4 border-2 border-gray-200 relative hover:shadow-xl transition-all';
                 templateCard.onclick = () => selectTemplate(index);
                 
                 let premiumBadge = '';
@@ -620,19 +655,40 @@
                     premiumBadge = '<div class="premium-badge">💎 +5€</div>';
                 }
                 
+                let previewContent = '';
+                switch(template.id) {
+                    case 'modern-clean':
+                        previewContent = '<div style="text-align: center; padding: 15px;"><div style="width: 60px; height: 4px; background: #3b82f6; margin: 0 auto 8px; border-radius: 2px;"></div><div style="font-size: 14px; font-weight: bold; color: #1e40af;">MODERN</div><div style="font-size: 10px; color: #6b7280;">Clean & Simple</div></div>';
+                        break;
+                    case 'business-pro':
+                        previewContent = '<div style="text-align: center; padding: 15px;"><div style="width: 30px; height: 30px; border: 2px solid #374151; border-radius: 50%; margin: 0 auto 8px;"></div><div style="font-size: 14px; font-weight: bold; color: #111827;">BUSINESS</div><div style="font-size: 10px; color: #6b7280;">Professional</div></div>';
+                        break;
+                    case 'creative-studio':
+                        previewContent = '<div style="text-align: center; padding: 15px;"><div style="width: 40px; height: 25px; background: linear-gradient(45deg, #f59e0b, #dc2626); margin: 0 auto 8px; border-radius: 4px;"></div><div style="font-size: 14px; font-weight: bold; color: #dc2626;">CREATIVE</div><div style="font-size: 10px; color: #6b7280;">Artistic</div></div>';
+                        break;
+                    case 'fresh-green':
+                        previewContent = '<div style="text-align: center; padding: 15px;"><div style="width: 30px; height: 30px; background: #10b981; border-radius: 50%; margin: 0 auto 8px; position: relative;"><div style="position: absolute; top: 12px; left: 12px; width: 6px; height: 6px; background: white; border-radius: 50%;"></div></div><div style="font-size: 14px; font-weight: bold; color: #047857;">ECO</div><div style="font-size: 10px; color: #6b7280;">Green & Natural</div></div>';
+                        break;
+                    case 'luxury-gold':
+                        previewContent = '<div style="text-align: center; padding: 15px;"><div style="width: 35px; height: 35px; background: linear-gradient(45deg, #fbbf24, #f59e0b); margin: 0 auto 8px; border-radius: 50%; box-shadow: 0 2px 10px rgba(251, 191, 36, 0.4);"><div style="margin-top: 12px; color: white; font-size: 12px;">💎</div></div><div style="font-size: 14px; font-weight: bold; color: #f59e0b;">LUXURY</div><div style="font-size: 10px; color: #6b7280;">Premium Gold</div></div>';
+                        break;
+                    default:
+                        previewContent = `<div style="text-align: center; padding: 15px; color: ${template.colors.primary};"><div style="font-size: 14px; font-weight: bold;">${template.name.toUpperCase()}</div><div style="font-size: 10px; color: #6b7280;">${template.description}</div></div>`;
+                }
+                
                 templateCard.innerHTML = `
                     ${premiumBadge}
                     <div class="mb-4">
-                        <div class="bg-gradient-to-br ${template.gradient} h-24 rounded-lg flex items-center justify-center text-white font-bold text-sm shadow-inner">
-                            ${template.preview}
+                        <div class="bg-gradient-to-br ${template.gradient} h-20 rounded-lg flex items-center justify-center text-white font-bold text-sm shadow-inner">
+                            ${previewContent}
                         </div>
                     </div>
                     <div class="text-center">
-                        <h4 class="font-bold text-lg mb-1">${template.name}</h4>
-                        <p class="text-gray-600 text-xs mb-3">${template.description}</p>
+                        <h4 class="font-bold text-base mb-1">${template.name}</h4>
+                        <p class="text-gray-600 text-xs mb-2">${template.description}</p>
                         <div class="text-center">
-                            <span class="text-xs font-bold ${template.isPremium ? 'text-yellow-600' : 'text-green-600'}">
-                                ${template.isPremium ? 'Premium +5€' : 'Gratuit'}
+                            <span class="text-xs font-bold px-2 py-1 rounded ${template.isPremium ? 'bg-yellow-100 text-yellow-700' : 'bg-green-100 text-green-700'}">
+                                ${template.isPremium ? '💎 Premium +5€' : '✨ Gratuit'}
                             </span>
                         </div>
                     </div>
@@ -640,69 +696,99 @@
                 
                 templateGrid.appendChild(templateCard);
             });
+            
+            console.log('✅ Templates affichés:', allTemplates.length);
         }
 
+        // Sélection d'un template
         function selectTemplate(index) {
-            // Désélectionner les autres templates
+            console.log('🎯 Template sélectionné:', index);
+            
+            // Désélectionner tous les templates
             document.querySelectorAll('.template-card').forEach(card => {
                 card.classList.remove('selected');
             });
             
             // Sélectionner le template actuel
             const selectedCard = document.querySelectorAll('.template-card')[index];
-            selectedCard.classList.add('selected');
+            if (selectedCard) {
+                selectedCard.classList.add('selected');
+            }
             
             selectedTemplate = index;
             
-            // Activer le bouton continuer
-            const continueBtn = document.getElementById('continueBtn');
-            continueBtn.disabled = false;
-            continueBtn.classList.remove('disabled:opacity-50');
-            
-            // Mettre à jour les couleurs selon le template sélectionné
-            if (templates[index]) {
-                websiteData.primaryColor = templates[index].colors.primary;
+            // Mettre à jour les couleurs selon le template
+            if (allTemplates[index]) {
+                websiteData.primaryColor = allTemplates[index].colors.primary;
             }
             
-            showNotification(`✅ Thème "${templates[index].name}" sélectionné !`);
+            // Activer le bouton continuer
+            const continueBtn = document.getElementById('continueBtn');
+            if (continueBtn) {
+                continueBtn.disabled = false;
+                continueBtn.classList.remove('disabled:opacity-50');
+            }
+            
+            showNotification(`✅ Thème "${allTemplates[index].name}" sélectionné !`);
         }
 
+        // FONCTION CRITIQUE : Procéder à la prévisualisation
         function proceedWithSelectedTemplate() {
-            if (selectedTemplate === null) return;
-            generatePreview();
+            console.log('👁️ Génération de la prévisualisation...');
+            
+            if (selectedTemplate === null) {
+                showNotification('❌ Veuillez sélectionner un thème !');
+                return;
+            }
+            
+            // Naviguer vers la prévisualisation
+            document.getElementById('qualityTemplates').style.display = 'none';
+            document.getElementById('previewSection').style.display = 'block';
+            document.getElementById('mainSection').style.display = 'none';
+            
+            // Initialiser la prévisualisation
+            initializePreview();
+            
+            window.scrollTo(0, 0);
         }
 
-        // Génération de la prévisualisation (CORRIGÉE - Plus d'écran blanc)
-        function generatePreview() {
-            // S'assurer que les données sont prêtes
+        // FONCTION ESSENTIELLE : Initialisation de la prévisualisation
+        function initializePreview() {
+            console.log('🔄 Initialisation de la prévisualisation...');
+            
             if (!websiteData.businessName) {
+                console.error('❌ Données du site manquantes');
                 showNotification('❌ Erreur dans les données du site');
                 return;
             }
 
             // Pré-remplir les champs
-            document.getElementById('previewBusinessName').textContent = websiteData.businessName;
-            document.getElementById('mainTitle').value = websiteData.businessName;
-            document.getElementById('subtitle').value = websiteData.description;
-            document.getElementById('primaryColor').value = websiteData.primaryColor;
+            const previewBusinessName = document.getElementById('previewBusinessName');
+            const mainTitle = document.getElementById('mainTitle');
+            const subtitle = document.getElementById('subtitle');
+            const primaryColor = document.getElementById('primaryColor');
+            
+            if (previewBusinessName) previewBusinessName.textContent = websiteData.businessName;
+            if (mainTitle) mainTitle.value = websiteData.businessName;
+            if (subtitle) subtitle.value = websiteData.description;
+            if (primaryColor) primaryColor.value = websiteData.primaryColor;
             
             // Mettre à jour l'info sur le coût du template
             updateTemplateCostInfo();
             
-            // Générer immédiatement l'aperçu
-            updatePreview();
+            // Générer l'aperçu immédiatement
+            setTimeout(() => {
+                updatePreview();
+            }, 100);
             
-            // Afficher la section de prévisualisation
-            document.getElementById('qualityTemplates').style.display = 'none';
-            document.getElementById('previewSection').style.display = 'block';
-            
-            window.scrollTo(0, 0);
             showNotification('✅ Prévisualisation chargée ! Personnalisez votre site.');
         }
 
         function updateTemplateCostInfo() {
-            const template = templates[selectedTemplate];
+            const template = allTemplates[selectedTemplate];
             const costInfo = document.getElementById('templateCostInfo');
+            
+            if (!costInfo) return;
             
             if (template && template.isPremium) {
                 costInfo.innerHTML = `
@@ -714,23 +800,36 @@
                         <div class="font-bold text-yellow-600">+5€</div>
                     </div>
                 `;
-                costInfo.style.display = 'block';
             } else {
                 costInfo.innerHTML = `
                     <div class="text-center">
                         <span class="font-bold text-green-600">✅ Thème gratuit "${template ? template.name : 'Standard'}" inclus</span>
                     </div>
                 `;
-                costInfo.style.display = 'block';
             }
         }
 
+        // FONCTION PRINCIPALE : Mise à jour de la prévisualisation
         function updatePreview() {
-            const mainTitle = document.getElementById('mainTitle').value || websiteData.businessName;
-            const subtitle = document.getElementById('subtitle').value || websiteData.description;
-            const primaryColor = document.getElementById('primaryColor').value;
-            const phone = document.getElementById('phone').value;
-            const address = document.getElementById('address').value;
+            console.log('🎨 Mise à jour de la prévisualisation...');
+            
+            const mainTitleEl = document.getElementById('mainTitle');
+            const subtitleEl = document.getElementById('subtitle');
+            const primaryColorEl = document.getElementById('primaryColor');
+            const phoneEl = document.getElementById('phone');
+            const addressEl = document.getElementById('address');
+            
+            if (!mainTitleEl || !subtitleEl || !primaryColorEl) {
+                console.error('❌ Éléments de formulaire manquants');
+                return;
+            }
+            
+            // Récupérer les valeurs actuelles
+            const mainTitle = mainTitleEl.value || websiteData.businessName;
+            const subtitle = subtitleEl.value || websiteData.description;
+            const primaryColor = primaryColorEl.value;
+            const phone = phoneEl ? phoneEl.value : '';
+            const address = addressEl ? addressEl.value : '';
 
             // Mettre à jour les données
             websiteData.mainTitle = mainTitle;
@@ -739,24 +838,35 @@
             websiteData.phone = phone;
             websiteData.address = address;
 
-            // Générer le contenu avec le template sélectionné
-            const siteContent = generateBeautifulSiteContent();
-            document.getElementById('websitePreview').innerHTML = siteContent;
+            // Générer le contenu
+            const siteContent = generateSiteContent();
+            const previewEl = document.getElementById('websitePreview');
+            
+            if (previewEl && siteContent) {
+                previewEl.innerHTML = siteContent;
+                console.log('✅ Prévisualisation mise à jour');
+            } else {
+                console.error('❌ Impossible de mettre à jour la prévisualisation');
+            }
         }
 
-        function generateBeautifulSiteContent() {
+        // FONCTION DE GÉNÉRATION : Contenu du site
+        function generateSiteContent() {
             const { mainTitle, subtitle, primaryColor, phone, address, siteType, photos } = websiteData;
-            const template = templates[selectedTemplate];
+            const template = allTemplates[selectedTemplate];
             
-            // Header magnifique avec le style du template
+            if (!template) {
+                console.error('❌ Template manquant');
+                return '<div style="padding: 20px; text-align: center; color: red;">Erreur: Template non trouvé</div>';
+            }
+            
+            // Header avec le style du template
             let content = `
-                <div style="background: linear-gradient(135deg, ${primaryColor}, ${template ? template.colors.secondary : '#1e40af'}); color: white; padding: 40px 30px; text-align: center; border-radius: 0; margin: 0; position: relative; overflow: hidden;">
-                    <div style="position: absolute; top: -50px; right: -50px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
-                    <div style="position: absolute; bottom: -30px; left: -30px; width: 80px; height: 80px; background: rgba(255,255,255,0.05); border-radius: 50%;"></div>
-                    <h1 style="font-size: 2.8rem; font-weight: 900; margin-bottom: 15px; text-shadow: 0 4px 8px rgba(0,0,0,0.3); letter-spacing: -1px;">${mainTitle}</h1>
-                    <p style="font-size: 1.3rem; opacity: 0.95; max-width: 500px; margin: 0 auto 25px; line-height: 1.6;">${subtitle}</p>
-                    <div style="display: inline-flex; background: rgba(255,255,255,0.2); padding: 12px 24px; border-radius: 25px; backdrop-filter: blur(10px);">
-                        <span style="font-weight: bold; font-size: 1rem;">🌟 Site Professionnel</span>
+                <div style="background: linear-gradient(135deg, ${primaryColor}, ${template.colors.secondary}); color: white; padding: 30px 20px; text-align: center; margin: 0;">
+                    <h1 style="font-size: 2.2rem; font-weight: 900; margin-bottom: 12px; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">${mainTitle}</h1>
+                    <p style="font-size: 1.1rem; opacity: 0.95; margin-bottom: 20px; line-height: 1.5;">${subtitle}</p>
+                    <div style="display: inline-block; background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 20px; font-size: 0.9rem; font-weight: bold;">
+                        ✨ Site Professionnel
                     </div>
                 </div>
             `;
@@ -764,203 +874,160 @@
             // Section photos si disponibles
             if (photos && photos.length > 0) {
                 content += `
-                    <div style="padding: 50px 30px; background: linear-gradient(45deg, #f8fafc, #ffffff);">
-                        <div style="text-align: center; margin-bottom: 40px;">
-                            <h2 style="color: ${primaryColor}; font-size: 2.2rem; font-weight: 800; margin-bottom: 15px;">📸 Nos Réalisations</h2>
-                            <div style="width: 80px; height: 4px; background: ${primaryColor}; margin: 0 auto; border-radius: 2px;"></div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px;">
+                    <div style="padding: 30px 20px; background: #f8fafc;">
+                        <h2 style="color: ${primaryColor}; font-size: 1.8rem; font-weight: bold; text-align: center; margin-bottom: 20px;">📸 Nos Réalisations</h2>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
                             ${photos.slice(0, 6).map(photo => `
-                                <div style="position: relative; overflow: hidden; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: transform 0.3s;">
-                                    <img src="${photo.data}" alt="${photo.name}" style="width: 100%; height: 140px; object-fit: cover;">
-                                    <div style="position: absolute; inset: 0; background: linear-gradient(135deg, ${primaryColor}22, transparent);"></div>
-                                </div>
+                                <img src="${photo.data}" alt="${photo.name}" style="width: 100%; height: 120px; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
                             `).join('')}
                         </div>
                     </div>
                 `;
             }
 
-            // Contenu spécifique beauté selon le secteur
-            content += generateSectorContent();
+            // Contenu spécifique selon le secteur
+            content += generateSectorSpecificContent();
 
-            // Section contact magnifique
+            // Section contact si informations disponibles
             if (phone || address) {
                 content += `
-                    <div style="background: linear-gradient(135deg, ${primaryColor}, ${template ? template.colors.secondary : '#1e40af'}); color: white; padding: 50px 30px; margin: 0; position: relative;">
-                        <div style="position: absolute; top: -20px; right: 50px; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
-                        <div style="text-align: center; margin-bottom: 35px;">
-                            <h2 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 15px;">📞 Contactez-nous</h2>
-                            <div style="width: 80px; height: 4px; background: rgba(255,255,255,0.3); margin: 0 auto;"></div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; max-width: 600px; margin: 0 auto;">
+                    <div style="background: linear-gradient(135deg, ${primaryColor}, ${template.colors.secondary}); color: white; padding: 30px 20px; margin: 0;">
+                        <h2 style="font-size: 1.8rem; font-weight: bold; text-align: center; margin-bottom: 20px;">📞 Contact</h2>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; max-width: 500px; margin: 0 auto;">
                             ${phone ? `
-                                <div style="background: rgba(255,255,255,0.15); padding: 25px; border-radius: 15px; text-align: center; backdrop-filter: blur(10px);">
-                                    <div style="font-size: 2rem; margin-bottom: 10px;">📱</div>
-                                    <div style="font-weight: bold; margin-bottom: 8px;">Téléphone</div>
-                                    <div style="font-size: 1.2rem; font-weight: 600;">${phone}</div>
+                                <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 10px; text-align: center;">
+                                    <div style="font-weight: bold; margin-bottom: 5px;">📱 Téléphone</div>
+                                    <div>${phone}</div>
                                 </div>
                             ` : ''}
                             ${address ? `
-                                <div style="background: rgba(255,255,255,0.15); padding: 25px; border-radius: 15px; text-align: center; backdrop-filter: blur(10px);">
-                                    <div style="font-size: 2rem; margin-bottom: 10px;">📍</div>
-                                    <div style="font-weight: bold; margin-bottom: 8px;">Adresse</div>
-                                    <div style="font-size: 1.1rem; font-weight: 600; line-height: 1.4;">${address}</div>
+                                <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 10px; text-align: center;">
+                                    <div style="font-weight: bold; margin-bottom: 5px;">📍 Adresse</div>
+                                    <div style="font-size: 0.9rem; line-height: 1.3;">${address}</div>
                                 </div>
                             ` : ''}
                         </div>
                     </div>
                 `;
             }
-
-            // Footer CTA magnifique
-            content += `
-                <div style="text-align: center; padding: 60px 30px; background: linear-gradient(45deg, #f1f5f9, #e2e8f0); margin: 0;">
-                    <h3 style="font-size: 2.5rem; font-weight: 900; color: ${primaryColor}; margin-bottom: 20px;">🌟 Prêt à commencer ?</h3>
-                    <p style="font-size: 1.2rem; color: #64748b; margin-bottom: 30px; max-width: 500px; margin-left: auto; margin-right: auto;">Découvrez l'excellence de nos services dès aujourd'hui</p>
-                    <div style="display: inline-flex; background: linear-gradient(135deg, ${primaryColor}, ${template ? template.colors.secondary : '#1e40af'}); color: white; padding: 18px 40px; border-radius: 30px; font-weight: bold; font-size: 1.1rem; box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);">
-                        💫 Contactez-nous maintenant
-                    </div>
-                </div>
-            `;
 
             return content;
         }
 
-        function generateSectorContent() {
+        function generateSectorSpecificContent() {
             const { primaryColor, siteType } = websiteData;
-            const template = templates[selectedTemplate];
-
-            let sectorContent = `
-                <div style="padding: 60px 30px; background: white;">
-                    <div style="text-align: center; margin-bottom: 50px;">
-                        <h2 style="color: ${primaryColor}; font-size: 2.5rem; font-weight: 900; margin-bottom: 20px;">
-            `;
-
+            
+            let content = `<div style="padding: 30px 20px; background: white;">`;
+            
             switch(siteType) {
                 case 'location-voiture':
-                    sectorContent += `🚗 Notre Flotte Premium</h2>
-                        <p style="font-size: 1.2rem; color: #64748b; max-width: 600px; margin: 0 auto;">Véhicules haut de gamme pour tous vos déplacements</p>
-                        <div style="width: 100px; height: 4px; background: ${primaryColor}; margin: 20px auto; border-radius: 2px;"></div>
-                    </div>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
-                        <div style="background: linear-gradient(135deg, #f8fafc, #ffffff); padding: 35px; border-radius: 20px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.08); border: 2px solid #f1f5f9;">
-                            <div style="font-size: 4rem; margin-bottom: 20px;">🚗</div>
-                            <h3 style="font-size: 1.8rem; font-weight: bold; color: ${primaryColor}; margin-bottom: 15px;">Citadines</h3>
-                            <div style="font-size: 2rem; font-weight: 900; color: #10b981; margin-bottom: 15px;">25€<span style="font-size: 1rem; font-weight: normal;">/jour</span></div>
-                            <p style="color: #64748b; margin-bottom: 20px;">Parfait pour la ville</p>
-                            <div style="background: ${primaryColor}; color: white; padding: 12px 25px; border-radius: 25px; display: inline-block; font-weight: bold;">Peugeot 208 • Renault Clio</div>
+                    content += `
+                        <h2 style="color: ${primaryColor}; font-size: 2rem; font-weight: bold; text-align: center; margin-bottom: 25px;">🚗 Notre Flotte</h2>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                            <div style="background: #f9fafb; padding: 20px; border-radius: 12px; text-align: center; border: 2px solid #e5e7eb;">
+                                <div style="font-size: 3rem; margin-bottom: 10px;">🚗</div>
+                                <h3 style="font-weight: bold; color: ${primaryColor}; margin-bottom: 8px;">Citadines</h3>
+                                <div style="font-size: 1.5rem; font-weight: bold; color: #10b981; margin-bottom: 8px;">25€/jour</div>
+                                <p style="color: #6b7280; font-size: 0.9rem;">Peugeot 208, Renault Clio</p>
+                            </div>
+                            <div style="background: #f9fafb; padding: 20px; border-radius: 12px; text-align: center; border: 2px solid #e5e7eb;">
+                                <div style="font-size: 3rem; margin-bottom: 10px;">🚙</div>
+                                <h3 style="font-weight: bold; color: ${primaryColor}; margin-bottom: 8px;">SUV</h3>
+                                <div style="font-size: 1.5rem; font-weight: bold; color: #10b981; margin-bottom: 8px;">45€/jour</div>
+                                <p style="color: #6b7280; font-size: 0.9rem;">BMW X3, Audi Q5</p>
+                            </div>
+                            <div style="background: #f9fafb; padding: 20px; border-radius: 12px; text-align: center; border: 2px solid ${primaryColor};">
+                                <div style="font-size: 3rem; margin-bottom: 10px;">🏎️</div>
+                                <h3 style="font-weight: bold; color: ${primaryColor}; margin-bottom: 8px;">Premium</h3>
+                                <div style="font-size: 1.5rem; font-weight: bold; color: #10b981; margin-bottom: 8px;">89€/jour</div>
+                                <p style="color: #6b7280; font-size: 0.9rem;">Mercedes, BMW Série 5</p>
+                            </div>
                         </div>
-                        <div style="background: linear-gradient(135deg, #f8fafc, #ffffff); padding: 35px; border-radius: 20px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.08); border: 2px solid #f1f5f9;">
-                            <div style="font-size: 4rem; margin-bottom: 20px;">🚙</div>
-                            <h3 style="font-size: 1.8rem; font-weight: bold; color: ${primaryColor}; margin-bottom: 15px;">SUV Premium</h3>
-                            <div style="font-size: 2rem; font-weight: 900; color: #10b981; margin-bottom: 15px;">45€<span style="font-size: 1rem; font-weight: normal;">/jour</span></div>
-                            <p style="color: #64748b; margin-bottom: 20px;">Confort et espace</p>
-                            <div style="background: ${primaryColor}; color: white; padding: 12px 25px; border-radius: 25px; display: inline-block; font-weight: bold;">BMW X3 • Audi Q5</div>
-                        </div>
-                        <div style="background: linear-gradient(135deg, ${primaryColor}22, #ffffff); padding: 35px; border-radius: 20px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.12); border: 2px solid ${primaryColor};">
-                            <div style="font-size: 4rem; margin-bottom: 20px;">🏎️</div>
-                            <h3 style="font-size: 1.8rem; font-weight: bold; color: ${primaryColor}; margin-bottom: 15px;">Luxury</h3>
-                            <div style="font-size: 2rem; font-weight: 900; color: #10b981; margin-bottom: 15px;">89€<span style="font-size: 1rem; font-weight: normal;">/jour</span></div>
-                            <p style="color: #64748b; margin-bottom: 20px;">Prestige absolu</p>
-                            <div style="background: ${primaryColor}; color: white; padding: 12px 25px; border-radius: 25px; display: inline-block; font-weight: bold;">Mercedes • BMW Série 5</div>
-                        </div>
-                    </div>
-                `;
+                    `;
                     break;
-
+                    
                 case 'restaurant':
-                    sectorContent += `🍽️ Notre Menu Gastronomique</h2>
-                        <p style="font-size: 1.2rem; color: #64748b; max-width: 600px; margin: 0 auto;">Une expérience culinaire exceptionnelle vous attend</p>
-                        <div style="width: 100px; height: 4px; background: ${primaryColor}; margin: 20px auto; border-radius: 2px;"></div>
-                    </div>
-                    <div style="display: grid; gap: 40px; max-width: 800px; margin: 0 auto;">
-                        <div style="background: linear-gradient(135deg, #ffffff, #f8fafc); padding: 40px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.08);">
-                            <h3 style="font-size: 1.8rem; font-weight: bold; color: ${primaryColor}; margin-bottom: 25px; display: flex; align-items: center;"><span style="margin-right: 15px;">🥗</span>Entrées Signature</h3>
-                            <div style="space-y: 15px;">
-                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 2px dotted #e2e8f0;">
-                                    <div>
-                                        <div style="font-weight: bold; font-size: 1.1rem;">Salade Caesar Revisitée</div>
-                                        <div style="color: #64748b; font-size: 0.9rem;">Parmesan 24 mois, croûtons artisanaux</div>
-                                    </div>
-                                    <span style="font-weight: 900; color: ${primaryColor}; font-size: 1.2rem;">14€</span>
+                    content += `
+                        <h2 style="color: ${primaryColor}; font-size: 2rem; font-weight: bold; text-align: center; margin-bottom: 25px;">🍽️ Notre Menu</h2>
+                        <div style="max-width: 600px; margin: 0 auto;">
+                            <div style="background: #f9fafb; padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid ${primaryColor};">
+                                <h3 style="font-weight: bold; color: ${primaryColor}; margin-bottom: 15px; font-size: 1.3rem;">🥗 Entrées</h3>
+                                <div style="margin-bottom: 10px; display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px dotted #d1d5db;">
+                                    <span>Salade Caesar</span><strong style="color: ${primaryColor};">12€</strong>
                                 </div>
-                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 2px dotted #e2e8f0;">
-                                    <div>
-                                        <div style="font-weight: bold; font-size: 1.1rem;">Carpaccio de Saint-Jacques</div>
-                                        <div style="color: #64748b; font-size: 0.9rem;">Agrumes, huile d'olive premium</div>
-                                    </div>
-                                    <span style="font-weight: 900; color: ${primaryColor}; font-size: 1.2rem;">18€</span>
+                                <div style="display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px dotted #d1d5db;">
+                                    <span>Carpaccio de saumon</span><strong style="color: ${primaryColor};">15€</strong>
+                                </div>
+                            </div>
+                            <div style="background: #f9fafb; padding: 25px; border-radius: 12px; border-left: 4px solid ${primaryColor};">
+                                <h3 style="font-weight: bold; color: ${primaryColor}; margin-bottom: 15px; font-size: 1.3rem;">🥩 Plats Principaux</h3>
+                                <div style="margin-bottom: 10px; display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px dotted #d1d5db;">
+                                    <span>Filet de bœuf</span><strong style="color: ${primaryColor};">28€</strong>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px dotted #d1d5db;">
+                                    <span>Saumon grillé</span><strong style="color: ${primaryColor};">22€</strong>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                `;
+                    `;
                     break;
-
-                case 'salon':
-                    sectorContent += `💇 Nos Services Beauté</h2>
-                        <p style="font-size: 1.2rem; color: #64748b; max-width: 600px; margin: 0 auto;">Révélez votre beauté naturelle avec nos experts</p>
-                        <div style="width: 100px; height: 4px; background: ${primaryColor}; margin: 20px auto; border-radius: 2px;"></div>
-                    </div>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px;">
-                        ${['💇‍♀️ Coupe & Brushing - 45€', '🎨 Coloration Premium - 85€', '✨ Soins Réparateurs - 35€', '💆‍♀️ Massage Crânien - 28€', '👰 Chignon Mariage - 75€', '🔥 Lissage Keratin - 150€'].map(service => `
-                            <div style="background: linear-gradient(135deg, #ffffff, ${primaryColor}11); padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.08); border: 1px solid #f1f5f9;">
-                                <div style="font-weight: bold; color: ${primaryColor}; font-size: 1.1rem; line-height: 1.4;">${service}</div>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-                    break;
-
+                    
                 default:
-                    sectorContent += `✨ Nos Services Excellence</h2>
-                        <p style="font-size: 1.2rem; color: #64748b; max-width: 600px; margin: 0 auto;">Des solutions professionnelles adaptées à vos besoins</p>
-                        <div style="width: 100px; height: 4px; background: ${primaryColor}; margin: 20px auto; border-radius: 2px;"></div>
-                    </div>
-                    <div style="display: grid; gap: 30px; max-width: 800px; margin: 0 auto;">
-                        <div style="background: linear-gradient(135deg, #ffffff, ${primaryColor}11); padding: 35px; border-radius: 20px; border-left: 6px solid ${primaryColor}; box-shadow: 0 15px 35px rgba(0,0,0,0.08);">
-                            <h3 style="font-weight: 900; color: ${primaryColor}; font-size: 1.6rem; margin-bottom: 15px;">🎯 Service Premium</h3>
-                            <p style="color: #64748b; font-size: 1.1rem; line-height: 1.6;">Découvrez nos services de qualité exceptionnelle, conçus pour dépasser vos attentes et vous offrir une expérience unique.</p>
+                    content += `
+                        <h2 style="color: ${primaryColor}; font-size: 2rem; font-weight: bold; text-align: center; margin-bottom: 25px;">✨ Nos Services</h2>
+                        <div style="max-width: 600px; margin: 0 auto;">
+                            <div style="background: #f9fafb; padding: 25px; border-radius: 12px; border-left: 4px solid ${primaryColor};">
+                                <h3 style="font-weight: bold; color: ${primaryColor}; margin-bottom: 10px;">Service Excellence</h3>
+                                <p style="color: #6b7280; line-height: 1.6;">Découvrez nos services de qualité professionnelle adaptés à vos besoins spécifiques.</p>
+                            </div>
                         </div>
-                    </div>
-                `;
+                    `;
             }
+            
+            return content + '</div>';
+        }
 
-            return sectorContent + '</div>';
+        // Navigation
+        function goBackToMain() {
+            document.getElementById('previewSection').style.display = 'none';
+            document.getElementById('qualityTemplates').style.display = 'none';
+            document.getElementById('mainSection').style.display = 'block';
+            window.scrollTo(0, 0);
         }
 
         function goBackToTemplates() {
             document.getElementById('previewSection').style.display = 'none';
             document.getElementById('qualityTemplates').style.display = 'block';
+            window.scrollTo(0, 0);
         }
 
+        // Sélection d'offre et paiement
         function selectOffer(type) {
             currentOffer = type;
             
-            // Calculer le prix final
             let basePrice = (type === 'site') ? 15 : 49;
             let templateCost = 0;
             
-            if (type === 'site' && templates[selectedTemplate] && templates[selectedTemplate].isPremium) {
+            if (type === 'site' && allTemplates[selectedTemplate] && allTemplates[selectedTemplate].isPremium) {
                 templateCost = 5;
             }
-            // Pour la conciergerie, tous les thèmes premium sont inclus
             
             let finalPrice = basePrice + templateCost;
             
-            // Mettre à jour l'affichage des prix
-            document.getElementById('sitePrice').textContent = type === 'site' ? `${finalPrice}€` : '15€';
+            const sitePrice = document.getElementById('sitePrice');
+            if (sitePrice && type === 'site') {
+                sitePrice.textContent = `${finalPrice}€`;
+            }
             
-            // Mettre à jour les radio buttons
             document.querySelectorAll('.offer-radio').forEach(radio => {
                 radio.checked = radio.value === type;
             });
             
-            // Mettre à jour le bouton de paiement
             const payButton = document.getElementById('payButton');
-            payButton.innerHTML = `💳 COMMANDER MAINTENANT - ${finalPrice}€`;
-            payButton.style.backgroundColor = type === 'site' ? '#3b82f6' : '#10b981';
+            if (payButton) {
+                payButton.innerHTML = `💳 COMMANDER MAINTENANT - ${finalPrice}€`;
+                payButton.style.backgroundColor = type === 'site' ? '#3b82f6' : '#10b981';
+            }
         }
 
         function processPayment() {
@@ -970,44 +1037,27 @@
                 return;
             }
 
-            // Calculer le prix final
             let basePrice = (currentOffer === 'site') ? 15 : 49;
             let templateCost = 0;
             
-            if (currentOffer === 'site' && templates[selectedTemplate] && templates[selectedTemplate].isPremium) {
+            if (currentOffer === 'site' && allTemplates[selectedTemplate] && allTemplates[selectedTemplate].isPremium) {
                 templateCost = 5;
             }
             
             let finalPrice = basePrice + templateCost;
             
-            let paypalUrl;
-            if (currentOffer === 'site') {
-                paypalUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=assakourc@gmail.com&item_name=Site+IA+Pro+Theme+${templates[selectedTemplate].name}+-+IA+WebGen&amount=${finalPrice}.00&currency_code=EUR&return=${encodeURIComponent(window.location.href)}&cancel_return=${encodeURIComponent(window.location.href)}`;
-            } else {
-                paypalUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=assakourc@gmail.com&item_name=Conciergerie+IA+Complete+Premium+-+IA+WebGen&amount=49.00&currency_code=EUR&return=${encodeURIComponent(window.location.href)}&cancel_return=${encodeURIComponent(window.location.href)}`;
-            }
+            const templateName = allTemplates[selectedTemplate] ? allTemplates[selectedTemplate].name : 'Standard';
+            const itemName = currentOffer === 'site' 
+                ? `Site+IA+Pro+Theme+${templateName.replace(/\s+/g, '+')}+-+IA+WebGen`
+                : 'Conciergerie+IA+Complete+Premium+-+IA+WebGen';
+            
+            const paypalUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=assakourc@gmail.com&item_name=${itemName}&amount=${finalPrice}.00&currency_code=EUR&return=${encodeURIComponent(window.location.href)}&cancel_return=${encodeURIComponent(window.location.href)}`;
 
-            const orderData = {
-                user: currentUser,
-                websiteData: websiteData,
-                selectedTemplate: selectedTemplate,
-                templateInfo: templates[selectedTemplate],
-                offer: currentOffer,
-                price: finalPrice,
-                date: new Date().toISOString()
-            };
-            localStorage.setItem('pendingOrder', JSON.stringify(orderData));
-
-            const templateName = templates[selectedTemplate] ? templates[selectedTemplate].name : 'Standard';
             const message = `🎉 Commande confirmée !\n\n` +
                           `📋 Récapitulatif :\n` +
-                          `• Thème: ${templateName} ${templates[selectedTemplate] && templates[selectedTemplate].isPremium ? '(Premium)' : '(Gratuit)'}\n` +
+                          `• Thème: ${templateName} ${allTemplates[selectedTemplate] && allTemplates[selectedTemplate].isPremium ? '(Premium +5€)' : '(Gratuit)'}\n` +
                           `• Offre: ${currentOffer === 'site' ? 'Site IA Pro' : 'Conciergerie IA Complète'}\n` +
                           `• Prix total: ${finalPrice}€\n\n` +
-                          `📧 Vous recevrez après paiement :\n` +
-                          `• Email de confirmation\n` +
-                          `• ${currentOffer === 'site' ? 'Fichiers du site' : 'Site mis en ligne automatiquement'}\n` +
-                          `• Support inclus\n\n` +
                           `Procéder au paiement PayPal ?`;
 
             if (confirm(message)) {
@@ -1120,12 +1170,14 @@
         function showNotification(message) {
             const notification = document.getElementById('notification');
             const text = document.getElementById('notificationText');
-            text.textContent = message;
-            notification.style.display = 'block';
-            
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 5000);
+            if (notification && text) {
+                text.textContent = message;
+                notification.style.display = 'block';
+                
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 5000);
+            }
         }
     </script>
 </body>
