@@ -25,6 +25,14 @@
         .template-card:hover { transform: scale(1.02); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
         .template-card.selected { border: 3px solid #10b981; background: #f0fdf4; }
         .premium-badge { position: absolute; top: -8px; right: -8px; background: linear-gradient(45deg, #ffd700, #ffed4e); color: #1f2937; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: bold; }
+        
+        /* Styles pour la prévisualisation multi-pages */
+        .site-nav { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(10px); }
+        .page-content { display: none; }
+        .page-content.active { display: block; }
+        .nav-link { cursor: pointer; transition: all 0.3s; }
+        .nav-link:hover { transform: translateY(-2px); }
+        .nav-link.active { font-weight: bold; }
     </style>
 </head>
 <body class="font-sans">
@@ -70,7 +78,7 @@
                 <div class="flex items-center gap-4">
                     <div class="text-sm">
                         <span class="bg-green-500 px-3 py-1 rounded-full text-xs sm:text-sm">
-                            ✨ 78% choisissent notre service conciergerie !
+                            ✨ Sites complets avec toutes les pages !
                         </span>
                     </div>
                     <div id="authButtons" class="flex gap-2">
@@ -98,14 +106,31 @@
         <section class="gradient-bg text-white py-20 fade-in">
             <div class="container mx-auto px-4 text-center">
                 <h2 class="text-3xl sm:text-5xl font-bold mb-6">
-                    🚀 Créez votre site web professionnel avec l'IA
+                    🚀 Sites Web Complets avec toutes les Pages
                 </h2>
                 <p class="text-lg sm:text-xl mb-8 opacity-90">
-                    Intelligence artificielle avancée + 7 thèmes gratuits + 3 thèmes premium = Site professionnel en 2-4h !
+                    Sites professionnels complets : Accueil, À propos, Services, Portfolio, Blog, Contact + RGPD !
                 </p>
                 
                 <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-6 sm:p-8 max-w-2xl mx-auto">
-                    <h3 class="text-xl sm:text-2xl font-bold mb-6">🎯 Créer mon site professionnel</h3>
+                    <h3 class="text-xl sm:text-2xl font-bold mb-6">🎯 Créer mon site professionnel complet</h3>
+                    
+                    <!-- Fonctionnalités incluses -->
+                    <div class="mb-6 text-left bg-white bg-opacity-10 rounded-lg p-4">
+                        <h4 class="font-bold mb-3">✨ Fonctionnalités incluses :</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                            <div>✅ 7 pages complètes</div>
+                            <div>✅ Menu navigation sticky</div>
+                            <div>✅ Responsive mobile/tablet</div>
+                            <div>✅ SEO optimisé</div>
+                            <div>✅ Formulaire contact</div>
+                            <div>✅ Blog avec catégories</div>
+                            <div>✅ Galerie portfolio</div>
+                            <div>✅ Conformité RGPD</div>
+                            <div>✅ Page 404 personnalisée</div>
+                            <div>✅ Réseaux sociaux</div>
+                        </div>
+                    </div>
                     
                     <form id="websiteForm" class="space-y-4">
                         <div class="grid md:grid-cols-2 gap-4">
@@ -157,7 +182,7 @@
                         </div>
                         
                         <button type="submit" class="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-bold py-4 px-6 rounded-lg transform hover:scale-105 transition-all duration-200 text-lg">
-                            🎨 CHOISIR UN THÈME & PRÉVISUALISER
+                            🎨 CHOISIR UN THÈME & CRÉER MON SITE COMPLET
                         </button>
                     </form>
                 </div>
@@ -169,10 +194,10 @@
             <div class="container mx-auto px-4">
                 <div class="text-center mb-12">
                     <h3 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
-                        🤖 IA Professionnelle + Service Conciergerie
+                        🏆 Sites Web Professionnels Complets
                     </h3>
                     <p class="text-lg sm:text-xl text-gray-600">
-                        Notre IA crée des sites de qualité agence web !
+                        Toutes les pages essentielles pour un site professionnel !
                     </p>
                 </div>
 
@@ -180,15 +205,18 @@
                     <!-- Offre Site Seul -->
                     <div class="bg-white rounded-lg shadow-lg p-6 sm:p-8 card-hover">
                         <div class="text-center">
-                            <h4 class="text-xl sm:text-2xl font-bold text-gray-800 mb-4">📄 Site IA Professionnel</h4>
+                            <h4 class="text-xl sm:text-2xl font-bold text-gray-800 mb-4">📄 Site Complet Pro</h4>
                             <div class="text-3xl sm:text-4xl font-bold text-blue-600 mb-4">15€</div>
                             <ul class="text-left space-y-2 mb-6 text-sm sm:text-base">
-                                <li>✅ 7 thèmes gratuits + 3 premium (+5€)</li>
-                                <li>✅ Intégration de vos photos personnelles</li>
-                                <li>✅ Templates ultra-modernes</li>
-                                <li>✅ Prévisualisation et modifications</li>
-                                <li>✅ Code source optimisé</li>
-                                <li>✅ Livraison par email instantanée</li>
+                                <li>✅ 7 pages complètes (Accueil, À propos, Services, etc.)</li>
+                                <li>✅ Menu navigation responsive + sticky</li>
+                                <li>✅ Formulaire contact avec validation</li>
+                                <li>✅ Blog simple avec catégories</li>
+                                <li>✅ Galerie portfolio/réalisations</li>
+                                <li>✅ Footer avec réseaux sociaux</li>
+                                <li>✅ SEO optimisé + RGPD</li>
+                                <li>✅ Page 404 personnalisée</li>
+                                <li>✅ Code source complet</li>
                                 <li>❌ Pas d'hébergement inclus</li>
                             </ul>
                         </div>
@@ -200,20 +228,23 @@
                             🔥 LE PLUS POPULAIRE
                         </div>
                         <div class="text-center mt-4">
-                            <h4 class="text-xl sm:text-2xl font-bold mb-4">🤖 Conciergerie IA Complète</h4>
+                            <h4 class="text-xl sm:text-2xl font-bold mb-4">🤖 Conciergerie Site Complet</h4>
                             <div class="text-3xl sm:text-4xl font-bold mb-4">49€</div>
                             <ul class="text-left space-y-2 mb-6 text-sm sm:text-base">
-                                <li>✅ Tout inclus + tous les thèmes premium</li>
+                                <li>✅ Tout inclus du Site Complet Pro</li>
                                 <li>✅ <strong>Nom de domaine automatique</strong></li>
-                                <li>✅ <strong>Hébergement premium configuré</strong></li>
+                                <li>✅ <strong>Hébergement sécurisé HTTPS</strong></li>
                                 <li>✅ <strong>Site en ligne en 2-4h maximum</strong></li>
-                                <li>✅ <strong>Optimisation SEO automatique</strong></li>
-                                <li>✅ <strong>Support technique 3 mois</strong></li>
-                                <li>✅ <strong>Formation utilisateur incluse</strong></li>
+                                <li>✅ <strong>Formulaire contact fonctionnel</strong></li>
+                                <li>✅ <strong>Blog prêt à l'emploi</strong></li>
+                                <li>✅ <strong>Optimisation SEO complète</strong></li>
+                                <li>✅ <strong>Certificats SSL + sécurité</strong></li>
+                                <li>✅ <strong>Formation + Support 3 mois</strong></li>
+                                <li>✅ <strong>Tous les thèmes premium inclus</strong></li>
                             </ul>
                             <div class="bg-yellow-400 text-gray-800 p-3 rounded-lg text-xs sm:text-sm font-bold mb-4">
-                                ⏰ Site professionnel en ligne en 2-4h !<br>
-                                🎨 Tous les thèmes premium inclus
+                                ⏰ Site professionnel complet en ligne en 2-4h !<br>
+                                🏆 Toutes les pages + fonctionnalités incluses
                             </div>
                         </div>
                     </div>
@@ -227,7 +258,7 @@
         <div class="container mx-auto px-4">
             <div class="text-center mb-12">
                 <h3 class="text-3xl font-bold text-gray-800 mb-4">🎨 Choisissez votre thème professionnel</h3>
-                <p class="text-xl text-gray-600">7 thèmes gratuits + 3 thèmes premium à 5€</p>
+                <p class="text-xl text-gray-600">7 thèmes gratuits + 3 thèmes premium à 5€ - Sites complets avec toutes les pages</p>
                 <button onclick="goBackToMain()" class="mt-4 bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600">
                     <i class="fas fa-arrow-left mr-2"></i>Modifier les informations
                 </button>
@@ -240,7 +271,7 @@
             <div class="text-center mt-8">
                 <button onclick="proceedWithSelectedTemplate()" id="continueBtn" 
                         class="bg-green-500 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-                    <i class="fas fa-eye mr-2"></i>VOIR LA PRÉVISUALISATION
+                    <i class="fas fa-eye mr-2"></i>VOIR LE SITE COMPLET
                 </button>
             </div>
         </div>
@@ -252,7 +283,7 @@
             <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-2xl font-bold text-gray-800">
-                        🎉 Prévisualisation : <span id="previewBusinessName"></span>
+                        🏆 Site complet : <span id="previewBusinessName"></span>
                     </h2>
                     <div class="flex gap-3">
                         <button onclick="goBackToTemplates()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
@@ -267,11 +298,12 @@
                 <div class="grid lg:grid-cols-2 gap-8">
                     <!-- Aperçu du site -->
                     <div>
-                        <h3 class="text-lg font-bold mb-4">📱 Aperçu de votre site</h3>
-                        <div id="websitePreview" class="border-2 border-gray-300 rounded-lg bg-white overflow-auto" style="height: 500px; padding: 0;">
+                        <h3 class="text-lg font-bold mb-4">🌐 Aperçu de votre site complet</h3>
+                        <p class="text-sm text-gray-600 mb-4">Naviguez entre toutes les pages de votre site :</p>
+                        <div id="websitePreview" class="border-2 border-gray-300 rounded-lg bg-white overflow-auto" style="height: 600px; padding: 0;">
                             <div style="padding: 20px; text-align: center; color: #6b7280;">
                                 <i class="fas fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 10px;"></i>
-                                <p>Génération de votre site en cours...</p>
+                                <p>Génération de votre site complet en cours...</p>
                             </div>
                         </div>
                     </div>
@@ -285,11 +317,11 @@
                                 <input type="color" id="primaryColor" value="#3b82f6" class="w-full h-10 rounded" onchange="updatePreview()">
                             </div>
                             <div>
-                                <label class="block text-sm font-bold mb-2">Titre principal</label>
+                                <label class="block text-sm font-bold mb-2">Nom de l'entreprise</label>
                                 <input type="text" id="mainTitle" class="w-full p-3 border rounded-lg" onchange="updatePreview()">
                             </div>
                             <div>
-                                <label class="block text-sm font-bold mb-2">Sous-titre</label>
+                                <label class="block text-sm font-bold mb-2">Description activité</label>
                                 <textarea id="subtitle" class="w-full p-3 border rounded-lg h-20" onchange="updatePreview()"></textarea>
                             </div>
                             <div>
@@ -300,8 +332,12 @@
                                 <label class="block text-sm font-bold mb-2">Adresse</label>
                                 <input type="text" id="address" class="w-full p-3 border rounded-lg" placeholder="123 Rue Example, Paris" onchange="updatePreview()">
                             </div>
+                            <div>
+                                <label class="block text-sm font-bold mb-2">Email professionnel</label>
+                                <input type="email" id="businessEmail" class="w-full p-3 border rounded-lg" placeholder="contact@entreprise.fr" onchange="updatePreview()">
+                            </div>
                             <button onclick="updatePreview()" class="w-full bg-blue-500 text-white py-3 rounded hover:bg-blue-600">
-                                🔄 Mettre à jour l'aperçu
+                                🔄 Mettre à jour le site
                             </button>
                         </div>
                         
@@ -315,8 +351,8 @@
                                 <div class="border rounded-lg p-4 cursor-pointer hover:bg-blue-50" onclick="selectOffer('site')">
                                     <div class="flex justify-between items-center">
                                         <div>
-                                            <h4 class="font-bold">📄 Site IA Pro</h4>
-                                            <p class="text-sm text-gray-600">Code source + Photos + Livraison email</p>
+                                            <h4 class="font-bold">📄 Site Complet Pro</h4>
+                                            <p class="text-sm text-gray-600">7 pages + Code source + Livraison email</p>
                                         </div>
                                         <div class="text-right">
                                             <div class="font-bold text-blue-600" id="sitePrice">15€</div>
@@ -327,8 +363,8 @@
                                 <div class="border rounded-lg p-4 cursor-pointer hover:bg-green-50 border-green-500" onclick="selectOffer('conciergerie')">
                                     <div class="flex justify-between items-center">
                                         <div>
-                                            <h4 class="font-bold">🤖 Conciergerie IA - 49€ ⭐</h4>
-                                            <p class="text-sm text-gray-600">Site + Domaine + Hébergement + Tous les thèmes premium</p>
+                                            <h4 class="font-bold">🤖 Conciergerie Site Complet - 49€ ⭐</h4>
+                                            <p class="text-sm text-gray-600">Site + Domaine + Hébergement + Formation</p>
                                         </div>
                                         <div class="text-right">
                                             <div class="font-bold text-green-600">49€</div>
@@ -339,7 +375,7 @@
                             </div>
                             
                             <button id="payButton" onclick="processPayment()" class="w-full mt-6 bg-green-500 text-white py-4 px-6 rounded-lg font-bold text-lg hover:bg-green-600 transform hover:scale-105 transition-all">
-                                💳 COMMANDER MAINTENANT - 49€
+                                💳 COMMANDER SITE COMPLET - 49€
                             </button>
                         </div>
                     </div>
@@ -410,6 +446,7 @@
         let selectedTemplate = null;
         let uploadedPhotos = [];
         let allTemplates = [];
+        let currentPage = 'accueil';
 
         // Templates définis globalement
         const TEMPLATES = [
@@ -500,7 +537,7 @@
 
         // Initialisation
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 Application démarrée');
+            console.log('🚀 Application site complet démarrée');
             
             if (currentUser) {
                 showUserMenu();
@@ -510,14 +547,14 @@
             if (form) {
                 form.addEventListener('submit', function(e) {
                     e.preventDefault();
-                    console.log('📝 Formulaire soumis');
+                    console.log('📝 Formulaire site complet soumis');
                     generateTemplates();
                 });
             }
 
             setupPhotoUpload();
             allTemplates = TEMPLATES;
-            console.log('✅ Initialisation terminée');
+            console.log('✅ Initialisation site complet terminée');
         });
 
         // Configuration upload photos
@@ -591,7 +628,7 @@
 
         // FONCTION PRINCIPALE : Génération des templates
         function generateTemplates() {
-            console.log('🎨 Génération des templates...');
+            console.log('🎨 Génération des templates site complet...');
             
             // Récupérer les données du formulaire
             const businessName = document.getElementById('businessName').value.trim();
@@ -616,10 +653,11 @@
                 subtitle: description,
                 primaryColor: '#3b82f6',
                 phone: '',
-                address: ''
+                address: '',
+                businessEmail: ''
             };
 
-            console.log('📋 Données du site:', websiteData);
+            console.log('📋 Données du site complet:', websiteData);
 
             // Afficher les templates
             displayTemplates();
@@ -630,7 +668,7 @@
             document.getElementById('previewSection').style.display = 'none';
             
             window.scrollTo(0, 0);
-            showNotification('✅ Choisissez votre thème parmi 10 options !');
+            showNotification('✅ Choisissez votre thème pour votre site complet !');
         }
 
         // FONCTION ESSENTIELLE : Affichage des templates
@@ -655,26 +693,7 @@
                     premiumBadge = '<div class="premium-badge">💎 +5€</div>';
                 }
                 
-                let previewContent = '';
-                switch(template.id) {
-                    case 'modern-clean':
-                        previewContent = '<div style="text-align: center; padding: 15px;"><div style="width: 60px; height: 4px; background: #3b82f6; margin: 0 auto 8px; border-radius: 2px;"></div><div style="font-size: 14px; font-weight: bold; color: #1e40af;">MODERN</div><div style="font-size: 10px; color: #6b7280;">Clean & Simple</div></div>';
-                        break;
-                    case 'business-pro':
-                        previewContent = '<div style="text-align: center; padding: 15px;"><div style="width: 30px; height: 30px; border: 2px solid #374151; border-radius: 50%; margin: 0 auto 8px;"></div><div style="font-size: 14px; font-weight: bold; color: #111827;">BUSINESS</div><div style="font-size: 10px; color: #6b7280;">Professional</div></div>';
-                        break;
-                    case 'creative-studio':
-                        previewContent = '<div style="text-align: center; padding: 15px;"><div style="width: 40px; height: 25px; background: linear-gradient(45deg, #f59e0b, #dc2626); margin: 0 auto 8px; border-radius: 4px;"></div><div style="font-size: 14px; font-weight: bold; color: #dc2626;">CREATIVE</div><div style="font-size: 10px; color: #6b7280;">Artistic</div></div>';
-                        break;
-                    case 'fresh-green':
-                        previewContent = '<div style="text-align: center; padding: 15px;"><div style="width: 30px; height: 30px; background: #10b981; border-radius: 50%; margin: 0 auto 8px; position: relative;"><div style="position: absolute; top: 12px; left: 12px; width: 6px; height: 6px; background: white; border-radius: 50%;"></div></div><div style="font-size: 14px; font-weight: bold; color: #047857;">ECO</div><div style="font-size: 10px; color: #6b7280;">Green & Natural</div></div>';
-                        break;
-                    case 'luxury-gold':
-                        previewContent = '<div style="text-align: center; padding: 15px;"><div style="width: 35px; height: 35px; background: linear-gradient(45deg, #fbbf24, #f59e0b); margin: 0 auto 8px; border-radius: 50%; box-shadow: 0 2px 10px rgba(251, 191, 36, 0.4);"><div style="margin-top: 12px; color: white; font-size: 12px;">💎</div></div><div style="font-size: 14px; font-weight: bold; color: #f59e0b;">LUXURY</div><div style="font-size: 10px; color: #6b7280;">Premium Gold</div></div>';
-                        break;
-                    default:
-                        previewContent = `<div style="text-align: center; padding: 15px; color: ${template.colors.primary};"><div style="font-size: 14px; font-weight: bold;">${template.name.toUpperCase()}</div><div style="font-size: 10px; color: #6b7280;">${template.description}</div></div>`;
-                }
+                let previewContent = `<div style="text-align: center; padding: 15px; color: ${template.colors.primary}; font-size: 12px;"><div style="font-weight: bold;">SITE COMPLET</div><div style="margin: 5px 0;">7 Pages</div><div style="font-size: 10px; color: #6b7280;">${template.name}</div></div>`;
                 
                 templateCard.innerHTML = `
                     ${premiumBadge}
@@ -686,6 +705,7 @@
                     <div class="text-center">
                         <h4 class="font-bold text-base mb-1">${template.name}</h4>
                         <p class="text-gray-600 text-xs mb-2">${template.description}</p>
+                        <div class="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded mb-2">7 Pages complètes</div>
                         <div class="text-center">
                             <span class="text-xs font-bold px-2 py-1 rounded ${template.isPremium ? 'bg-yellow-100 text-yellow-700' : 'bg-green-100 text-green-700'}">
                                 ${template.isPremium ? '💎 Premium +5€' : '✨ Gratuit'}
@@ -697,7 +717,7 @@
                 templateGrid.appendChild(templateCard);
             });
             
-            console.log('✅ Templates affichés:', allTemplates.length);
+            console.log('✅ Templates site complet affichés:', allTemplates.length);
         }
 
         // Sélection d'un template
@@ -729,12 +749,12 @@
                 continueBtn.classList.remove('disabled:opacity-50');
             }
             
-            showNotification(`✅ Thème "${allTemplates[index].name}" sélectionné !`);
+            showNotification(`✅ Thème "${allTemplates[index].name}" sélectionné pour site complet !`);
         }
 
         // FONCTION CRITIQUE : Procéder à la prévisualisation
         function proceedWithSelectedTemplate() {
-            console.log('👁️ Génération de la prévisualisation...');
+            console.log('👁️ Génération du site complet...');
             
             if (selectedTemplate === null) {
                 showNotification('❌ Veuillez sélectionner un thème !');
@@ -754,7 +774,7 @@
 
         // FONCTION ESSENTIELLE : Initialisation de la prévisualisation
         function initializePreview() {
-            console.log('🔄 Initialisation de la prévisualisation...');
+            console.log('🔄 Initialisation du site complet...');
             
             if (!websiteData.businessName) {
                 console.error('❌ Données du site manquantes');
@@ -781,7 +801,7 @@
                 updatePreview();
             }, 100);
             
-            showNotification('✅ Prévisualisation chargée ! Personnalisez votre site.');
+            showNotification('✅ Site complet généré ! Naviguez entre les pages.');
         }
 
         function updateTemplateCostInfo() {
@@ -795,7 +815,7 @@
                     <div class="flex items-center justify-between">
                         <div>
                             <span class="font-bold">💎 Thème Premium "${template.name}"</span>
-                            <p class="text-sm text-gray-600">Coût supplémentaire du thème premium</p>
+                            <p class="text-sm text-gray-600">Site complet avec toutes les pages + thème premium</p>
                         </div>
                         <div class="font-bold text-yellow-600">+5€</div>
                     </div>
@@ -803,7 +823,8 @@
             } else {
                 costInfo.innerHTML = `
                     <div class="text-center">
-                        <span class="font-bold text-green-600">✅ Thème gratuit "${template ? template.name : 'Standard'}" inclus</span>
+                        <span class="font-bold text-green-600">✅ Site complet avec thème gratuit "${template ? template.name : 'Standard'}" inclus</span>
+                        <p class="text-sm text-gray-600">7 pages professionnelles + toutes les fonctionnalités</p>
                     </div>
                 `;
             }
@@ -811,13 +832,14 @@
 
         // FONCTION PRINCIPALE : Mise à jour de la prévisualisation
         function updatePreview() {
-            console.log('🎨 Mise à jour de la prévisualisation...');
+            console.log('🎨 Mise à jour du site complet...');
             
             const mainTitleEl = document.getElementById('mainTitle');
             const subtitleEl = document.getElementById('subtitle');
             const primaryColorEl = document.getElementById('primaryColor');
             const phoneEl = document.getElementById('phone');
             const addressEl = document.getElementById('address');
+            const businessEmailEl = document.getElementById('businessEmail');
             
             if (!mainTitleEl || !subtitleEl || !primaryColorEl) {
                 console.error('❌ Éléments de formulaire manquants');
@@ -830,6 +852,7 @@
             const primaryColor = primaryColorEl.value;
             const phone = phoneEl ? phoneEl.value : '';
             const address = addressEl ? addressEl.value : '';
+            const businessEmail = businessEmailEl ? businessEmailEl.value : '';
 
             // Mettre à jour les données
             websiteData.mainTitle = mainTitle;
@@ -837,22 +860,23 @@
             websiteData.primaryColor = primaryColor;
             websiteData.phone = phone;
             websiteData.address = address;
+            websiteData.businessEmail = businessEmail;
 
             // Générer le contenu
-            const siteContent = generateSiteContent();
+            const siteContent = generateCompleteSiteContent();
             const previewEl = document.getElementById('websitePreview');
             
             if (previewEl && siteContent) {
                 previewEl.innerHTML = siteContent;
-                console.log('✅ Prévisualisation mise à jour');
+                console.log('✅ Site complet mis à jour');
             } else {
-                console.error('❌ Impossible de mettre à jour la prévisualisation');
+                console.error('❌ Impossible de mettre à jour le site complet');
             }
         }
 
-        // FONCTION DE GÉNÉRATION : Contenu du site
-        function generateSiteContent() {
-            const { mainTitle, subtitle, primaryColor, phone, address, siteType, photos } = websiteData;
+        // FONCTION PRINCIPALE : Génération du site complet
+        function generateCompleteSiteContent() {
+            const { mainTitle, subtitle, primaryColor, phone, address, businessEmail, siteType, photos } = websiteData;
             const template = allTemplates[selectedTemplate];
             
             if (!template) {
@@ -860,112 +884,240 @@
                 return '<div style="padding: 20px; text-align: center; color: red;">Erreur: Template non trouvé</div>';
             }
             
-            // Header avec le style du template
+            // Navigation sticky
             let content = `
-                <div style="background: linear-gradient(135deg, ${primaryColor}, ${template.colors.secondary}); color: white; padding: 30px 20px; text-align: center; margin: 0;">
-                    <h1 style="font-size: 2.2rem; font-weight: 900; margin-bottom: 12px; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">${mainTitle}</h1>
-                    <p style="font-size: 1.1rem; opacity: 0.95; margin-bottom: 20px; line-height: 1.5;">${subtitle}</p>
-                    <div style="display: inline-block; background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 20px; font-size: 0.9rem; font-weight: bold;">
-                        ✨ Site Professionnel
+                <div class="site-nav" style="background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid #e5e7eb; padding: 15px 20px; position: sticky; top: 0; z-index: 50;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto;">
+                        <div style="font-size: 1.5rem; font-weight: bold; color: ${primaryColor};">
+                            ${mainTitle}
+                        </div>
+                        <div style="display: flex; gap: 25px; font-size: 0.9rem;">
+                            <span class="nav-link active" onclick="showPage('accueil')" style="color: ${primaryColor}; font-weight: bold; cursor: pointer;">Accueil</span>
+                            <span class="nav-link" onclick="showPage('apropos')" style="color: #6b7280; cursor: pointer;">À propos</span>
+                            <span class="nav-link" onclick="showPage('services')" style="color: #6b7280; cursor: pointer;">Services</span>
+                            <span class="nav-link" onclick="showPage('portfolio')" style="color: #6b7280; cursor: pointer;">Portfolio</span>
+                            <span class="nav-link" onclick="showPage('blog')" style="color: #6b7280; cursor: pointer;">Blog</span>
+                            <span class="nav-link" onclick="showPage('contact')" style="color: #6b7280; cursor: pointer;">Contact</span>
+                        </div>
+                        <div style="display: none;">
+                            <button style="background: none; border: none; font-size: 1.5rem;">☰</button>
+                        </div>
                     </div>
                 </div>
             `;
 
-            // Section photos si disponibles
-            if (photos && photos.length > 0) {
-                content += `
-                    <div style="padding: 30px 20px; background: #f8fafc;">
-                        <h2 style="color: ${primaryColor}; font-size: 1.8rem; font-weight: bold; text-align: center; margin-bottom: 20px;">📸 Nos Réalisations</h2>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
-                            ${photos.slice(0, 6).map(photo => `
-                                <img src="${photo.data}" alt="${photo.name}" style="width: 100%; height: 120px; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                            `).join('')}
+            // Page Accueil
+            content += `
+                <div id="page-accueil" class="page-content active">
+                    <!-- Hero Section -->
+                    <div style="background: linear-gradient(135deg, ${primaryColor}, ${template.colors.secondary}); color: white; padding: 60px 20px; text-align: center;">
+                        <div style="max-width: 800px; margin: 0 auto;">
+                            <h1 style="font-size: 3rem; font-weight: 900; margin-bottom: 20px; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">${mainTitle}</h1>
+                            <p style="font-size: 1.3rem; opacity: 0.95; margin-bottom: 30px; line-height: 1.6;">${subtitle}</p>
+                            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                                <div style="background: rgba(255,255,255,0.2); padding: 12px 24px; border-radius: 25px; font-weight: bold;">✨ Service Premium</div>
+                                <div style="background: rgba(255,255,255,0.2); padding: 12px 24px; border-radius: 25px; font-weight: bold;">🏆 Qualité Garantie</div>
+                            </div>
                         </div>
                     </div>
-                `;
-            }
-
-            // Contenu spécifique selon le secteur
-            content += generateSectorSpecificContent();
-
-            // Section contact si informations disponibles
-            if (phone || address) {
-                content += `
-                    <div style="background: linear-gradient(135deg, ${primaryColor}, ${template.colors.secondary}); color: white; padding: 30px 20px; margin: 0;">
-                        <h2 style="font-size: 1.8rem; font-weight: bold; text-align: center; margin-bottom: 20px;">📞 Contact</h2>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; max-width: 500px; margin: 0 auto;">
-                            ${phone ? `
-                                <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 10px; text-align: center;">
-                                    <div style="font-weight: bold; margin-bottom: 5px;">📱 Téléphone</div>
-                                    <div>${phone}</div>
+                    
+                    <!-- Présentation -->
+                    <div style="padding: 60px 20px; background: white;">
+                        <div style="max-width: 1000px; margin: 0 auto; text-align: center;">
+                            <h2 style="font-size: 2.5rem; color: ${primaryColor}; margin-bottom: 30px;">Pourquoi nous choisir ?</h2>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-top: 40px;">
+                                <div style="text-align: center; padding: 30px;">
+                                    <div style="font-size: 4rem; margin-bottom: 20px;">⚡</div>
+                                    <h3 style="color: ${primaryColor}; font-weight: bold; margin-bottom: 15px;">Rapidité</h3>
+                                    <p style="color: #6b7280; line-height: 1.6;">Service ultra-rapide et efficace pour répondre à vos besoins</p>
                                 </div>
-                            ` : ''}
-                            ${address ? `
-                                <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 10px; text-align: center;">
-                                    <div style="font-weight: bold; margin-bottom: 5px;">📍 Adresse</div>
-                                    <div style="font-size: 0.9rem; line-height: 1.3;">${address}</div>
+                                <div style="text-align: center; padding: 30px;">
+                                    <div style="font-size: 4rem; margin-bottom: 20px;">🏆</div>
+                                    <h3 style="color: ${primaryColor}; font-weight: bold; margin-bottom: 15px;">Qualité</h3>
+                                    <p style="color: #6b7280; line-height: 1.6;">Excellence et professionnalisme dans chaque prestation</p>
                                 </div>
-                            ` : ''}
+                                <div style="text-align: center; padding: 30px;">
+                                    <div style="font-size: 4rem; margin-bottom: 20px;">💯</div>
+                                    <h3 style="color: ${primaryColor}; font-weight: bold; margin-bottom: 15px;">Satisfaction</h3>
+                                    <p style="color: #6b7280; line-height: 1.6;">Votre satisfaction est notre priorité absolue</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                `;
-            }
+                </div>
+            `;
+
+            // Page À propos
+            content += `
+                <div id="page-apropos" class="page-content" style="display: none;">
+                    <div style="padding: 60px 20px; background: white;">
+                        <div style="max-width: 800px; margin: 0 auto;">
+                            <h1 style="font-size: 3rem; color: ${primaryColor}; text-align: center; margin-bottom: 40px;">À propos de ${mainTitle}</h1>
+                            
+                            <div style="background: #f8fafc; padding: 40px; border-radius: 15px; margin-bottom: 40px;">
+                                <h2 style="color: ${primaryColor}; font-size: 2rem; margin-bottom: 25px;">Notre Histoire</h2>
+                                <p style="color: #4b5563; line-height: 1.8; font-size: 1.1rem; margin-bottom: 20px;">
+                                    ${mainTitle} est née de la passion de fournir des services d'excellence. Depuis notre création, 
+                                    nous nous efforçons de dépasser les attentes de nos clients.
+                                </p>
+                                <p style="color: #4b5563; line-height: 1.8; font-size: 1.1rem;">
+                                    ${subtitle} Nous combinons expertise technique et approche personnalisée pour offrir 
+                                    des solutions adaptées à chaque besoin.
+                                </p>
+                            </div>
+                            
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px;">
+                                <div style="text-align: center; padding: 30px; background: white; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                                    <div style="font-size: 3rem; margin-bottom: 15px;">🎯</div>
+                                    <h3 style="color: ${primaryColor}; font-weight: bold; margin-bottom: 10px;">Mission</h3>
+                                    <p style="color: #6b7280;">Offrir un service d'exception à chaque client</p>
+                                </div>
+                                <div style="text-align: center; padding: 30px; background: white; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                                    <div style="font-size: 3rem; margin-bottom: 15px;">👀</div>
+                                    <h3 style="color: ${primaryColor}; font-weight: bold; margin-bottom: 10px;">Vision</h3>
+                                    <p style="color: #6b7280;">Être la référence dans notre domaine</p>
+                                </div>
+                                <div style="text-align: center; padding: 30px; background: white; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                                    <div style="font-size: 3rem; margin-bottom: 15px;">💎</div>
+                                    <h3 style="color: ${primaryColor}; font-weight: bold; margin-bottom: 10px;">Valeurs</h3>
+                                    <p style="color: #6b7280;">Intégrité, qualité et innovation</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Page Services (spécifique selon le secteur)
+            content += generateServicesPage();
+
+            // Page Portfolio
+            content += generatePortfolioPage();
+
+            // Page Blog
+            content += generateBlogPage();
+
+            // Page Contact
+            content += generateContactPage();
+
+            // Footer avec réseaux sociaux et mentions légales
+            content += generateFooter();
+
+            // Script pour navigation entre pages
+            content += `
+                <script>
+                    function showPage(pageId) {
+                        // Masquer toutes les pages
+                        document.querySelectorAll('.page-content').forEach(page => {
+                            page.style.display = 'none';
+                        });
+                        
+                        // Afficher la page sélectionnée
+                        const selectedPage = document.getElementById('page-' + pageId);
+                        if (selectedPage) {
+                            selectedPage.style.display = 'block';
+                        }
+                        
+                        // Mettre à jour la navigation
+                        document.querySelectorAll('.nav-link').forEach(link => {
+                            link.style.color = '#6b7280';
+                            link.style.fontWeight = 'normal';
+                            link.classList.remove('active');
+                        });
+                        
+                        event.target.style.color = '${primaryColor}';
+                        event.target.style.fontWeight = 'bold';
+                        event.target.classList.add('active');
+                        
+                        // Scroll vers le haut
+                        document.querySelector('#websitePreview').scrollTop = 0;
+                    }
+                </script>
+            `;
 
             return content;
         }
 
-        function generateSectorSpecificContent() {
-            const { primaryColor, siteType } = websiteData;
+        function generateServicesPage() {
+            const { primaryColor, siteType, mainTitle } = websiteData;
             
-            let content = `<div style="padding: 30px 20px; background: white;">`;
+            let servicesContent = `
+                <div id="page-services" class="page-content" style="display: none;">
+                    <div style="padding: 60px 20px; background: white;">
+                        <div style="max-width: 1000px; margin: 0 auto;">
+                            <h1 style="font-size: 3rem; color: ${primaryColor}; text-align: center; margin-bottom: 50px;">Nos Services</h1>
+            `;
             
             switch(siteType) {
                 case 'location-voiture':
-                    content += `
-                        <h2 style="color: ${primaryColor}; font-size: 2rem; font-weight: bold; text-align: center; margin-bottom: 25px;">🚗 Notre Flotte</h2>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
-                            <div style="background: #f9fafb; padding: 20px; border-radius: 12px; text-align: center; border: 2px solid #e5e7eb;">
-                                <div style="font-size: 3rem; margin-bottom: 10px;">🚗</div>
-                                <h3 style="font-weight: bold; color: ${primaryColor}; margin-bottom: 8px;">Citadines</h3>
-                                <div style="font-size: 1.5rem; font-weight: bold; color: #10b981; margin-bottom: 8px;">25€/jour</div>
-                                <p style="color: #6b7280; font-size: 0.9rem;">Peugeot 208, Renault Clio</p>
+                    servicesContent += `
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                            <div style="background: #f8fafc; padding: 30px; border-radius: 15px; text-align: center; border: 2px solid #e5e7eb;">
+                                <div style="font-size: 4rem; margin-bottom: 20px;">🚗</div>
+                                <h3 style="font-size: 1.8rem; font-weight: bold; color: ${primaryColor}; margin-bottom: 15px;">Location Citadines</h3>
+                                <div style="font-size: 2rem; font-weight: 900; color: #10b981; margin-bottom: 15px;">À partir de 25€<span style="font-size: 1rem; font-weight: normal;">/jour</span></div>
+                                <p style="color: #6b7280; margin-bottom: 20px;">Véhicules parfaits pour la ville</p>
+                                <ul style="text-align: left; color: #4b5563; margin-bottom: 20px;">
+                                    <li>✓ Peugeot 208, Renault Clio</li>
+                                    <li>✓ Économiques et pratiques</li>
+                                    <li>✓ Assurance tous risques incluse</li>
+                                    <li>✓ GPS disponible</li>
+                                </ul>
                             </div>
-                            <div style="background: #f9fafb; padding: 20px; border-radius: 12px; text-align: center; border: 2px solid #e5e7eb;">
-                                <div style="font-size: 3rem; margin-bottom: 10px;">🚙</div>
-                                <h3 style="font-weight: bold; color: ${primaryColor}; margin-bottom: 8px;">SUV</h3>
-                                <div style="font-size: 1.5rem; font-weight: bold; color: #10b981; margin-bottom: 8px;">45€/jour</div>
-                                <p style="color: #6b7280; font-size: 0.9rem;">BMW X3, Audi Q5</p>
+                            <div style="background: #f8fafc; padding: 30px; border-radius: 15px; text-align: center; border: 2px solid #e5e7eb;">
+                                <div style="font-size: 4rem; margin-bottom: 20px;">🚙</div>
+                                <h3 style="font-size: 1.8rem; font-weight: bold; color: ${primaryColor}; margin-bottom: 15px;">SUV & Familiales</h3>
+                                <div style="font-size: 2rem; font-weight: 900; color: #10b981; margin-bottom: 15px;">À partir de 45€<span style="font-size: 1rem; font-weight: normal;">/jour</span></div>
+                                <p style="color: #6b7280; margin-bottom: 20px;">Espace et confort pour la famille</p>
+                                <ul style="text-align: left; color: #4b5563; margin-bottom: 20px;">
+                                    <li>✓ BMW X3, Audi Q5</li>
+                                    <li>✓ 5-7 places disponibles</li>
+                                    <li>✓ Coffre spacieux</li>
+                                    <li>✓ Équipements premium</li>
+                                </ul>
                             </div>
-                            <div style="background: #f9fafb; padding: 20px; border-radius: 12px; text-align: center; border: 2px solid ${primaryColor};">
-                                <div style="font-size: 3rem; margin-bottom: 10px;">🏎️</div>
-                                <h3 style="font-weight: bold; color: ${primaryColor}; margin-bottom: 8px;">Premium</h3>
-                                <div style="font-size: 1.5rem; font-weight: bold; color: #10b981; margin-bottom: 8px;">89€/jour</div>
-                                <p style="color: #6b7280; font-size: 0.9rem;">Mercedes, BMW Série 5</p>
+                            <div style="background: linear-gradient(135deg, ${primaryColor}22, #ffffff); padding: 30px; border-radius: 15px; text-align: center; border: 2px solid ${primaryColor};">
+                                <div style="font-size: 4rem; margin-bottom: 20px;">🏎️</div>
+                                <h3 style="font-size: 1.8rem; font-weight: bold; color: ${primaryColor}; margin-bottom: 15px;">Luxury & Prestige</h3>
+                                <div style="font-size: 2rem; font-weight: 900; color: #10b981; margin-bottom: 15px;">À partir de 89€<span style="font-size: 1rem; font-weight: normal;">/jour</span></div>
+                                <p style="color: #6b7280; margin-bottom: 20px;">L'excellence automobile</p>
+                                <ul style="text-align: left; color: #4b5563; margin-bottom: 20px;">
+                                    <li>✓ Mercedes, BMW Série 5</li>
+                                    <li>✓ Véhicules haut de gamme</li>
+                                    <li>✓ Chauffeur disponible</li>
+                                    <li>✓ Service premium</li>
+                                </ul>
                             </div>
                         </div>
                     `;
                     break;
                     
                 case 'restaurant':
-                    content += `
-                        <h2 style="color: ${primaryColor}; font-size: 2rem; font-weight: bold; text-align: center; margin-bottom: 25px;">🍽️ Notre Menu</h2>
-                        <div style="max-width: 600px; margin: 0 auto;">
-                            <div style="background: #f9fafb; padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid ${primaryColor};">
-                                <h3 style="font-weight: bold; color: ${primaryColor}; margin-bottom: 15px; font-size: 1.3rem;">🥗 Entrées</h3>
-                                <div style="margin-bottom: 10px; display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px dotted #d1d5db;">
-                                    <span>Salade Caesar</span><strong style="color: ${primaryColor};">12€</strong>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px dotted #d1d5db;">
-                                    <span>Carpaccio de saumon</span><strong style="color: ${primaryColor};">15€</strong>
+                    servicesContent += `
+                        <div style="display: grid; gap: 40px;">
+                            <div style="background: #f8fafc; padding: 40px; border-radius: 15px;">
+                                <h3 style="font-size: 2rem; font-weight: bold; color: ${primaryColor}; margin-bottom: 25px; text-align: center;">🍽️ Restauration sur place</h3>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                                    <div style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid ${primaryColor};">
+                                        <h4 style="font-weight: bold; color: ${primaryColor}; margin-bottom: 10px;">🥗 Menu du jour</h4>
+                                        <p style="color: #6b7280;">Entrée + Plat + Dessert à partir de 18€</p>
+                                    </div>
+                                    <div style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid ${primaryColor};">
+                                        <h4 style="font-weight: bold; color: ${primaryColor}; margin-bottom: 10px;">🍷 Carte des vins</h4>
+                                        <p style="color: #6b7280;">Sélection de vins français et internationaux</p>
+                                    </div>
+                                    <div style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid ${primaryColor};">
+                                        <h4 style="font-weight: bold; color: ${primaryColor}; margin-bottom: 10px;">🎂 Événements privés</h4>
+                                        <p style="color: #6b7280;">Anniversaires, mariages, réceptions d'entreprise</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div style="background: #f9fafb; padding: 25px; border-radius: 12px; border-left: 4px solid ${primaryColor};">
-                                <h3 style="font-weight: bold; color: ${primaryColor}; margin-bottom: 15px; font-size: 1.3rem;">🥩 Plats Principaux</h3>
-                                <div style="margin-bottom: 10px; display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px dotted #d1d5db;">
-                                    <span>Filet de bœuf</span><strong style="color: ${primaryColor};">28€</strong>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px dotted #d1d5db;">
-                                    <span>Saumon grillé</span><strong style="color: ${primaryColor};">22€</strong>
+                            <div style="background: linear-gradient(135deg, ${primaryColor}11, #ffffff); padding: 40px; border-radius: 15px;">
+                                <h3 style="font-size: 2rem; font-weight: bold; color: ${primaryColor}; margin-bottom: 25px; text-align: center;">🚀 Services additionnels</h3>
+                                <div style="text-align: center;">
+                                    <div style="display: inline-flex; background: ${primaryColor}; color: white; padding: 15px 30px; border-radius: 25px; margin: 10px; font-weight: bold;">📱 Réservation en ligne</div>
+                                    <div style="display: inline-flex; background: ${primaryColor}; color: white; padding: 15px 30px; border-radius: 25px; margin: 10px; font-weight: bold;">🚚 Livraison à domicile</div>
+                                    <div style="display: inline-flex; background: ${primaryColor}; color: white; padding: 15px 30px; border-radius: 25px; margin: 10px; font-weight: bold;">🥡 Plats à emporter</div>
                                 </div>
                             </div>
                         </div>
@@ -973,18 +1125,429 @@
                     break;
                     
                 default:
-                    content += `
-                        <h2 style="color: ${primaryColor}; font-size: 2rem; font-weight: bold; text-align: center; margin-bottom: 25px;">✨ Nos Services</h2>
-                        <div style="max-width: 600px; margin: 0 auto;">
-                            <div style="background: #f9fafb; padding: 25px; border-radius: 12px; border-left: 4px solid ${primaryColor};">
-                                <h3 style="font-weight: bold; color: ${primaryColor}; margin-bottom: 10px;">Service Excellence</h3>
-                                <p style="color: #6b7280; line-height: 1.6;">Découvrez nos services de qualité professionnelle adaptés à vos besoins spécifiques.</p>
+                    servicesContent += `
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                            <div style="background: #f8fafc; padding: 30px; border-radius: 15px; border-left: 6px solid ${primaryColor};">
+                                <h3 style="font-size: 1.8rem; font-weight: bold; color: ${primaryColor}; margin-bottom: 20px;">🎯 Service Principal</h3>
+                                <p style="color: #6b7280; line-height: 1.6; margin-bottom: 20px;">
+                                    Notre service phare adapté à vos besoins spécifiques avec un accompagnement personnalisé.
+                                </p>
+                                <ul style="color: #4b5563; margin-bottom: 20px;">
+                                    <li>✓ Consultation gratuite</li>
+                                    <li>✓ Devis personnalisé</li>
+                                    <li>✓ Suivi de qualité</li>
+                                    <li>✓ Garantie satisfaction</li>
+                                </ul>
+                            </div>
+                            <div style="background: #f8fafc; padding: 30px; border-radius: 15px; border-left: 6px solid ${primaryColor};">
+                                <h3 style="font-size: 1.8rem; font-weight: bold; color: ${primaryColor}; margin-bottom: 20px;">⚡ Service Express</h3>
+                                <p style="color: #6b7280; line-height: 1.6; margin-bottom: 20px;">
+                                    Solution rapide pour les besoins urgents avec intervention sous 24h.
+                                </p>
+                                <ul style="color: #4b5563; margin-bottom: 20px;">
+                                    <li>✓ Intervention rapide</li>
+                                    <li>✓ Disponibilité 7j/7</li>
+                                    <li>✓ Équipe experte</li>
+                                    <li>✓ Tarif préférentiel</li>
+                                </ul>
+                            </div>
+                            <div style="background: linear-gradient(135deg, ${primaryColor}22, #ffffff); padding: 30px; border-radius: 15px; border-left: 6px solid ${primaryColor};">
+                                <h3 style="font-size: 1.8rem; font-weight: bold; color: ${primaryColor}; margin-bottom: 20px;">🏆 Service Premium</h3>
+                                <p style="color: #6b7280; line-height: 1.6; margin-bottom: 20px;">
+                                    L'excellence de notre expertise avec un service haut de gamme et un suivi privilégié.
+                                </p>
+                                <ul style="color: #4b5563; margin-bottom: 20px;">
+                                    <li>✓ Service VIP</li>
+                                    <li>✓ Accompagnement dédié</li>
+                                    <li>✓ Garantie étendue</li>
+                                    <li>✓ Support prioritaire</li>
+                                </ul>
                             </div>
                         </div>
                     `;
             }
             
-            return content + '</div>';
+            return servicesContent + '</div></div></div>';
+        }
+
+        function generatePortfolioPage() {
+            const { primaryColor, photos } = websiteData;
+            
+            let portfolioContent = `
+                <div id="page-portfolio" class="page-content" style="display: none;">
+                    <div style="padding: 60px 20px; background: white;">
+                        <div style="max-width: 1000px; margin: 0 auto;">
+                            <h1 style="font-size: 3rem; color: ${primaryColor}; text-align: center; margin-bottom: 50px;">Notre Portfolio</h1>
+            `;
+            
+            if (photos && photos.length > 0) {
+                portfolioContent += `
+                    <div style="margin-bottom: 50px;">
+                        <h2 style="font-size: 2rem; color: ${primaryColor}; text-align: center; margin-bottom: 30px;">📸 Nos Réalisations</h2>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px;">
+                            ${photos.map((photo, index) => `
+                                <div style="position: relative; overflow: hidden; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); transition: transform 0.3s;">
+                                    <img src="${photo.data}" alt="Réalisation ${index + 1}" style="width: 100%; height: 200px; object-fit: cover;">
+                                    <div style="position: absolute; inset: 0; background: linear-gradient(135deg, ${primaryColor}33, transparent); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0">
+                                        <div style="color: white; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Projet ${index + 1}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            portfolioContent += `
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                    <div style="background: #f8fafc; padding: 30px; border-radius: 15px; text-align: center;">
+                        <div style="font-size: 4rem; margin-bottom: 20px;">🏆</div>
+                        <h3 style="color: ${primaryColor}; font-weight: bold; font-size: 1.5rem; margin-bottom: 15px;">Projet Excellence</h3>
+                        <p style="color: #6b7280; line-height: 1.6;">
+                            Un projet d'envergure qui démontre notre expertise et notre capacité à relever les défis les plus complexes.
+                        </p>
+                    </div>
+                    <div style="background: #f8fafc; padding: 30px; border-radius: 15px; text-align: center;">
+                        <div style="font-size: 4rem; margin-bottom: 20px;">⚡</div>
+                        <h3 style="color: ${primaryColor}; font-weight: bold; font-size: 1.5rem; margin-bottom: 15px;">Innovation</h3>
+                        <p style="color: #6b7280; line-height: 1.6;">
+                            Solutions innovantes et créatives qui ont permis d'atteindre des résultats exceptionnels.
+                        </p>
+                    </div>
+                    <div style="background: #f8fafc; padding: 30px; border-radius: 15px; text-align: center;">
+                        <div style="font-size: 4rem; margin-bottom: 20px;">💎</div>
+                        <h3 style="color: ${primaryColor}; font-weight: bold; font-size: 1.5rem; margin-bottom: 15px;">Qualité Premium</h3>
+                        <p style="color: #6b7280; line-height: 1.6;">
+                            Un travail de précision qui reflète notre engagement envers l'excellence et la satisfaction client.
+                        </p>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 50px;">
+                    <div style="background: ${primaryColor}; color: white; padding: 20px 40px; border-radius: 25px; display: inline-block; font-weight: bold; font-size: 1.1rem;">
+                        📞 Discutons de votre projet
+                    </div>
+                </div>
+            `;
+            
+            return portfolioContent + '</div></div></div>';
+        }
+
+        function generateBlogPage() {
+            const { primaryColor } = websiteData;
+            
+            return `
+                <div id="page-blog" class="page-content" style="display: none;">
+                    <div style="padding: 60px 20px; background: white;">
+                        <div style="max-width: 900px; margin: 0 auto;">
+                            <h1 style="font-size: 3rem; color: ${primaryColor}; text-align: center; margin-bottom: 50px;">Blog & Actualités</h1>
+                            
+                            <!-- Catégories -->
+                            <div style="text-align: center; margin-bottom: 40px;">
+                                <div style="display: inline-flex; gap: 15px; flex-wrap: wrap;">
+                                    <div style="background: ${primaryColor}; color: white; padding: 8px 20px; border-radius: 20px; font-weight: bold; font-size: 0.9rem;">📰 Actualités</div>
+                                    <div style="background: #f3f4f6; color: #6b7280; padding: 8px 20px; border-radius: 20px; font-weight: bold; font-size: 0.9rem;">💡 Conseils</div>
+                                    <div style="background: #f3f4f6; color: #6b7280; padding: 8px 20px; border-radius: 20px; font-weight: bold; font-size: 0.9rem;">🔧 Tutoriels</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Articles -->
+                            <div style="display: grid; gap: 40px;">
+                                <article style="background: #f8fafc; padding: 30px; border-radius: 15px; border-left: 6px solid ${primaryColor};">
+                                    <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 15px;">
+                                        <div style="background: ${primaryColor}; color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.8rem; font-weight: bold;">ACTUALITÉ</div>
+                                        <div style="color: #9ca3af; font-size: 0.9rem;">📅 ${new Date().toLocaleDateString('fr-FR')}</div>
+                                    </div>
+                                    <h2 style="color: ${primaryColor}; font-size: 1.8rem; font-weight: bold; margin-bottom: 15px;">
+                                        Nos dernières innovations au service de votre satisfaction
+                                    </h2>
+                                    <p style="color: #4b5563; line-height: 1.7; margin-bottom: 15px;">
+                                        Nous sommes fiers de vous présenter nos dernières innovations qui révolutionnent notre approche 
+                                        et améliorent considérablement la qualité de nos services...
+                                    </p>
+                                    <div style="text-align: right;">
+                                        <span style="color: ${primaryColor}; font-weight: bold; cursor: pointer;">Lire la suite →</span>
+                                    </div>
+                                </article>
+                                
+                                <article style="background: #f8fafc; padding: 30px; border-radius: 15px; border-left: 6px solid ${primaryColor};">
+                                    <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 15px;">
+                                        <div style="background: #10b981; color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.8rem; font-weight: bold;">CONSEILS</div>
+                                        <div style="color: #9ca3af; font-size: 0.9rem;">📅 ${new Date(Date.now() - 86400000 * 3).toLocaleDateString('fr-FR')}</div>
+                                    </div>
+                                    <h2 style="color: ${primaryColor}; font-size: 1.8rem; font-weight: bold; margin-bottom: 15px;">
+                                        Comment optimiser votre expérience avec nos services
+                                    </h2>
+                                    <p style="color: #4b5563; line-height: 1.7; margin-bottom: 15px;">
+                                        Découvrez nos conseils d'experts pour tirer le meilleur parti de nos services et obtenir 
+                                        des résultats encore plus satisfaisants...
+                                    </p>
+                                    <div style="text-align: right;">
+                                        <span style="color: ${primaryColor}; font-weight: bold; cursor: pointer;">Lire la suite →</span>
+                                    </div>
+                                </article>
+                                
+                                <article style="background: #f8fafc; padding: 30px; border-radius: 15px; border-left: 6px solid ${primaryColor};">
+                                    <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 15px;">
+                                        <div style="background: #f59e0b; color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.8rem; font-weight: bold;">TUTORIEL</div>
+                                        <div style="color: #9ca3af; font-size: 0.9rem;">📅 ${new Date(Date.now() - 86400000 * 7).toLocaleDateString('fr-FR')}</div>
+                                    </div>
+                                    <h2 style="color: ${primaryColor}; font-size: 1.8rem; font-weight: bold; margin-bottom: 15px;">
+                                        Guide complet : Tout ce que vous devez savoir
+                                    </h2>
+                                    <p style="color: #4b5563; line-height: 1.7; margin-bottom: 15px;">
+                                        Un guide détaillé qui vous accompagne pas à pas pour comprendre tous les aspects 
+                                        de notre domaine d'expertise...
+                                    </p>
+                                    <div style="text-align: right;">
+                                        <span style="color: ${primaryColor}; font-weight: bold; cursor: pointer;">Lire la suite →</span>
+                                    </div>
+                                </article>
+                            </div>
+                            
+                            <div style="text-align: center; margin-top: 50px;">
+                                <div style="background: ${primaryColor}; color: white; padding: 15px 30px; border-radius: 25px; display: inline-block; font-weight: bold;">
+                                    📧 S'abonner à la newsletter
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateContactPage() {
+            const { primaryColor, phone, address, businessEmail, mainTitle } = websiteData;
+            
+            return `
+                <div id="page-contact" class="page-content" style="display: none;">
+                    <div style="padding: 60px 20px; background: white;">
+                        <div style="max-width: 1000px; margin: 0 auto;">
+                            <h1 style="font-size: 3rem; color: ${primaryColor}; text-align: center; margin-bottom: 50px;">Contactez-nous</h1>
+                            
+                            <div style="display: grid; lg:grid-template-columns: 1fr 1fr; gap: 50px;">
+                                <!-- Informations de contact -->
+                                <div>
+                                    <h2 style="color: ${primaryColor}; font-size: 2rem; margin-bottom: 30px;">📞 Nos Coordonnées</h2>
+                                    
+                                    <div style="display: grid; gap: 25px;">
+                                        ${phone ? `
+                                            <div style="background: #f8fafc; padding: 25px; border-radius: 15px; border-left: 6px solid ${primaryColor};">
+                                                <div style="display: flex; align-items: center; gap: 15px;">
+                                                    <div style="background: ${primaryColor}; color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">📱</div>
+                                                    <div>
+                                                        <h3 style="font-weight: bold; color: ${primaryColor}; margin-bottom: 5px;">Téléphone</h3>
+                                                        <p style="color: #4b5563; font-size: 1.1rem;">${phone}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ` : ''}
+                                        
+                                        ${businessEmail ? `
+                                            <div style="background: #f8fafc; padding: 25px; border-radius: 15px; border-left: 6px solid ${primaryColor};">
+                                                <div style="display: flex; align-items: center; gap: 15px;">
+                                                    <div style="background: ${primaryColor}; color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">📧</div>
+                                                    <div>
+                                                        <h3 style="font-weight: bold; color: ${primaryColor}; margin-bottom: 5px;">Email</h3>
+                                                        <p style="color: #4b5563; font-size: 1.1rem;">${businessEmail}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ` : ''}
+                                        
+                                        ${address ? `
+                                            <div style="background: #f8fafc; padding: 25px; border-radius: 15px; border-left: 6px solid ${primaryColor};">
+                                                <div style="display: flex; align-items: center; gap: 15px;">
+                                                    <div style="background: ${primaryColor}; color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">📍</div>
+                                                    <div>
+                                                        <h3 style="font-weight: bold; color: ${primaryColor}; margin-bottom: 5px;">Adresse</h3>
+                                                        <p style="color: #4b5563; font-size: 1.1rem;">${address}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ` : ''}
+                                        
+                                        <div style="background: #f8fafc; padding: 25px; border-radius: 15px; border-left: 6px solid ${primaryColor};">
+                                            <div style="display: flex; align-items: center; gap: 15px;">
+                                                <div style="background: ${primaryColor}; color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">⏰</div>
+                                                <div>
+                                                    <h3 style="font-weight: bold; color: ${primaryColor}; margin-bottom: 5px;">Horaires</h3>
+                                                    <p style="color: #4b5563; font-size: 1.1rem;">Lun-Ven: 9h-18h<br>Sam: 9h-12h</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Formulaire de contact -->
+                                <div>
+                                    <h2 style="color: ${primaryColor}; font-size: 2rem; margin-bottom: 30px;">✉️ Nous Écrire</h2>
+                                    
+                                    <form style="background: #f8fafc; padding: 30px; border-radius: 15px; border: 2px solid #e5e7eb;">
+                                        <div style="display: grid; gap: 20px;">
+                                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                                <div>
+                                                    <label style="display: block; font-weight: bold; color: #374151; margin-bottom: 5px;">Nom *</label>
+                                                    <input type="text" required style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 1rem;">
+                                                </div>
+                                                <div>
+                                                    <label style="display: block; font-weight: bold; color: #374151; margin-bottom: 5px;">Prénom *</label>
+                                                    <input type="text" required style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 1rem;">
+                                                </div>
+                                            </div>
+                                            
+                                            <div>
+                                                <label style="display: block; font-weight: bold; color: #374151; margin-bottom: 5px;">Email *</label>
+                                                <input type="email" required style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 1rem;">
+                                            </div>
+                                            
+                                            <div>
+                                                <label style="display: block; font-weight: bold; color: #374151; margin-bottom: 5px;">Téléphone</label>
+                                                <input type="tel" style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 1rem;">
+                                            </div>
+                                            
+                                            <div>
+                                                <label style="display: block; font-weight: bold; color: #374151; margin-bottom: 5px;">Sujet *</label>
+                                                <select required style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 1rem;">
+                                                    <option value="">Choisissez un sujet</option>
+                                                    <option value="devis">Demande de devis</option>
+                                                    <option value="info">Demande d'information</option>
+                                                    <option value="rdv">Prise de rendez-vous</option>
+                                                    <option value="autre">Autre</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <div>
+                                                <label style="display: block; font-weight: bold; color: #374151; margin-bottom: 5px;">Message *</label>
+                                                <textarea required rows="5" style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 1rem; resize: vertical;" placeholder="Décrivez votre demande..."></textarea>
+                                            </div>
+                                            
+                                            <!-- Conformité RGPD -->
+                                            <div style="display: flex; align-items: flex-start; gap: 10px;">
+                                                <input type="checkbox" required style="margin-top: 4px;">
+                                                <label style="font-size: 0.9rem; color: #6b7280; line-height: 1.4;">
+                                                    J'accepte que mes données personnelles soient utilisées pour me recontacter concernant ma demande. 
+                                                    <a href="#" style="color: ${primaryColor}; text-decoration: underline;">Politique de confidentialité</a>
+                                                </label>
+                                            </div>
+                                            
+                                            <button type="submit" style="background: ${primaryColor}; color: white; padding: 15px 30px; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: all 0.3s;">
+                                                📨 Envoyer le message
+                                            </button>
+                                        </div>
+                                    </form>
+                                    
+                                    <div style="text-align: center; margin-top: 30px; padding: 20px; background: #f0f9ff; border-radius: 10px; border: 1px solid ${primaryColor};">
+                                        <p style="color: ${primaryColor}; font-weight: bold; margin: 0;">⚡ Réponse garantie sous 24h</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateFooter() {
+            const { primaryColor, mainTitle, phone, businessEmail, address } = websiteData;
+            
+            return `
+                <!-- Footer -->
+                <footer style="background: linear-gradient(135deg, #1f2937, #111827); color: white; padding: 60px 20px 30px;">
+                    <div style="max-width: 1200px; margin: 0 auto;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px;">
+                            
+                            <!-- Informations entreprise -->
+                            <div>
+                                <h3 style="color: ${primaryColor}; font-size: 1.5rem; font-weight: bold; margin-bottom: 20px;">${mainTitle}</h3>
+                                <p style="color: #d1d5db; line-height: 1.6; margin-bottom: 20px;">
+                                    Votre partenaire de confiance pour des services d'exception. 
+                                    Nous nous engageons à dépasser vos attentes.
+                                </p>
+                                <div style="display: flex; gap: 15px;">
+                                    <a href="#" style="background: ${primaryColor}; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: all 0.3s;">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                    <a href="#" style="background: ${primaryColor}; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: all 0.3s;">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                    <a href="#" style="background: ${primaryColor}; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: all 0.3s;">
+                                        <i class="fab fa-linkedin-in"></i>
+                                    </a>
+                                    <a href="#" style="background: ${primaryColor}; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: all 0.3s;">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <!-- Liens rapides -->
+                            <div>
+                                <h4 style="color: ${primaryColor}; font-weight: bold; margin-bottom: 20px;">Liens Rapides</h4>
+                                <ul style="list-style: none; padding: 0; margin: 0;">
+                                    <li style="margin-bottom: 10px;"><a href="#" onclick="showPage('accueil')" style="color: #d1d5db; text-decoration: none;">Accueil</a></li>
+                                    <li style="margin-bottom: 10px;"><a href="#" onclick="showPage('apropos')" style="color: #d1d5db; text-decoration: none;">À propos</a></li>
+                                    <li style="margin-bottom: 10px;"><a href="#" onclick="showPage('services')" style="color: #d1d5db; text-decoration: none;">Services</a></li>
+                                    <li style="margin-bottom: 10px;"><a href="#" onclick="showPage('portfolio')" style="color: #d1d5db; text-decoration: none;">Portfolio</a></li>
+                                    <li style="margin-bottom: 10px;"><a href="#" onclick="showPage('blog')" style="color: #d1d5db; text-decoration: none;">Blog</a></li>
+                                    <li style="margin-bottom: 10px;"><a href="#" onclick="showPage('contact')" style="color: #d1d5db; text-decoration: none;">Contact</a></li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Contact info -->
+                            <div>
+                                <h4 style="color: ${primaryColor}; font-weight: bold; margin-bottom: 20px;">Contact</h4>
+                                <div style="color: #d1d5db; line-height: 1.8;">
+                                    ${phone ? `<p>📱 ${phone}</p>` : ''}
+                                    ${businessEmail ? `<p>📧 ${businessEmail}</p>` : ''}
+                                    ${address ? `<p>📍 ${address}</p>` : ''}
+                                    <p>⏰ Lun-Ven: 9h-18h</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Légal -->
+                            <div>
+                                <h4 style="color: ${primaryColor}; font-weight: bold; margin-bottom: 20px;">Informations Légales</h4>
+                                <ul style="list-style: none; padding: 0; margin: 0; color: #d1d5db;">
+                                    <li style="margin-bottom: 10px;"><a href="#" style="color: #d1d5db; text-decoration: none;">Mentions légales</a></li>
+                                    <li style="margin-bottom: 10px;"><a href="#" style="color: #d1d5db; text-decoration: none;">Politique de confidentialité</a></li>
+                                    <li style="margin-bottom: 10px;"><a href="#" style="color: #d1d5db; text-decoration: none;">Conditions générales</a></li>
+                                    <li style="margin-bottom: 10px;"><a href="#" style="color: #d1d5db; text-decoration: none;">Cookies</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Copyright -->
+                        <div style="border-top: 1px solid #374151; padding-top: 30px; text-align: center;">
+                            <p style="color: #9ca3af; margin: 0;">
+                                © ${new Date().getFullYear()} ${mainTitle}. Tous droits réservés. | 
+                                Site créé avec ❤️ par IA WebGen
+                            </p>
+                        </div>
+                    </div>
+                </footer>
+                
+                <!-- Bannière cookies RGPD -->
+                <div id="cookie-banner" style="position: fixed; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.95); color: white; padding: 20px; z-index: 1000;">
+                    <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;">
+                        <div style="flex: 1;">
+                            <p style="margin: 0; font-size: 0.9rem;">
+                                🍪 Ce site utilise des cookies pour améliorer votre expérience. 
+                                En continuant, vous acceptez notre <a href="#" style="color: ${primaryColor};">politique de cookies</a>.
+                            </p>
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <button onclick="document.getElementById('cookie-banner').style.display='none'" 
+                                    style="background: #6b7280; color: white; padding: 8px 16px; border: none; border-radius: 5px; cursor: pointer;">
+                                Refuser
+                            </button>
+                            <button onclick="document.getElementById('cookie-banner').style.display='none'" 
+                                    style="background: ${primaryColor}; color: white; padding: 8px 16px; border: none; border-radius: 5px; cursor: pointer;">
+                                Accepter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
         }
 
         // Navigation
@@ -1025,7 +1588,7 @@
             
             const payButton = document.getElementById('payButton');
             if (payButton) {
-                payButton.innerHTML = `💳 COMMANDER MAINTENANT - ${finalPrice}€`;
+                payButton.innerHTML = `💳 COMMANDER SITE COMPLET - ${finalPrice}€`;
                 payButton.style.backgroundColor = type === 'site' ? '#3b82f6' : '#10b981';
             }
         }
@@ -1048,25 +1611,27 @@
             
             const templateName = allTemplates[selectedTemplate] ? allTemplates[selectedTemplate].name : 'Standard';
             const itemName = currentOffer === 'site' 
-                ? `Site+IA+Pro+Theme+${templateName.replace(/\s+/g, '+')}+-+IA+WebGen`
-                : 'Conciergerie+IA+Complete+Premium+-+IA+WebGen';
+                ? `Site+Complet+Pro+Theme+${templateName.replace(/\s+/g, '+')}+-+IA+WebGen`
+                : 'Conciergerie+Site+Complet+Premium+-+IA+WebGen';
             
             const paypalUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=assakourc@gmail.com&item_name=${itemName}&amount=${finalPrice}.00&currency_code=EUR&return=${encodeURIComponent(window.location.href)}&cancel_return=${encodeURIComponent(window.location.href)}`;
 
-            const message = `🎉 Commande confirmée !\n\n` +
+            const message = `🏆 Commande Site Complet confirmée !\n\n` +
                           `📋 Récapitulatif :\n` +
+                          `• Site complet: 7 pages professionnelles\n` +
                           `• Thème: ${templateName} ${allTemplates[selectedTemplate] && allTemplates[selectedTemplate].isPremium ? '(Premium +5€)' : '(Gratuit)'}\n` +
-                          `• Offre: ${currentOffer === 'site' ? 'Site IA Pro' : 'Conciergerie IA Complète'}\n` +
+                          `• Fonctionnalités: Menu sticky, Blog, Portfolio, Contact, RGPD\n` +
+                          `• Offre: ${currentOffer === 'site' ? 'Site Complet Pro' : 'Conciergerie Site Complet'}\n` +
                           `• Prix total: ${finalPrice}€\n\n` +
                           `Procéder au paiement PayPal ?`;
 
             if (confirm(message)) {
                 window.open(paypalUrl, '_blank');
-                showNotification('🎉 Redirection PayPal... Commande en cours !');
+                showNotification('🎉 Redirection PayPal... Site complet en commande !');
             }
         }
 
-        // Fonctions d'authentification
+        // Fonctions d'authentification (identiques)
         function showLogin() {
             document.getElementById('authModalTitle').textContent = 'Connexion';
             document.getElementById('loginForm').style.display = 'block';
@@ -1122,7 +1687,7 @@
             document.getElementById('userName').textContent = `👋 ${currentUser.name}`;
         }
 
-        // Fonctions de partage
+        // Fonctions de partage (identiques)
         function toggleShareMenu() {
             const menu = document.getElementById('shareMenu');
             menu.classList.toggle('hidden');
@@ -1138,7 +1703,7 @@
 
         function shareOnTwitter() {
             const url = window.location.href;
-            const text = "🤖 Incroyable ! IA WebGen crée des sites pros avec 10 thèmes magnifiques !";
+            const text = "🏆 Incroyable ! IA WebGen crée des sites complets avec toutes les pages !";
             const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
             window.open(twitterUrl, '_blank', 'width=600,height=400');
             showNotification('🎁 Code SHARE10 activé ! 10% de réduction !');
@@ -1147,7 +1712,7 @@
 
         function shareOnWhatsApp() {
             const url = window.location.href;
-            const text = "🤖 Regarde ! IA WebGen crée des sites magnifiques en 2h : ";
+            const text = "🏆 Regarde ! IA WebGen crée des sites complets avec toutes les pages : ";
             const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text + url)}`;
             window.open(whatsappUrl, '_blank');
             showNotification('🎁 Code SHARE10 activé ! Économisez 10% !');
