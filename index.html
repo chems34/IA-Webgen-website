@@ -20,7 +20,6 @@
         .template-card { cursor: pointer; transition: all 0.3s; border: 3px solid transparent; }
         .template-card:hover { transform: scale(1.02); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
         .template-card.selected { border: 3px solid #10b981; background: #f0fdf4; }
-        .premium-badge { position: absolute; top: -8px; right: -8px; background: linear-gradient(45deg, #ffd700, #ffed4e); color: #1f2937; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: bold; }
         .site-nav { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(10px); }
         .page-content { display: none; }
         .page-content.active { display: block; }
@@ -31,7 +30,6 @@
         .requirement-card { border: 2px solid #e5e7eb; border-radius: 12px; padding: 20px; transition: all 0.3s; cursor: pointer; }
         .requirement-card:hover { border-color: #3b82f6; transform: translateY(-2px); }
         .requirement-card.selected { border-color: #10b981; background: #f0fdf4; }
-        .feature-toggle { margin: 10px 0; }
         .tab-button { padding: 12px 20px; border-radius: 8px; margin-right: 10px; cursor: pointer; transition: all 0.3s; }
         .tab-button.active { background: #3b82f6; color: white; }
         .tab-button:not(.active) { background: #f3f4f6; color: #6b7280; }
@@ -152,26 +150,6 @@
                                   class="w-full p-4 border rounded-lg h-32 resize-none"></textarea>
                     </div>
                 </div>
-
-                <!-- Upload de photos -->
-                <div class="mb-8">
-                    <h4 class="text-2xl font-bold text-gray-800 mb-6">📸 Vos images</h4>
-                    <div class="photo-upload-area bg-white rounded-lg" id="photoUploadArea">
-                        <div class="mb-4">
-                            <i class="fas fa-camera text-4xl text-blue-500 mb-2"></i>
-                            <h4 class="text-gray-800 font-bold text-lg mb-2">Ajoutez vos photos</h4>
-                            <p class="text-gray-600 text-sm mb-4">
-                                Glissez vos images ici ou cliquez pour sélectionner
-                            </p>
-                            <input type="file" id="photoInput" multiple accept="image/*" class="hidden">
-                            <button type="button" onclick="document.getElementById('photoInput').click()" 
-                                    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-sm">
-                                <i class="fas fa-upload mr-2"></i>Choisir des photos
-                            </button>
-                        </div>
-                        <div id="photoPreview" class="grid grid-cols-3 gap-2 mt-4 hidden"></div>
-                    </div>
-                </div>
             </div>
             
             <div class="text-center mt-8">
@@ -240,79 +218,36 @@
                     
                     <!-- Panneau de modifications -->
                     <div>
-                        <h3 class="text-lg font-bold mb-4">⚙️ Modifications & Ajouts</h3>
+                        <h3 class="text-lg font-bold mb-4">⚙️ Personnalisation</h3>
                         
-                        <!-- Onglets -->
-                        <div class="mb-4">
-                            <div class="flex flex-wrap">
-                                <button class="tab-button active" onclick="switchTab('content')">📝 Contenu</button>
-                                <button class="tab-button" onclick="switchTab('features')">🚀 Fonctionnalités</button>
-                                <button class="tab-button" onclick="switchTab('design')">🎨 Design</button>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-bold mb-2">Nom de l'entreprise</label>
+                                <input type="text" id="mainTitle" class="w-full p-3 border rounded-lg" onchange="updatePreview()">
                             </div>
-                        </div>
-
-                        <!-- Contenu de base -->
-                        <div id="content-tab" class="tab-content active">
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block text-sm font-bold mb-2">Nom de l'entreprise</label>
-                                    <input type="text" id="mainTitle" class="w-full p-3 border rounded-lg" onchange="updatePreview()">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-bold mb-2">Description</label>
-                                    <textarea id="subtitle" class="w-full p-3 border rounded-lg h-20" onchange="updatePreview()"></textarea>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-bold mb-2">Téléphone</label>
-                                    <input type="tel" id="phone" class="w-full p-3 border rounded-lg" placeholder="01 23 45 67 89" onchange="updatePreview()">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-bold mb-2">Adresse</label>
-                                    <input type="text" id="address" class="w-full p-3 border rounded-lg" placeholder="123 Rue Example, Paris" onchange="updatePreview()">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-bold mb-2">Email</label>
-                                    <input type="email" id="businessEmail" class="w-full p-3 border rounded-lg" placeholder="contact@entreprise.fr" onchange="updatePreview()">
-                                </div>
+                            <div>
+                                <label class="block text-sm font-bold mb-2">Description</label>
+                                <textarea id="subtitle" class="w-full p-3 border rounded-lg h-20" onchange="updatePreview()"></textarea>
                             </div>
-                        </div>
-
-                        <!-- Fonctionnalités -->
-                        <div id="features-tab" class="tab-content">
-                            <div class="space-y-4">
-                                <h4 class="font-bold text-gray-800">Ajouter des fonctionnalités :</h4>
-                                <div id="additionalFeatures" class="space-y-3">
-                                    <!-- Généré dynamiquement -->
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-bold mb-2">Demande personnalisée</label>
-                                    <textarea id="customFeatureRequest" class="w-full p-3 border rounded-lg h-20" placeholder="Ex: 'Ajouter un chat en direct', 'Système de réservation'..."></textarea>
-                                    <button onclick="addCustomFeature()" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                                        <i class="fas fa-plus mr-2"></i>Ajouter
-                                    </button>
-                                </div>
+                            <div>
+                                <label class="block text-sm font-bold mb-2">Couleur principale</label>
+                                <input type="color" id="primaryColor" value="#3b82f6" class="w-full h-10 rounded" onchange="updatePreview()">
                             </div>
-                        </div>
-
-                        <!-- Design -->
-                        <div id="design-tab" class="tab-content">
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block text-sm font-bold mb-2">Couleur principale</label>
-                                    <input type="color" id="primaryColor" value="#3b82f6" class="w-full h-10 rounded" onchange="updatePreview()">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-bold mb-2">Style de police</label>
-                                    <select id="fontStyle" class="w-full p-3 border rounded-lg" onchange="updatePreview()">
-                                        <option value="modern">Moderne</option>
-                                        <option value="classic">Classique</option>
-                                        <option value="elegant">Élégant</option>
-                                    </select>
-                                </div>
-                                <button onclick="updatePreview()" class="w-full bg-blue-500 text-white py-3 rounded hover:bg-blue-600">
-                                    🔄 Appliquer les changements
-                                </button>
+                            <div>
+                                <label class="block text-sm font-bold mb-2">Téléphone</label>
+                                <input type="tel" id="phone" class="w-full p-3 border rounded-lg" placeholder="01 23 45 67 89" onchange="updatePreview()">
                             </div>
+                            <div>
+                                <label class="block text-sm font-bold mb-2">Adresse</label>
+                                <input type="text" id="address" class="w-full p-3 border rounded-lg" placeholder="123 Rue Example, Paris" onchange="updatePreview()">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold mb-2">Email</label>
+                                <input type="email" id="businessEmail" class="w-full p-3 border rounded-lg" placeholder="contact@entreprise.fr" onchange="updatePreview()">
+                            </div>
+                            <button onclick="updatePreview()" class="w-full bg-blue-500 text-white py-3 rounded hover:bg-blue-600">
+                                🔄 Mettre à jour
+                            </button>
                         </div>
                         
                         <!-- Action finale -->
@@ -336,7 +271,6 @@
         // Variables globales
         let websiteData = {};
         let selectedTemplate = null;
-        let uploadedPhotos = [];
         let selectedRequirements = {
             pages: [],
             features: [],
@@ -434,8 +368,6 @@
 
         // Initialisation
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 IA WebGen Intelligent démarré');
-            
             const form = document.getElementById('websiteForm');
             if (form) {
                 form.addEventListener('submit', function(e) {
@@ -443,78 +375,7 @@
                     analyzeNeeds();
                 });
             }
-
-            setupPhotoUpload();
         });
-
-        // Configuration upload photos
-        function setupPhotoUpload() {
-            const uploadArea = document.getElementById('photoUploadArea');
-            const photoInput = document.getElementById('photoInput');
-            
-            if (!uploadArea || !photoInput) return;
-            
-            uploadArea.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                uploadArea.classList.add('drag-over');
-            });
-            
-            uploadArea.addEventListener('dragleave', () => {
-                uploadArea.classList.remove('drag-over');
-            });
-            
-            uploadArea.addEventListener('drop', (e) => {
-                e.preventDefault();
-                uploadArea.classList.remove('drag-over');
-                handleFiles(e.dataTransfer.files);
-            });
-            
-            photoInput.addEventListener('change', (e) => {
-                handleFiles(e.target.files);
-            });
-        }
-
-        function handleFiles(files) {
-            for (let file of files) {
-                if (file.type.startsWith('image/') && file.size <= 5 * 1024 * 1024) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        uploadedPhotos.push({
-                            name: file.name,
-                            data: e.target.result
-                        });
-                        displayPhotoPreview();
-                    };
-                    reader.readAsDataURL(file);
-                }
-            }
-        }
-
-        function displayPhotoPreview() {
-            const preview = document.getElementById('photoPreview');
-            if (!preview) return;
-            
-            preview.innerHTML = '';
-            preview.classList.remove('hidden');
-            
-            uploadedPhotos.forEach((photo, index) => {
-                const div = document.createElement('div');
-                div.className = 'relative';
-                div.innerHTML = `
-                    <img src="${photo.data}" alt="${photo.name}" class="w-full h-24 object-cover rounded">
-                    <button onclick="removePhoto(${index})" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 text-xs">×</button>
-                `;
-                preview.appendChild(div);
-            });
-        }
-
-        function removePhoto(index) {
-            uploadedPhotos.splice(index, 1);
-            displayPhotoPreview();
-            if (uploadedPhotos.length === 0) {
-                document.getElementById('photoPreview').classList.add('hidden');
-            }
-        }
 
         // ANALYSE INTELLIGENTE DES BESOINS
         function analyzeNeeds() {
@@ -533,7 +394,6 @@
                 description,
                 siteType,
                 userEmail,
-                photos: uploadedPhotos,
                 mainTitle: businessName,
                 subtitle: description,
                 primaryColor: '#3b82f6',
@@ -682,7 +542,7 @@
                 continueBtn.disabled = false;
             }
             
-            showNotification(`✅ Design "${TEMPLATES[index].name}" sélectionné !`);
+            showNotification('✅ Design "' + TEMPLATES[index].name + '" sélectionné !');
         }
 
         function proceedWithSelectedTemplate() {
@@ -709,80 +569,11 @@
             if (subtitle) subtitle.value = websiteData.description;
             if (primaryColor) primaryColor.value = websiteData.primaryColor;
             
-            generateAdditionalFeatures();
-            
             setTimeout(() => {
                 updatePreview();
             }, 100);
             
             showNotification('✅ Votre site personnalisé est prêt !');
-        }
-
-        function generateAdditionalFeatures() {
-            const container = document.getElementById('additionalFeatures');
-            if (!container) return;
-            
-            const availableFeatures = [
-                { id: 'newsletter', name: 'Newsletter', icon: '📧', description: 'Inscription newsletter' },
-                { id: 'faq', name: 'FAQ', icon: '❓', description: 'Questions fréquentes' },
-                { id: 'maps', name: 'Google Maps', icon: '🗺️', description: 'Localisation interactive' },
-                { id: 'social', name: 'Réseaux sociaux', icon: '📱', description: 'Liens réseaux sociaux' },
-                { id: 'seo', name: 'SEO avancé', icon: '🔍', description: 'Optimisation référencement' },
-                { id: 'analytics', name: 'Analytics', icon: '📊', description: 'Suivi des visiteurs' }
-            ];
-            
-            container.innerHTML = '';
-            
-            availableFeatures.forEach(feature => {
-                const div = document.createElement('div');
-                div.className = 'flex items-center justify-between bg-gray-50 p-3 rounded-lg';
-                div.innerHTML = `
-                    <div class="flex items-center">
-                        <span class="text-xl mr-3">${feature.icon}</span>
-                        <div>
-                            <div class="font-medium">${feature.name}</div>
-                            <div class="text-sm text-gray-600">${feature.description}</div>
-                        </div>
-                    </div>
-                    <label class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" class="sr-only peer" onchange="toggleFeature('${feature.id}')">
-                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                    </label>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function toggleFeature(featureId) {
-            console.log('Feature toggled:', featureId);
-            updatePreview();
-        }
-
-        function addCustomFeature() {
-            const request = document.getElementById('customFeatureRequest').value.trim();
-            if (!request) {
-                showNotification('❌ Décrivez la fonctionnalité à ajouter');
-                return;
-            }
-            
-            selectedRequirements.customRequests += '\n' + request;
-            document.getElementById('customFeatureRequest').value = '';
-            showNotification('✅ Fonctionnalité ajoutée ! Génération en cours...');
-            updatePreview();
-        }
-
-        function switchTab(tabName) {
-            // Cacher tous les onglets
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            document.querySelectorAll('.tab-button').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // Afficher l'onglet sélectionné
-            document.getElementById(tabName + '-tab').classList.add('active');
-            event.target.classList.add('active');
         }
 
         function updatePreview() {
@@ -809,7 +600,7 @@
             websiteData.address = address;
             websiteData.businessEmail = businessEmail;
 
-            const siteContent = generateIntelligentSiteContent();
+            const siteContent = generateSiteContent();
             const previewEl = document.getElementById('websitePreview');
             
             if (previewEl && siteContent) {
@@ -817,15 +608,17 @@
             }
         }
 
-        function generateIntelligentSiteContent() {
-            const { mainTitle, subtitle, primaryColor } = websiteData;
+        function generateSiteContent() {
             const template = TEMPLATES[selectedTemplate];
+            const primaryColor = websiteData.primaryColor;
+            const mainTitle = websiteData.mainTitle;
+            const subtitle = websiteData.subtitle;
             
             if (!template) {
                 return '<div style="padding: 20px; text-align: center; color: red;">Erreur: Template non trouvé</div>';
             }
             
-            // Navigation intelligente basée sur les besoins
+            // Navigation intelligente
             let navItems = ['Accueil'];
             selectedRequirements.pages.forEach(pageId => {
                 const pageNames = {
@@ -846,198 +639,100 @@
             });
             navItems.push('Contact');
             
-            let content = `
-                <div class="site-nav" style="background: rgba(255,255,255,0.95); border-bottom: 1px solid #e5e7eb; padding: 15px 20px; position: sticky; top: 0;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div style="font-size: 1.5rem; font-weight: bold; color: ${primaryColor};">
-                            ${mainTitle}
-                        </div>
-                        <div style="display: flex; gap: 20px; font-size: 0.9rem;">
-                            ${navItems.map((item, index) => `
-                                <span class="nav-link ${index === 0 ? 'active' : ''}" onclick="showPage('${item.toLowerCase()}')" style="color: ${index === 0 ? primaryColor : '#6b7280'}; font-weight: ${index === 0 ? 'bold' : 'normal'}; cursor: pointer;">${item}</span>
-                            `).join('')}
-                        </div>
-                    </div>
-                </div>
-            `;
+            let content = '<div class="site-nav" style="background: rgba(255,255,255,0.95); border-bottom: 1px solid #e5e7eb; padding: 15px 20px; position: sticky; top: 0;">';
+            content += '<div style="display: flex; justify-content: space-between; align-items: center;">';
+            content += '<div style="font-size: 1.5rem; font-weight: bold; color: ' + primaryColor + ';">' + mainTitle + '</div>';
+            content += '<div style="display: flex; gap: 20px; font-size: 0.9rem;">';
+            
+            navItems.forEach((item, index) => {
+                const isFirst = index === 0;
+                content += '<span class="nav-link ' + (isFirst ? 'active' : '') + '" onclick="showPage(\'' + item.toLowerCase() + '\')" style="color: ' + (isFirst ? primaryColor : '#6b7280') + '; font-weight: ' + (isFirst ? 'bold' : 'normal') + '; cursor: pointer;">' + item + '</span>';
+            });
+            
+            content += '</div></div></div>';
 
-            // Page d'accueil intelligente
-            content += `
-                <div id="page-accueil" class="page-content active">
-                    <div style="background: linear-gradient(135deg, ${primaryColor}, ${template.colors.secondary}); color: white; padding: 60px 20px; text-align: center;">
-                        <h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 20px;">${mainTitle}</h1>
-                        <p style="font-size: 1.2rem; margin-bottom: 30px;">${subtitle}</p>
-                        ${selectedRequirements.pages.includes('reservation') ? 
-                            '<button style="background: rgba(255,255,255,0.2); padding: 15px 30px; border: none; border-radius: 25px; color: white; font-weight: bold; cursor: pointer;">Réserver maintenant</button>' :
-                            selectedRequirements.pages.includes('shop') ?
-                            '<button style="background: rgba(255,255,255,0.2); padding: 15px 30px; border: none; border-radius: 25px; color: white; font-weight: bold; cursor: pointer;">Voir la boutique</button>' :
-                            '<button style="background: rgba(255,255,255,0.2); padding: 15px 30px; border: none; border-radius: 25px; color: white; font-weight: bold; cursor: pointer;">Nous contacter</button>'
-                        }
-                    </div>
-                    
-                    ${uploadedPhotos.length > 0 ? `
-                        <div style="padding: 60px 20px; background: white;">
-                            <h2 style="font-size: 2rem; color: ${primaryColor}; text-align: center; margin-bottom: 40px;">📸 Nos Réalisations</h2>
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto;">
-                                ${uploadedPhotos.slice(0, 6).map(photo => `
-                                    <img src="${photo.data}" alt="${photo.name}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                                `).join('')}
-                            </div>
-                        </div>
-                    ` : ''}
-                    
-                    <div style="padding: 60px 20px; background: #f8fafc;">
-                        <h2 style="font-size: 2rem; color: ${primaryColor}; text-align: center; margin-bottom: 40px;">Pourquoi nous choisir ?</h2>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; max-width: 800px; margin: 0 auto;">
-                            <div style="text-align: center; padding: 20px;">
-                                <div style="font-size: 3rem; margin-bottom: 15px;">⚡</div>
-                                <h3 style="color: ${primaryColor}; margin-bottom: 10px;">Rapidité</h3>
-                                <p style="color: #666;">Service rapide et efficace</p>
-                            </div>
-                            <div style="text-align: center; padding: 20px;">
-                                <div style="font-size: 3rem; margin-bottom: 15px;">🏆</div>
-                                <h3 style="color: ${primaryColor}; margin-bottom: 10px;">Qualité</h3>
-                                <p style="color: #666;">Excellence garantie</p>
-                            </div>
-                            <div style="text-align: center; padding: 20px;">
-                                <div style="font-size: 3rem; margin-bottom: 15px;">💯</div>
-                                <h3 style="color: ${primaryColor}; margin-bottom: 10px;">Satisfaction</h3>
-                                <p style="color: #666;">Clients satisfaits</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
+            // Page d'accueil
+            content += '<div id="page-accueil" class="page-content active">';
+            content += '<div style="background: linear-gradient(135deg, ' + primaryColor + ', ' + template.colors.secondary + '); color: white; padding: 60px 20px; text-align: center;">';
+            content += '<h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 20px;">' + mainTitle + '</h1>';
+            content += '<p style="font-size: 1.2rem; margin-bottom: 30px;">' + subtitle + '</p>';
+            
+            if (selectedRequirements.pages.includes('reservation')) {
+                content += '<button style="background: rgba(255,255,255,0.2); padding: 15px 30px; border: none; border-radius: 25px; color: white; font-weight: bold; cursor: pointer;">Réserver maintenant</button>';
+            } else if (selectedRequirements.pages.includes('shop')) {
+                content += '<button style="background: rgba(255,255,255,0.2); padding: 15px 30px; border: none; border-radius: 25px; color: white; font-weight: bold; cursor: pointer;">Voir la boutique</button>';
+            } else {
+                content += '<button style="background: rgba(255,255,255,0.2); padding: 15px 30px; border: none; border-radius: 25px; color: white; font-weight: bold; cursor: pointer;">Nous contacter</button>';
+            }
+            
+            content += '</div>';
+            content += '<div style="padding: 60px 20px; background: #f8fafc;">';
+            content += '<h2 style="font-size: 2rem; color: ' + primaryColor + '; text-align: center; margin-bottom: 40px;">Pourquoi nous choisir ?</h2>';
+            content += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; max-width: 800px; margin: 0 auto;">';
+            content += '<div style="text-align: center; padding: 20px;"><div style="font-size: 3rem; margin-bottom: 15px;">⚡</div><h3 style="color: ' + primaryColor + '; margin-bottom: 10px;">Rapidité</h3><p style="color: #666;">Service rapide et efficace</p></div>';
+            content += '<div style="text-align: center; padding: 20px;"><div style="font-size: 3rem; margin-bottom: 15px;">🏆</div><h3 style="color: ' + primaryColor + '; margin-bottom: 10px;">Qualité</h3><p style="color: #666;">Excellence garantie</p></div>';
+            content += '<div style="text-align: center; padding: 20px;"><div style="font-size: 3rem; margin-bottom: 15px;">💯</div><h3 style="color: ' + primaryColor + '; margin-bottom: 10px;">Satisfaction</h3><p style="color: #666;">Clients satisfaits</p></div>';
+            content += '</div></div></div>';
 
-            // Générer les pages sélectionnées
+            // Pages sélectionnées
             content += generateSelectedPages();
 
             // Page contact
             content += generateContactPage();
 
             // Footer
-            content += `
-                <footer style="background: #1f2937; color: white; padding: 40px 20px; text-align: center;">
-                    <h3 style="color: ${primaryColor}; margin-bottom: 20px;">${mainTitle}</h3>
-                    <p style="margin-bottom: 20px;">Votre partenaire de confiance</p>
-                    <p style="color: #9ca3af;">© ${new Date().getFullYear()} ${mainTitle}. Tous droits réservés.</p>
-                </footer>
-            `;
-
-            // Script de navigation
-            content += `
-                <script>
-                    function showPage(pageId) {
-                        document.querySelectorAll('.page-content').forEach(page => {
-                            page.style.display = 'none';
-                        });
-                        
-                        const selectedPage = document.getElementById('page-' + pageId);
-                        if (selectedPage) {
-                            selectedPage.style.display = 'block';
-                        }
-                        
-                        document.querySelectorAll('.nav-link').forEach(link => {
-                            link.style.color = '#6b7280';
-                            link.style.fontWeight = 'normal';
-                        });
-                        
-                        event.target.style.color = '${primaryColor}';
-                        event.target.style.fontWeight = 'bold';
-                        
-                        document.querySelector('#websitePreview').scrollTop = 0;
-                    }
-                </script>
-            `;
+            content += '<footer style="background: #1f2937; color: white; padding: 40px 20px; text-align: center;">';
+            content += '<h3 style="color: ' + primaryColor + '; margin-bottom: 20px;">' + mainTitle + '</h3>';
+            content += '<p style="margin-bottom: 20px;">Votre partenaire de confiance</p>';
+            content += '<p style="color: #9ca3af;">© ' + new Date().getFullYear() + ' ' + mainTitle + '. Tous droits réservés.</p>';
+            content += '</footer>';
 
             return content;
         }
 
         function generateSelectedPages() {
-            const { primaryColor, mainTitle } = websiteData;
+            const primaryColor = websiteData.primaryColor;
             let content = '';
 
-            // Générer les pages selon les besoins sélectionnés
             selectedRequirements.pages.forEach(pageId => {
                 switch(pageId) {
                     case 'menu':
-                        content += `
-                            <div id="page-menu" class="page-content" style="display: none;">
-                                <div style="padding: 60px 20px; background: white;">
-                                    <h1 style="font-size: 2.5rem; color: ${primaryColor}; text-align: center; margin-bottom: 50px;">🍽️ Notre Menu</h1>
-                                    <div style="max-width: 800px; margin: 0 auto;">
-                                        <div style="background: #f8fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
-                                            <h3 style="color: ${primaryColor}; font-size: 1.5rem; margin-bottom: 20px;">🥗 Entrées</h3>
-                                            <div style="display: flex; justify-content: space-between; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dotted #ccc;">
-                                                <span>Salade César</span><strong style="color: ${primaryColor};">12€</strong>
-                                            </div>
-                                            <div style="display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px dotted #ccc;">
-                                                <span>Carpaccio de saumon</span><strong style="color: ${primaryColor};">15€</strong>
-                                            </div>
-                                        </div>
-                                        <div style="background: #f8fafc; padding: 30px; border-radius: 15px;">
-                                            <h3 style="color: ${primaryColor}; font-size: 1.5rem; margin-bottom: 20px;">🥩 Plats</h3>
-                                            <div style="display: flex; justify-content: space-between; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dotted #ccc;">
-                                                <span>Filet de bœuf</span><strong style="color: ${primaryColor};">28€</strong>
-                                            </div>
-                                            <div style="display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px dotted #ccc;">
-                                                <span>Saumon grillé</span><strong style="color: ${primaryColor};">22€</strong>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
+                        content += '<div id="page-menu" class="page-content" style="display: none;">';
+                        content += '<div style="padding: 60px 20px; background: white;">';
+                        content += '<h1 style="font-size: 2.5rem; color: ' + primaryColor + '; text-align: center; margin-bottom: 50px;">🍽️ Notre Menu</h1>';
+                        content += '<div style="max-width: 800px; margin: 0 auto;">';
+                        content += '<div style="background: #f8fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">';
+                        content += '<h3 style="color: ' + primaryColor + '; font-size: 1.5rem; margin-bottom: 20px;">🥗 Entrées</h3>';
+                        content += '<div style="display: flex; justify-content: space-between; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dotted #ccc;"><span>Salade César</span><strong style="color: ' + primaryColor + ';">12€</strong></div>';
+                        content += '<div style="display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px dotted #ccc;"><span>Carpaccio de saumon</span><strong style="color: ' + primaryColor + ';">15€</strong></div>';
+                        content += '</div></div></div></div>';
                         break;
 
                     case 'shop':
-                        content += `
-                            <div id="page-boutique" class="page-content" style="display: none;">
-                                <div style="padding: 60px 20px; background: white;">
-                                    <h1 style="font-size: 2.5rem; color: ${primaryColor}; text-align: center; margin-bottom: 50px;">🛍️ Notre Boutique</h1>
-                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; max-width: 1000px; margin: 0 auto;">
-                                        <div style="background: #f8fafc; padding: 20px; border-radius: 15px; text-align: center;">
-                                            <div style="width: 100%; height: 150px; background: #e5e7eb; border-radius: 10px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; font-size: 3rem;">📦</div>
-                                            <h3 style="color: ${primaryColor}; font-weight: bold; margin-bottom: 10px;">Produit 1</h3>
-                                            <p style="color: #6b7280; margin-bottom: 15px;">Description du produit</p>
-                                            <div style="font-size: 1.5rem; font-weight: bold; color: ${primaryColor}; margin-bottom: 15px;">29€</div>
-                                            <button style="background: ${primaryColor}; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer;">Ajouter au panier</button>
-                                        </div>
-                                        <div style="background: #f8fafc; padding: 20px; border-radius: 15px; text-align: center;">
-                                            <div style="width: 100%; height: 150px; background: #e5e7eb; border-radius: 10px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; font-size: 3rem;">📦</div>
-                                            <h3 style="color: ${primaryColor}; font-weight: bold; margin-bottom: 10px;">Produit 2</h3>
-                                            <p style="color: #6b7280; margin-bottom: 15px;">Description du produit</p>
-                                            <div style="font-size: 1.5rem; font-weight: bold; color: ${primaryColor}; margin-bottom: 15px;">39€</div>
-                                            <button style="background: ${primaryColor}; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer;">Ajouter au panier</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
+                        content += '<div id="page-boutique" class="page-content" style="display: none;">';
+                        content += '<div style="padding: 60px 20px; background: white;">';
+                        content += '<h1 style="font-size: 2.5rem; color: ' + primaryColor + '; text-align: center; margin-bottom: 50px;">🛍️ Notre Boutique</h1>';
+                        content += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; max-width: 1000px; margin: 0 auto;">';
+                        content += '<div style="background: #f8fafc; padding: 20px; border-radius: 15px; text-align: center;">';
+                        content += '<div style="width: 100%; height: 150px; background: #e5e7eb; border-radius: 10px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; font-size: 3rem;">📦</div>';
+                        content += '<h3 style="color: ' + primaryColor + '; font-weight: bold; margin-bottom: 10px;">Produit 1</h3>';
+                        content += '<p style="color: #6b7280; margin-bottom: 15px;">Description du produit</p>';
+                        content += '<div style="font-size: 1.5rem; font-weight: bold; color: ' + primaryColor + '; margin-bottom: 15px;">29€</div>';
+                        content += '<button style="background: ' + primaryColor + '; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer;">Ajouter au panier</button>';
+                        content += '</div></div></div></div>';
                         break;
 
                     case 'services':
-                        content += `
-                            <div id="page-services" class="page-content" style="display: none;">
-                                <div style="padding: 60px 20px; background: white;">
-                                    <h1 style="font-size: 2.5rem; color: ${primaryColor}; text-align: center; margin-bottom: 50px;">🔧 Nos Services</h1>
-                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1000px; margin: 0 auto;">
-                                        <div style="background: #f8fafc; padding: 30px; border-radius: 15px; text-align: center;">
-                                            <div style="font-size: 3rem; margin-bottom: 20px;">⚡</div>
-                                            <h3 style="color: ${primaryColor}; font-weight: bold; margin-bottom: 15px;">Service Express</h3>
-                                            <p style="color: #6b7280; margin-bottom: 20px;">Service rapide pour vos urgences</p>
-                                            <div style="font-size: 1.5rem; font-weight: bold; color: ${primaryColor};">À partir de 50€</div>
-                                        </div>
-                                        <div style="background: #f8fafc; padding: 30px; border-radius: 15px; text-align: center;">
-                                            <div style="font-size: 3rem; margin-bottom: 20px;">🏆</div>
-                                            <h3 style="color: ${primaryColor}; font-weight: bold; margin-bottom: 15px;">Service Premium</h3>
-                                            <p style="color: #6b7280; margin-bottom: 20px;">Notre service haut de gamme</p>
-                                            <div style="font-size: 1.5rem; font-weight: bold; color: ${primaryColor};">À partir de 100€</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
+                        content += '<div id="page-services" class="page-content" style="display: none;">';
+                        content += '<div style="padding: 60px 20px; background: white;">';
+                        content += '<h1 style="font-size: 2.5rem; color: ' + primaryColor + '; text-align: center; margin-bottom: 50px;">🔧 Nos Services</h1>';
+                        content += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1000px; margin: 0 auto;">';
+                        content += '<div style="background: #f8fafc; padding: 30px; border-radius: 15px; text-align: center;">';
+                        content += '<div style="font-size: 3rem; margin-bottom: 20px;">⚡</div>';
+                        content += '<h3 style="color: ' + primaryColor + '; font-weight: bold; margin-bottom: 15px;">Service Express</h3>';
+                        content += '<p style="color: #6b7280; margin-bottom: 20px;">Service rapide pour vos urgences</p>';
+                        content += '<div style="font-size: 1.5rem; font-weight: bold; color: ' + primaryColor + ';">À partir de 50€</div>';
+                        content += '</div></div></div></div>';
                         break;
                 }
             });
@@ -1046,74 +741,33 @@
         }
 
         function generateContactPage() {
-            const { primaryColor, phone, address, businessEmail, mainTitle } = websiteData;
+            const primaryColor = websiteData.primaryColor;
+            const phone = websiteData.phone;
+            const address = websiteData.address;
+            const businessEmail = websiteData.businessEmail;
             
-            return `
-                <div id="page-contact" class="page-content" style="display: none;">
-                    <div style="padding: 60px 20px; background: white;">
-                        <div style="max-width: 1000px; margin: 0 auto;">
-                            <h1 style="font-size: 2.5rem; color: ${primaryColor}; text-align: center; margin-bottom: 50px;">📞 Contact</h1>
-                            
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px;">
-                                <!-- Coordonnées -->
-                                <div style="background: #f8fafc; padding: 40px; border-radius: 15px;">
-                                    <h2 style="color: ${primaryColor}; font-size: 1.8rem; margin-bottom: 30px;">Nos Coordonnées</h2>
-                                    <div style="space-y: 20px;">
-                                        ${phone ? `
-                                            <div style="margin-bottom: 20px;">
-                                                <div style="font-size: 1.5rem; margin-bottom: 5px;">📱</div>
-                                                <strong style="color: ${primaryColor};">Téléphone</strong>
-                                                <p>${phone}</p>
-                                            </div>
-                                        ` : ''}
-                                        ${businessEmail ? `
-                                            <div style="margin-bottom: 20px;">
-                                                <div style="font-size: 1.5rem; margin-bottom: 5px;">📧</div>
-                                                <strong style="color: ${primaryColor};">Email</strong>
-                                                <p>${businessEmail}</p>
-                                            </div>
-                                        ` : ''}
-                                        ${address ? `
-                                            <div style="margin-bottom: 20px;">
-                                                <div style="font-size: 1.5rem; margin-bottom: 5px;">📍</div>
-                                                <strong style="color: ${primaryColor};">Adresse</strong>
-                                                <p>${address}</p>
-                                            </div>
-                                        ` : ''}
-                                        <div>
-                                            <div style="font-size: 1.5rem; margin-bottom: 5px;">⏰</div>
-                                            <strong style="color: ${primaryColor};">Horaires</strong>
-                                            <p>Lun-Ven: 9h-18h<br>Sam: 9h-12h</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- Formulaire -->
-                                <div>
-                                    <h2 style="color: ${primaryColor}; font-size: 1.8rem; margin-bottom: 30px;">Nous écrire</h2>
-                                    <form style="space-y: 20px;">
-                                        <div style="margin-bottom: 20px;">
-                                            <label style="display: block; font-weight: bold; margin-bottom: 5px;">Nom *</label>
-                                            <input type="text" style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px;" required>
-                                        </div>
-                                        <div style="margin-bottom: 20px;">
-                                            <label style="display: block; font-weight: bold; margin-bottom: 5px;">Email *</label>
-                                            <input type="email" style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px;" required>
-                                        </div>
-                                        <div style="margin-bottom: 20px;">
-                                            <label style="display: block; font-weight: bold; margin-bottom: 5px;">Message *</label>
-                                            <textarea rows="5" style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; resize: vertical;" required></textarea>
-                                        </div>
-                                        <button type="submit" style="background: ${primaryColor}; color: white; padding: 15px 30px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">
-                                            📨 Envoyer
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
+            let content = '<div id="page-contact" class="page-content" style="display: none;">';
+            content += '<div style="padding: 60px 20px; background: white;">';
+            content += '<div style="max-width: 1000px; margin: 0 auto;">';
+            content += '<h1 style="font-size: 2.5rem; color: ' + primaryColor + '; text-align: center; margin-bottom: 50px;">📞 Contact</h1>';
+            content += '<div style="background: #f8fafc; padding: 40px; border-radius: 15px; text-align: center;">';
+            content += '<h2 style="color: ' + primaryColor + '; font-size: 1.8rem; margin-bottom: 30px;">Contactez-nous</h2>';
+            content += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px;">';
+            
+            if (phone) {
+                content += '<div><div style="font-size: 2rem; margin-bottom: 10px;">📱</div><h3 style="color: ' + primaryColor + '; font-weight: bold;">Téléphone</h3><p>' + phone + '</p></div>';
+            }
+            if (businessEmail) {
+                content += '<div><div style="font-size: 2rem; margin-bottom: 10px;">📧</div><h3 style="color: ' + primaryColor + '; font-weight: bold;">Email</h3><p>' + businessEmail + '</p></div>';
+            }
+            if (address) {
+                content += '<div><div style="font-size: 2rem; margin-bottom: 10px;">📍</div><h3 style="color: ' + primaryColor + '; font-weight: bold;">Adresse</h3><p>' + address + '</p></div>';
+            }
+            
+            content += '<div><div style="font-size: 2rem; margin-bottom: 10px;">⏰</div><h3 style="color: ' + primaryColor + '; font-weight: bold;">Horaires</h3><p>Lun-Ven: 9h-18h</p></div>';
+            content += '</div></div></div></div></div>';
+            
+            return content;
         }
 
         // Navigation
@@ -1148,7 +802,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `${websiteData.businessName.replace(/\s+/g, '-')}-site-personnalise.html`;
+            a.download = websiteData.businessName.replace(/\s+/g, '-') + '-site-personnalise.html';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -1158,13 +812,13 @@
         }
 
         function requestConcierge() {
-            const message = `🤖 Demande de Service Conciergerie\n\n` +
-                          `Entreprise: ${websiteData.businessName}\n` +
-                          `Secteur: ${websiteData.siteType}\n` +
-                          `Pages demandées: ${selectedRequirements.pages.join(', ')}\n` +
-                          `Fonctionnalités: ${selectedRequirements.features.join(', ')}\n` +
-                          `Demandes spéciales: ${selectedRequirements.customRequests}\n\n` +
-                          `Nous nous occupons de tout : domaine, hébergement, mise en ligne !`;
+            const message = '🤖 Demande de Service Conciergerie\n\n' +
+                          'Entreprise: ' + websiteData.businessName + '\n' +
+                          'Secteur: ' + websiteData.siteType + '\n' +
+                          'Pages demandées: ' + selectedRequirements.pages.join(', ') + '\n' +
+                          'Fonctionnalités: ' + selectedRequirements.features.join(', ') + '\n' +
+                          'Demandes spéciales: ' + selectedRequirements.customRequests + '\n\n' +
+                          'Nous nous occupons de tout : domaine, hébergement, mise en ligne !';
             
             alert(message);
             showNotification('🤖 Demande de conciergerie envoyée !');
@@ -1172,26 +826,41 @@
 
         function generateFullSiteHTML() {
             const template = TEMPLATES[selectedTemplate];
-            const { mainTitle } = websiteData;
+            const mainTitle = websiteData.mainTitle;
             
-            return `<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${mainTitle}</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        .nav-link { cursor: pointer; transition: all 0.3s; }
-        .nav-link:hover { transform: translateY(-2px); }
-        .page-content { display: none; }
-        .page-content.active { display: block; }
-    </style>
-</head>
-<body>
-    ${generateIntelligentSiteContent()}
-</body>
-</html>`;
+            let html = '<!DOCTYPE html>\n<html lang="fr">\n<head>\n';
+            html += '<meta charset="UTF-8">\n';
+            html += '<meta name="viewport" content="width=device-width, initial-scale=1.0">\n';
+            html += '<title>' + mainTitle + '</title>\n';
+            html += '<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">\n';
+            html += '<style>\n';
+            html += '.nav-link { cursor: pointer; transition: all 0.3s; }\n';
+            html += '.nav-link:hover { transform: translateY(-2px); }\n';
+            html += '.page-content { display: none; }\n';
+            html += '.page-content.active { display: block; }\n';
+            html += '</style>\n';
+            html += '</head>\n<body>\n';
+            html += generateSiteContent();
+            html += '\n<script>\n';
+            html += 'function showPage(pageId) {\n';
+            html += '  document.querySelectorAll(".page-content").forEach(page => {\n';
+            html += '    page.style.display = "none";\n';
+            html += '  });\n';
+            html += '  const selectedPage = document.getElementById("page-" + pageId);\n';
+            html += '  if (selectedPage) {\n';
+            html += '    selectedPage.style.display = "block";\n';
+            html += '  }\n';
+            html += '  document.querySelectorAll(".nav-link").forEach(link => {\n';
+            html += '    link.style.color = "#6b7280";\n';
+            html += '    link.style.fontWeight = "normal";\n';
+            html += '  });\n';
+            html += '  event.target.style.color = "' + websiteData.primaryColor + '";\n';
+            html += '  event.target.style.fontWeight = "bold";\n';
+            html += '}\n';
+            html += '</script>\n';
+            html += '</body>\n</html>';
+            
+            return html;
         }
 
         function showNotification(message) {
@@ -1206,6 +875,28 @@
                 }, 4000);
             }
         }
+
+        // Fonction globale pour la navigation dans la prévisualisation
+        window.showPage = function(pageId) {
+            document.querySelectorAll('.page-content').forEach(page => {
+                page.style.display = 'none';
+            });
+            
+            const selectedPage = document.getElementById('page-' + pageId);
+            if (selectedPage) {
+                selectedPage.style.display = 'block';
+            }
+            
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.style.color = '#6b7280';
+                link.style.fontWeight = 'normal';
+            });
+            
+            if (event && event.target) {
+                event.target.style.color = websiteData.primaryColor;
+                event.target.style.fontWeight = 'bold';
+            }
+        };
     </script>
 </body>
 </html>
