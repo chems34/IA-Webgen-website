@@ -21,9 +21,10 @@
         .photo-upload-area { border: 2px dashed #cbd5e0; border-radius: 8px; padding: 20px; text-align: center; transition: all 0.3s; }
         .photo-upload-area:hover { border-color: #3b82f6; background-color: #f0f9ff; }
         .photo-upload-area.drag-over { border-color: #10b981; background-color: #f0fdf4; }
-        .template-card { cursor: pointer; transition: all 0.3s; }
-        .template-card:hover { transform: scale(1.05); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .template-card { cursor: pointer; transition: all 0.3s; border: 3px solid transparent; }
+        .template-card:hover { transform: scale(1.02); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
         .template-card.selected { border: 3px solid #10b981; }
+        .premium-badge { position: absolute; top: -8px; right: -8px; background: linear-gradient(45deg, #ffd700, #ffed4e); color: #1f2937; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: bold; }
     </style>
 </head>
 <body class="font-sans">
@@ -100,7 +101,7 @@
                     🚀 Créez votre site web professionnel avec l'IA
                 </h2>
                 <p class="text-lg sm:text-xl mb-8 opacity-90">
-                    Intelligence artificielle avancée + Photos personnalisées + Templates premium = Site professionnel en 2-4h !
+                    Intelligence artificielle avancée + 7 thèmes gratuits + 3 thèmes premium = Site professionnel en 2-4h !
                 </p>
                 
                 <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-6 sm:p-8 max-w-2xl mx-auto">
@@ -155,36 +156,8 @@
                             <div id="photoPreview" class="grid grid-cols-3 gap-2 mt-4 hidden"></div>
                         </div>
                         
-                        <!-- Niveau de qualité -->
-                        <div class="border rounded-lg p-4 bg-white bg-opacity-20">
-                            <h4 class="text-white font-bold mb-3">🎨 Niveau de qualité souhaité</h4>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                                <label class="flex items-center p-3 bg-white bg-opacity-10 rounded cursor-pointer hover:bg-opacity-20">
-                                    <input type="radio" name="quality" value="standard" class="mr-3" checked>
-                                    <div>
-                                        <div class="font-bold text-sm">Standard</div>
-                                        <div class="text-xs opacity-75">Site simple et efficace</div>
-                                    </div>
-                                </label>
-                                <label class="flex items-center p-3 bg-white bg-opacity-10 rounded cursor-pointer hover:bg-opacity-20">
-                                    <input type="radio" name="quality" value="premium" class="mr-3">
-                                    <div>
-                                        <div class="font-bold text-sm">Premium ⭐</div>
-                                        <div class="text-xs opacity-75">Design avancé + animations</div>
-                                    </div>
-                                </label>
-                                <label class="flex items-center p-3 bg-white bg-opacity-10 rounded cursor-pointer hover:bg-opacity-20">
-                                    <input type="radio" name="quality" value="professionnel" class="mr-3">
-                                    <div>
-                                        <div class="font-bold text-sm">Professionnel 🏆</div>
-                                        <div class="text-xs opacity-75">Qualité agence web</div>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                        
                         <button type="submit" class="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-bold py-4 px-6 rounded-lg transform hover:scale-105 transition-all duration-200 text-lg">
-                            🤖 GÉNÉRER MON SITE AVEC L'IA
+                            🎨 CHOISIR UN THÈME & PRÉVISUALISER
                         </button>
                     </form>
                 </div>
@@ -195,18 +168,18 @@
         <section id="qualityTemplates" class="quality-templates py-16 bg-gray-50">
             <div class="container mx-auto px-4">
                 <div class="text-center mb-12">
-                    <h3 class="text-3xl font-bold text-gray-800 mb-4">🎨 Choisissez votre template professionnel</h3>
-                    <p class="text-xl text-gray-600">L'IA a généré ces designs personnalisés pour votre activité</p>
+                    <h3 class="text-3xl font-bold text-gray-800 mb-4">🎨 Choisissez votre thème professionnel</h3>
+                    <p class="text-xl text-gray-600">7 thèmes gratuits + 3 thèmes premium à 5€</p>
                 </div>
                 
-                <div id="templateGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div id="templateGrid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
                     <!-- Les templates seront générés dynamiquement -->
                 </div>
                 
                 <div class="text-center mt-8">
                     <button onclick="proceedWithSelectedTemplate()" id="continueBtn" 
-                            class="bg-green-500 text-white px-8 py-3 rounded-lg font-bold hover:bg-green-600 disabled:opacity-50" disabled>
-                        Continuer avec ce design
+                            class="bg-green-500 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-green-600 disabled:opacity-50" disabled>
+                        <i class="fas fa-eye mr-2"></i>VOIR LA PRÉVISUALISATION
                     </button>
                 </div>
             </div>
@@ -231,14 +204,13 @@
                             <h4 class="text-xl sm:text-2xl font-bold text-gray-800 mb-4">📄 Site IA Professionnel</h4>
                             <div class="text-3xl sm:text-4xl font-bold text-blue-600 mb-4">15€</div>
                             <ul class="text-left space-y-2 mb-6 text-sm sm:text-base">
-                                <li>✅ Site créé par IA professionnelle</li>
+                                <li>✅ 7 thèmes gratuits + 3 premium (+5€)</li>
                                 <li>✅ Intégration de vos photos personnelles</li>
-                                <li>✅ Templates premium adaptatifs</li>
+                                <li>✅ Templates ultra-modernes</li>
                                 <li>✅ Prévisualisation et modifications</li>
                                 <li>✅ Code source optimisé</li>
                                 <li>✅ Livraison par email instantanée</li>
                                 <li>❌ Pas d'hébergement inclus</li>
-                                <li>❌ Installation par vos soins</li>
                             </ul>
                         </div>
                     </div>
@@ -252,95 +224,20 @@
                             <h4 class="text-xl sm:text-2xl font-bold mb-4">🤖 Conciergerie IA Complète</h4>
                             <div class="text-3xl sm:text-4xl font-bold mb-4">49€</div>
                             <ul class="text-left space-y-2 mb-6 text-sm sm:text-base">
-                                <li>✅ Tout inclus de l'offre Site IA</li>
+                                <li>✅ Tout inclus + tous les thèmes premium</li>
                                 <li>✅ <strong>Nom de domaine automatique</strong></li>
                                 <li>✅ <strong>Hébergement premium configuré</strong></li>
                                 <li>✅ <strong>Site en ligne en 2-4h maximum</strong></li>
                                 <li>✅ <strong>Optimisation SEO automatique</strong></li>
-                                <li>✅ <strong>Certificat SSL et sécurité</strong></li>
                                 <li>✅ <strong>Support technique 3 mois</strong></li>
-                                <li>✅ <strong>Maintenance et sauvegardes</strong></li>
                                 <li>✅ <strong>Formation utilisateur incluse</strong></li>
                             </ul>
                             <div class="bg-yellow-400 text-gray-800 p-3 rounded-lg text-xs sm:text-sm font-bold mb-4">
                                 ⏰ Site professionnel en ligne en 2-4h !<br>
-                                🤖 IA de qualité agence web
+                                🎨 Tous les thèmes premium inclus
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Processus automatisé -->
-        <section class="py-16 fade-in">
-            <div class="container mx-auto px-4">
-                <h3 class="text-3xl sm:text-4xl font-bold text-center text-gray-800 mb-12">
-                    🤖 Notre IA Professionnelle en Action
-                </h3>
-                
-                <div class="max-w-6xl mx-auto">
-                    <div class="grid sm:grid-cols-2 lg:grid-cols-6 gap-6">
-                        <div class="text-center p-4">
-                            <div class="bg-blue-500 text-white rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-2xl font-bold mx-auto mb-4">1</div>
-                            <h4 class="font-bold text-base sm:text-lg mb-2">📝 Analyse</h4>
-                            <p class="text-gray-600 text-sm sm:text-base">IA analyse votre activité</p>
-                        </div>
-                        
-                        <div class="text-center p-4">
-                            <div class="bg-green-500 text-white rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-2xl font-bold mx-auto mb-4">2</div>
-                            <h4 class="font-bold text-base sm:text-lg mb-2">🎨 Templates</h4>
-                            <p class="text-gray-600 text-sm sm:text-base">Génération de designs premium</p>
-                        </div>
-                        
-                        <div class="text-center p-4">
-                            <div class="bg-purple-500 text-white rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-2xl font-bold mx-auto mb-4">3</div>
-                            <h4 class="font-bold text-base sm:text-lg mb-2">📸 Photos</h4>
-                            <p class="text-gray-600 text-sm sm:text-base">Intégration photos personnelles</p>
-                        </div>
-                        
-                        <div class="text-center p-4">
-                            <div class="bg-orange-500 text-white rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-2xl font-bold mx-auto mb-4">4</div>
-                            <h4 class="font-bold text-base sm:text-lg mb-2">✏️ Personnalisation</h4>
-                            <p class="text-gray-600 text-sm sm:text-base">Modifications à volonté</p>
-                        </div>
-                        
-                        <div class="text-center p-4">
-                            <div class="bg-red-500 text-white rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-2xl font-bold mx-auto mb-4">5</div>
-                            <h4 class="font-bold text-base sm:text-lg mb-2">💳 Paiement</h4>
-                            <p class="text-gray-600 text-sm sm:text-base">Paiement sécurisé</p>
-                        </div>
-                        
-                        <div class="text-center p-4">
-                            <div class="bg-indigo-500 text-white rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-2xl font-bold mx-auto mb-4">6</div>
-                            <h4 class="font-bold text-base sm:text-lg mb-2">🌐 En ligne</h4>
-                            <p class="text-gray-600 text-sm sm:text-base">Site professionnel livré</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact -->
-        <section class="gradient-bg text-white py-16 fade-in">
-            <div class="container mx-auto px-4 text-center">
-                <h3 class="text-2xl sm:text-3xl font-bold mb-8">💬 Besoin d'aide ou d'informations ?</h3>
-                <p class="text-lg sm:text-xl mb-8">Notre équipe d'experts IA est disponible pour vous accompagner !</p>
-                <div class="flex flex-wrap justify-center gap-4">
-                    <a href="mailto:contact@iawebgen.com" 
-                       class="bg-white text-blue-600 px-6 py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors">
-                        📧 contact@iawebgen.com
-                    </a>
-                    <a href="https://www.paypal.com/paypalme/assakourc" target="_blank" 
-                       class="bg-green-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-600 transition-colors">
-                        💳 PayPal: assakourc
-                    </a>
-                </div>
-                
-                <div class="mt-8 text-sm opacity-75">
-                    <p>🤖 Propulsé par IA WebGen - Intelligence artificielle professionnelle</p>
-                    <p>⚡ Service premium disponible 24h/24 - Sites de qualité agence</p>
-                    <p>📧 Livraison instantanée avec formation utilisateur incluse</p>
                 </div>
             </div>
         </section>
@@ -352,18 +249,18 @@
             <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-2xl font-bold text-gray-800">
-                        🎉 Votre site professionnel : <span id="previewBusinessName"></span>
+                        🎉 Prévisualisation : <span id="previewBusinessName"></span>
                     </h2>
-                    <button onclick="goBackToMain()" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
-                        <i class="fas fa-arrow-left"></i> Retour
+                    <button onclick="goBackToTemplates()" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+                        <i class="fas fa-arrow-left"></i> Changer de thème
                     </button>
                 </div>
                 
                 <div class="grid lg:grid-cols-2 gap-8">
                     <!-- Aperçu du site -->
                     <div>
-                        <h3 class="text-lg font-bold mb-4">📱 Aperçu de votre site professionnel</h3>
-                        <div id="websitePreview" class="border-2 border-gray-300 rounded-lg p-4 bg-white min-h-96 overflow-auto" style="max-height: 600px;">
+                        <h3 class="text-lg font-bold mb-4">📱 Aperçu de votre site</h3>
+                        <div id="websitePreview" class="border-2 border-gray-300 rounded-lg bg-white overflow-auto" style="height: 500px;">
                             <!-- Le contenu sera généré dynamiquement -->
                         </div>
                     </div>
@@ -392,36 +289,45 @@
                                 <label class="block text-sm font-bold mb-2">Adresse</label>
                                 <input type="text" id="address" class="w-full p-3 border rounded-lg" placeholder="123 Rue Example, Paris">
                             </div>
-                            <button onclick="updatePreview()" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
+                            <button onclick="updatePreview()" class="w-full bg-blue-500 text-white py-3 rounded hover:bg-blue-600">
                                 🔄 Mettre à jour l'aperçu
                             </button>
                         </div>
                         
                         <!-- Choix de l'offre -->
                         <div class="mt-8 border-t pt-6">
-                            <h3 class="text-lg font-bold mb-4">💳 Choisissez votre offre</h3>
+                            <h3 class="text-lg font-bold mb-4">💳 Finaliser votre commande</h3>
+                            <div id="templateCostInfo" class="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                                <!-- Info sur le coût du template -->
+                            </div>
                             <div class="space-y-4">
-                                <div class="border rounded-lg p-4 cursor-pointer hover:bg-blue-50" onclick="selectOffer('site', 15)">
+                                <div class="border rounded-lg p-4 cursor-pointer hover:bg-blue-50" onclick="selectOffer('site')">
                                     <div class="flex justify-between items-center">
                                         <div>
-                                            <h4 class="font-bold">📄 Site IA Pro - 15€</h4>
+                                            <h4 class="font-bold">📄 Site IA Pro</h4>
                                             <p class="text-sm text-gray-600">Code source + Photos + Livraison email</p>
                                         </div>
-                                        <input type="radio" name="offer" value="site" class="offer-radio">
+                                        <div class="text-right">
+                                            <div class="font-bold text-blue-600" id="sitePrice">15€</div>
+                                            <input type="radio" name="offer" value="site" class="offer-radio mt-1">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="border rounded-lg p-4 cursor-pointer hover:bg-green-50 border-green-500" onclick="selectOffer('conciergerie', 49)">
+                                <div class="border rounded-lg p-4 cursor-pointer hover:bg-green-50 border-green-500" onclick="selectOffer('conciergerie')">
                                     <div class="flex justify-between items-center">
                                         <div>
                                             <h4 class="font-bold">🤖 Conciergerie IA - 49€ ⭐</h4>
-                                            <p class="text-sm text-gray-600">Site + Domaine + Hébergement + Formation</p>
+                                            <p class="text-sm text-gray-600">Site + Domaine + Hébergement + Tous les thèmes premium</p>
                                         </div>
-                                        <input type="radio" name="offer" value="conciergerie" class="offer-radio" checked>
+                                        <div class="text-right">
+                                            <div class="font-bold text-green-600">49€</div>
+                                            <input type="radio" name="offer" value="conciergerie" class="offer-radio mt-1" checked>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             
-                            <button id="payButton" onclick="processPayment()" class="w-full mt-6 bg-green-500 text-white py-3 px-6 rounded-lg font-bold hover:bg-green-600 transform hover:scale-105 transition-all">
+                            <button id="payButton" onclick="processPayment()" class="w-full mt-6 bg-green-500 text-white py-4 px-6 rounded-lg font-bold text-lg hover:bg-green-600 transform hover:scale-105 transition-all">
                                 💳 COMMANDER MAINTENANT - 49€
                             </button>
                         </div>
@@ -489,10 +395,10 @@
         // Variables globales
         let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
         let currentOffer = 'conciergerie';
-        let currentPrice = 49;
         let websiteData = {};
         let selectedTemplate = null;
         let uploadedPhotos = [];
+        let templates = [];
 
         // Initialisation
         document.addEventListener('DOMContentLoaded', function() {
@@ -576,13 +482,12 @@
             }
         }
 
-        // Génération de templates par l'IA
+        // Génération de templates
         function generateTemplates() {
             const businessName = document.getElementById('businessName').value.trim();
             const description = document.getElementById('description').value.trim();
             const siteType = document.getElementById('siteType').value;
             const userEmail = document.getElementById('userEmail').value.trim();
-            const quality = document.querySelector('input[name="quality"]:checked').value;
 
             if (!businessName || !description || !siteType || !userEmail) {
                 showNotification('❌ Veuillez remplir tous les champs obligatoires !');
@@ -594,7 +499,6 @@
                 description,
                 siteType,
                 userEmail,
-                quality,
                 photos: uploadedPhotos,
                 mainTitle: businessName,
                 subtitle: description,
@@ -603,176 +507,513 @@
                 address: ''
             };
 
+            // Générer les templates immédiatement
+            templates = getAllTemplates();
+            displayTemplates();
+            
             // Afficher la section des templates
             document.getElementById('mainSection').style.display = 'none';
             document.getElementById('qualityTemplates').style.display = 'block';
             
-            showNotification('🤖 L\'IA génère vos templates personnalisés...');
-            
-            setTimeout(() => {
-                generateTemplateOptions();
-            }, 2000);
+            showNotification('✅ Choisissez votre thème parmi 10 options !');
         }
 
-        function generateTemplateOptions() {
+        function getAllTemplates() {
+            return [
+                // 7 THÈMES GRATUITS
+                {
+                    name: 'Modern Clean',
+                    description: 'Design épuré et moderne',
+                    preview: '<div style="text-align: center; padding: 20px;"><div style="width: 60px; height: 4px; background: #3b82f6; margin: 0 auto 10px;"></div><div style="font-size: 16px; font-weight: bold;">MODERN</div><div style="font-size: 12px;">Clean & Simple</div></div>',
+                    gradient: 'from-blue-400 to-blue-600',
+                    isPremium: false,
+                    colors: { primary: '#3b82f6', secondary: '#1e40af' }
+                },
+                {
+                    name: 'Business Pro',
+                    description: 'Professionnel et élégant',
+                    preview: '<div style="text-align: center; padding: 20px;"><div style="width: 40px; height: 40px; border: 3px solid #374151; border-radius: 50%; margin: 0 auto 10px;"></div><div style="font-size: 16px; font-weight: bold;">BUSINESS</div><div style="font-size: 12px;">Professional</div></div>',
+                    gradient: 'from-gray-600 to-gray-800',
+                    isPremium: false,
+                    colors: { primary: '#374151', secondary: '#111827' }
+                },
+                {
+                    name: 'Creative Studio',
+                    description: 'Créatif et artistique',
+                    preview: '<div style="text-align: center; padding: 20px;"><div style="width: 50px; height: 30px; background: linear-gradient(45deg, #f59e0b, #ef4444); margin: 0 auto 10px; border-radius: 5px;"></div><div style="font-size: 16px; font-weight: bold;">CREATIVE</div><div style="font-size: 12px;">Artistic Design</div></div>',
+                    gradient: 'from-orange-400 to-red-500',
+                    isPremium: false,
+                    colors: { primary: '#f59e0b', secondary: '#dc2626' }
+                },
+                {
+                    name: 'Fresh Green',
+                    description: 'Nature et éco-responsable',
+                    preview: '<div style="text-align: center; padding: 20px;"><div style="width: 40px; height: 40px; background: #10b981; border-radius: 50%; margin: 0 auto 10px; position: relative;"><div style="position: absolute; top: 15px; left: 15px; width: 10px; height: 10px; background: white; border-radius: 50%;"></div></div><div style="font-size: 16px; font-weight: bold;">ECO</div><div style="font-size: 12px;">Green & Natural</div></div>',
+                    gradient: 'from-green-400 to-emerald-600',
+                    isPremium: false,
+                    colors: { primary: '#10b981', secondary: '#047857' }
+                },
+                {
+                    name: 'Tech Innovation',
+                    description: 'High-tech et futuriste',
+                    preview: '<div style="text-align: center; padding: 20px;"><div style="width: 50px; height: 20px; background: linear-gradient(90deg, #8b5cf6, #06b6d4); margin: 0 auto 10px; border-radius: 10px;"></div><div style="font-size: 16px; font-weight: bold;">TECH</div><div style="font-size: 12px;">Innovation</div></div>',
+                    gradient: 'from-purple-500 to-cyan-500',
+                    isPremium: false,
+                    colors: { primary: '#8b5cf6', secondary: '#7c3aed' }
+                },
+                {
+                    name: 'Warm Elegance',
+                    description: 'Chaleureux et accueillant',
+                    preview: '<div style="text-align: center; padding: 20px;"><div style="width: 45px; height: 45px; background: linear-gradient(135deg, #f97316, #ea580c); margin: 0 auto 10px; border-radius: 8px;"></div><div style="font-size: 16px; font-weight: bold;">WARM</div><div style="font-size: 12px;">Elegant & Cozy</div></div>',
+                    gradient: 'from-orange-500 to-amber-600',
+                    isPremium: false,
+                    colors: { primary: '#f97316', secondary: '#ea580c' }
+                },
+                {
+                    name: 'Classic Minimal',
+                    description: 'Classique et minimaliste',
+                    preview: '<div style="text-align: center; padding: 20px;"><div style="width: 60px; height: 2px; background: #6b7280; margin: 0 auto 5px;"></div><div style="width: 40px; height: 2px; background: #6b7280; margin: 0 auto 10px;"></div><div style="font-size: 16px; font-weight: bold;">MINIMAL</div><div style="font-size: 12px;">Less is More</div></div>',
+                    gradient: 'from-slate-400 to-slate-600',
+                    isPremium: false,
+                    colors: { primary: '#6b7280', secondary: '#374151' }
+                },
+                
+                // 3 THÈMES PREMIUM (+5€)
+                {
+                    name: 'Luxury Gold',
+                    description: 'Premium avec animations dorées',
+                    preview: '<div style="text-align: center; padding: 20px;"><div style="width: 50px; height: 50px; background: linear-gradient(45deg, #fbbf24, #f59e0b); margin: 0 auto 10px; border-radius: 50%; position: relative; box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);"><div style="position: absolute; top: 20px; left: 20px; width: 10px; height: 10px; background: white; border-radius: 50%;"></div></div><div style="font-size: 16px; font-weight: bold; color: #f59e0b;">LUXURY</div><div style="font-size: 12px;">Premium Gold</div></div>',
+                    gradient: 'from-yellow-400 to-amber-600',
+                    isPremium: true,
+                    colors: { primary: '#f59e0b', secondary: '#d97706' }
+                },
+                {
+                    name: 'Royal Purple',
+                    description: 'Design royal avec effets premium',
+                    preview: '<div style="text-align: center; padding: 20px;"><div style="width: 45px; height: 45px; background: linear-gradient(135deg, #a855f7, #7c3aed); margin: 0 auto 10px; border-radius: 12px; position: relative; box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);"><div style="position: absolute; top: 5px; right: 5px; width: 8px; height: 8px; background: white; border-radius: 50%;"></div></div><div style="font-size: 16px; font-weight: bold; color: #7c3aed;">ROYAL</div><div style="font-size: 12px;">Premium Purple</div></div>',
+                    gradient: 'from-purple-500 to-indigo-600',
+                    isPremium: true,
+                    colors: { primary: '#a855f7', secondary: '#7c3aed' }
+                },
+                {
+                    name: 'Diamond Elite',
+                    description: 'Ultra-premium avec cristaux',
+                    preview: '<div style="text-align: center; padding: 20px;"><div style="width: 50px; height: 30px; background: linear-gradient(45deg, #e5e7eb, #d1d5db, #9ca3af); margin: 0 auto 10px; border-radius: 5px; position: relative; box-shadow: 0 4px 25px rgba(156, 163, 175, 0.5);"><div style="position: absolute; top: 8px; left: 20px; width: 10px; height: 14px; background: white; clip-path: polygon(50% 0%, 0% 100%, 100% 100%);"></div></div><div style="font-size: 16px; font-weight: bold; background: linear-gradient(45deg, #6b7280, #374151); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">DIAMOND</div><div style="font-size: 12px;">Ultra Premium</div></div>',
+                    gradient: 'from-slate-400 to-slate-700',
+                    isPremium: true,
+                    colors: { primary: '#6b7280', secondary: '#374151' }
+                }
+            ];
+        }
+
+        function displayTemplates() {
             const templateGrid = document.getElementById('templateGrid');
             templateGrid.innerHTML = '';
             
-            const templates = getTemplatesForType(websiteData.siteType, websiteData.quality);
-            
             templates.forEach((template, index) => {
                 const templateCard = document.createElement('div');
-                templateCard.className = 'template-card bg-white rounded-lg shadow-lg p-4 border-2 border-gray-200';
+                templateCard.className = 'template-card bg-white rounded-xl shadow-lg p-4 border-2 border-gray-200 relative';
                 templateCard.onclick = () => selectTemplate(index);
                 
+                let premiumBadge = '';
+                if (template.isPremium) {
+                    premiumBadge = '<div class="premium-badge">💎 +5€</div>';
+                }
+                
                 templateCard.innerHTML = `
+                    ${premiumBadge}
                     <div class="mb-4">
-                        <div class="bg-gradient-to-br ${template.gradient} h-32 rounded-lg flex items-center justify-center text-white font-bold text-lg">
+                        <div class="bg-gradient-to-br ${template.gradient} h-24 rounded-lg flex items-center justify-center text-white font-bold text-sm shadow-inner">
                             ${template.preview}
                         </div>
                     </div>
-                    <div>
-                        <h4 class="font-bold text-lg mb-2">${template.name}</h4>
-                        <p class="text-gray-600 text-sm mb-3">${template.description}</p>
-                        <div class="flex flex-wrap gap-1 mb-3">
-                            ${template.features.map(f => `<span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">${f}</span>`).join('')}
-                        </div>
+                    <div class="text-center">
+                        <h4 class="font-bold text-lg mb-1">${template.name}</h4>
+                        <p class="text-gray-600 text-xs mb-3">${template.description}</p>
                         <div class="text-center">
-                            <span class="text-sm font-bold text-green-600">${template.level}</span>
+                            <span class="text-xs font-bold ${template.isPremium ? 'text-yellow-600' : 'text-green-600'}">
+                                ${template.isPremium ? 'Premium +5€' : 'Gratuit'}
+                            </span>
                         </div>
                     </div>
                 `;
                 
                 templateGrid.appendChild(templateCard);
             });
-            
-            showNotification('✅ Templates générés ! Choisissez votre préféré.');
-        }
-
-        function getTemplatesForType(siteType, quality) {
-            const baseTemplates = {
-                'location-voiture': [
-                    {
-                        name: 'Auto Premium',
-                        description: 'Design élégant pour location de véhicules haut de gamme',
-                        preview: '🚗 PREMIUM<br>BMW • AUDI<br>MERCEDES',
-                        gradient: 'from-gray-800 to-gray-600',
-                        features: ['Catalogue véhicules', 'Réservations', 'Prix en temps réel'],
-                        level: 'Premium'
-                    },
-                    {
-                        name: 'Drive Easy',
-                        description: 'Interface simple et efficace pour location rapide',
-                        preview: '🚙 LOCATION<br>RAPIDE<br>24H/7J',
-                        gradient: 'from-blue-500 to-blue-700',
-                        features: ['Booking rapide', 'Calcul prix', 'Contact direct'],
-                        level: 'Standard'
-                    },
-                    {
-                        name: 'Fleet Pro',
-                        description: 'Solution professionnelle pour flottes d\'entreprise',
-                        preview: '🚐 FLOTTE<br>ENTREPRISE<br>PRO',
-                        gradient: 'from-green-600 to-teal-700',
-                        features: ['Gestion flotte', 'Contrats B2B', 'Statistiques'],
-                        level: 'Professionnel'
-                    }
-                ],
-                restaurant: [
-                    {
-                        name: 'Gourmet Élégant',
-                        description: 'Design sophistiqué pour restaurant haut de gamme',
-                        preview: '🍽️ MENU<br>GASTRONOMIE<br>⭐⭐⭐',
-                        gradient: 'from-amber-500 to-orange-600',
-                        features: ['Menu interactif', 'Réservations', 'Galerie photos'],
-                        level: 'Premium'
-                    },
-                    {
-                        name: 'Bistrot Moderne',
-                        description: 'Style décontracté et chaleureux',
-                        preview: '☕ BISTROT<br>CONVIVIAL<br>LOCAL',
-                        gradient: 'from-green-500 to-teal-600',
-                        features: ['Carte simple', 'Horaires', 'Contact'],
-                        level: 'Standard'
-                    }
-                ],
-                salon: [
-                    {
-                        name: 'Beauty Spa',
-                        description: 'Ambiance relaxante et zen',
-                        preview: '💆‍♀️ SPA<br>BEAUTÉ<br>RELAX',
-                        gradient: 'from-pink-500 to-rose-600',
-                        features: ['Services beauté', 'Réservations', 'Galerie'],
-                        level: 'Premium'
-                    }
-                ],
-                garage: [
-                    {
-                        name: 'Auto Service Pro',
-                        description: 'Interface professionnelle pour garage automobile',
-                        preview: '🔧 GARAGE<br>RÉPARATION<br>AUTO',
-                        gradient: 'from-red-600 to-red-800',
-                        features: ['Services auto', 'Devis', 'Rendez-vous'],
-                        level: 'Standard'
-                    }
-                ],
-                plombier: [
-                    {
-                        name: 'Plomberie Express',
-                        description: 'Site d\'urgence pour plombier',
-                        preview: '🔧 PLOMBIER<br>URGENCE<br>24H/24',
-                        gradient: 'from-blue-600 to-cyan-700',
-                        features: ['Urgences', 'Devis', 'Interventions'],
-                        level: 'Standard'
-                    }
-                ],
-                photographe: [
-                    {
-                        name: 'Portfolio Artist',
-                        description: 'Galerie élégante pour photographe',
-                        preview: '📸 PORTFOLIO<br>PHOTOS<br>ART',
-                        gradient: 'from-purple-600 to-indigo-700',
-                        features: ['Galerie photos', 'Portfolio', 'Contact'],
-                        level: 'Premium'
-                    }
-                ]
-            };
-
-            const templates = baseTemplates[siteType] || [
-                {
-                    name: 'Professionnel Classic',
-                    description: 'Design polyvalent et efficace',
-                    preview: '⭐ PRO<br>SERVICE<br>QUALITÉ',
-                    gradient: 'from-gray-500 to-gray-700',
-                    features: ['Présentation', 'Services', 'Contact'],
-                    level: quality === 'professionnel' ? 'Professionnel' : 'Standard'
-                }
-            ];
-
-            return templates.filter(t => {
-                if (quality === 'standard') return t.level !== 'Professionnel';
-                if (quality === 'premium') return t.level !== 'Standard';
-                return true;
-            });
         }
 
         function selectTemplate(index) {
+            // Désélectionner les autres templates
             document.querySelectorAll('.template-card').forEach(card => {
                 card.classList.remove('selected');
             });
             
+            // Sélectionner le template actuel
             const selectedCard = document.querySelectorAll('.template-card')[index];
             selectedCard.classList.add('selected');
             
             selectedTemplate = index;
             
+            // Activer le bouton continuer
             const continueBtn = document.getElementById('continueBtn');
             continueBtn.disabled = false;
             continueBtn.classList.remove('disabled:opacity-50');
+            
+            // Mettre à jour les couleurs selon le template sélectionné
+            if (templates[index]) {
+                websiteData.primaryColor = templates[index].colors.primary;
+            }
+            
+            showNotification(`✅ Thème "${templates[index].name}" sélectionné !`);
         }
 
         function proceedWithSelectedTemplate() {
             if (selectedTemplate === null) return;
             generatePreview();
+        }
+
+        // Génération de la prévisualisation (CORRIGÉE - Plus d'écran blanc)
+        function generatePreview() {
+            // S'assurer que les données sont prêtes
+            if (!websiteData.businessName) {
+                showNotification('❌ Erreur dans les données du site');
+                return;
+            }
+
+            // Pré-remplir les champs
+            document.getElementById('previewBusinessName').textContent = websiteData.businessName;
+            document.getElementById('mainTitle').value = websiteData.businessName;
+            document.getElementById('subtitle').value = websiteData.description;
+            document.getElementById('primaryColor').value = websiteData.primaryColor;
+            
+            // Mettre à jour l'info sur le coût du template
+            updateTemplateCostInfo();
+            
+            // Générer immédiatement l'aperçu
+            updatePreview();
+            
+            // Afficher la section de prévisualisation
+            document.getElementById('qualityTemplates').style.display = 'none';
+            document.getElementById('previewSection').style.display = 'block';
+            
+            window.scrollTo(0, 0);
+            showNotification('✅ Prévisualisation chargée ! Personnalisez votre site.');
+        }
+
+        function updateTemplateCostInfo() {
+            const template = templates[selectedTemplate];
+            const costInfo = document.getElementById('templateCostInfo');
+            
+            if (template && template.isPremium) {
+                costInfo.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="font-bold">💎 Thème Premium "${template.name}"</span>
+                            <p class="text-sm text-gray-600">Coût supplémentaire du thème premium</p>
+                        </div>
+                        <div class="font-bold text-yellow-600">+5€</div>
+                    </div>
+                `;
+                costInfo.style.display = 'block';
+            } else {
+                costInfo.innerHTML = `
+                    <div class="text-center">
+                        <span class="font-bold text-green-600">✅ Thème gratuit "${template ? template.name : 'Standard'}" inclus</span>
+                    </div>
+                `;
+                costInfo.style.display = 'block';
+            }
+        }
+
+        function updatePreview() {
+            const mainTitle = document.getElementById('mainTitle').value || websiteData.businessName;
+            const subtitle = document.getElementById('subtitle').value || websiteData.description;
+            const primaryColor = document.getElementById('primaryColor').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+
+            // Mettre à jour les données
+            websiteData.mainTitle = mainTitle;
+            websiteData.subtitle = subtitle;
+            websiteData.primaryColor = primaryColor;
+            websiteData.phone = phone;
+            websiteData.address = address;
+
+            // Générer le contenu avec le template sélectionné
+            const siteContent = generateBeautifulSiteContent();
+            document.getElementById('websitePreview').innerHTML = siteContent;
+        }
+
+        function generateBeautifulSiteContent() {
+            const { mainTitle, subtitle, primaryColor, phone, address, siteType, photos } = websiteData;
+            const template = templates[selectedTemplate];
+            
+            // Header magnifique avec le style du template
+            let content = `
+                <div style="background: linear-gradient(135deg, ${primaryColor}, ${template ? template.colors.secondary : '#1e40af'}); color: white; padding: 40px 30px; text-align: center; border-radius: 0; margin: 0; position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: -50px; right: -50px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+                    <div style="position: absolute; bottom: -30px; left: -30px; width: 80px; height: 80px; background: rgba(255,255,255,0.05); border-radius: 50%;"></div>
+                    <h1 style="font-size: 2.8rem; font-weight: 900; margin-bottom: 15px; text-shadow: 0 4px 8px rgba(0,0,0,0.3); letter-spacing: -1px;">${mainTitle}</h1>
+                    <p style="font-size: 1.3rem; opacity: 0.95; max-width: 500px; margin: 0 auto 25px; line-height: 1.6;">${subtitle}</p>
+                    <div style="display: inline-flex; background: rgba(255,255,255,0.2); padding: 12px 24px; border-radius: 25px; backdrop-filter: blur(10px);">
+                        <span style="font-weight: bold; font-size: 1rem;">🌟 Site Professionnel</span>
+                    </div>
+                </div>
+            `;
+
+            // Section photos si disponibles
+            if (photos && photos.length > 0) {
+                content += `
+                    <div style="padding: 50px 30px; background: linear-gradient(45deg, #f8fafc, #ffffff);">
+                        <div style="text-align: center; margin-bottom: 40px;">
+                            <h2 style="color: ${primaryColor}; font-size: 2.2rem; font-weight: 800; margin-bottom: 15px;">📸 Nos Réalisations</h2>
+                            <div style="width: 80px; height: 4px; background: ${primaryColor}; margin: 0 auto; border-radius: 2px;"></div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px;">
+                            ${photos.slice(0, 6).map(photo => `
+                                <div style="position: relative; overflow: hidden; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: transform 0.3s;">
+                                    <img src="${photo.data}" alt="${photo.name}" style="width: 100%; height: 140px; object-fit: cover;">
+                                    <div style="position: absolute; inset: 0; background: linear-gradient(135deg, ${primaryColor}22, transparent);"></div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Contenu spécifique beauté selon le secteur
+            content += generateSectorContent();
+
+            // Section contact magnifique
+            if (phone || address) {
+                content += `
+                    <div style="background: linear-gradient(135deg, ${primaryColor}, ${template ? template.colors.secondary : '#1e40af'}); color: white; padding: 50px 30px; margin: 0; position: relative;">
+                        <div style="position: absolute; top: -20px; right: 50px; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+                        <div style="text-align: center; margin-bottom: 35px;">
+                            <h2 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 15px;">📞 Contactez-nous</h2>
+                            <div style="width: 80px; height: 4px; background: rgba(255,255,255,0.3); margin: 0 auto;"></div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; max-width: 600px; margin: 0 auto;">
+                            ${phone ? `
+                                <div style="background: rgba(255,255,255,0.15); padding: 25px; border-radius: 15px; text-align: center; backdrop-filter: blur(10px);">
+                                    <div style="font-size: 2rem; margin-bottom: 10px;">📱</div>
+                                    <div style="font-weight: bold; margin-bottom: 8px;">Téléphone</div>
+                                    <div style="font-size: 1.2rem; font-weight: 600;">${phone}</div>
+                                </div>
+                            ` : ''}
+                            ${address ? `
+                                <div style="background: rgba(255,255,255,0.15); padding: 25px; border-radius: 15px; text-align: center; backdrop-filter: blur(10px);">
+                                    <div style="font-size: 2rem; margin-bottom: 10px;">📍</div>
+                                    <div style="font-weight: bold; margin-bottom: 8px;">Adresse</div>
+                                    <div style="font-size: 1.1rem; font-weight: 600; line-height: 1.4;">${address}</div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Footer CTA magnifique
+            content += `
+                <div style="text-align: center; padding: 60px 30px; background: linear-gradient(45deg, #f1f5f9, #e2e8f0); margin: 0;">
+                    <h3 style="font-size: 2.5rem; font-weight: 900; color: ${primaryColor}; margin-bottom: 20px;">🌟 Prêt à commencer ?</h3>
+                    <p style="font-size: 1.2rem; color: #64748b; margin-bottom: 30px; max-width: 500px; margin-left: auto; margin-right: auto;">Découvrez l'excellence de nos services dès aujourd'hui</p>
+                    <div style="display: inline-flex; background: linear-gradient(135deg, ${primaryColor}, ${template ? template.colors.secondary : '#1e40af'}); color: white; padding: 18px 40px; border-radius: 30px; font-weight: bold; font-size: 1.1rem; box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);">
+                        💫 Contactez-nous maintenant
+                    </div>
+                </div>
+            `;
+
+            return content;
+        }
+
+        function generateSectorContent() {
+            const { primaryColor, siteType } = websiteData;
+            const template = templates[selectedTemplate];
+
+            let sectorContent = `
+                <div style="padding: 60px 30px; background: white;">
+                    <div style="text-align: center; margin-bottom: 50px;">
+                        <h2 style="color: ${primaryColor}; font-size: 2.5rem; font-weight: 900; margin-bottom: 20px;">
+            `;
+
+            switch(siteType) {
+                case 'location-voiture':
+                    sectorContent += `🚗 Notre Flotte Premium</h2>
+                        <p style="font-size: 1.2rem; color: #64748b; max-width: 600px; margin: 0 auto;">Véhicules haut de gamme pour tous vos déplacements</p>
+                        <div style="width: 100px; height: 4px; background: ${primaryColor}; margin: 20px auto; border-radius: 2px;"></div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                        <div style="background: linear-gradient(135deg, #f8fafc, #ffffff); padding: 35px; border-radius: 20px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.08); border: 2px solid #f1f5f9;">
+                            <div style="font-size: 4rem; margin-bottom: 20px;">🚗</div>
+                            <h3 style="font-size: 1.8rem; font-weight: bold; color: ${primaryColor}; margin-bottom: 15px;">Citadines</h3>
+                            <div style="font-size: 2rem; font-weight: 900; color: #10b981; margin-bottom: 15px;">25€<span style="font-size: 1rem; font-weight: normal;">/jour</span></div>
+                            <p style="color: #64748b; margin-bottom: 20px;">Parfait pour la ville</p>
+                            <div style="background: ${primaryColor}; color: white; padding: 12px 25px; border-radius: 25px; display: inline-block; font-weight: bold;">Peugeot 208 • Renault Clio</div>
+                        </div>
+                        <div style="background: linear-gradient(135deg, #f8fafc, #ffffff); padding: 35px; border-radius: 20px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.08); border: 2px solid #f1f5f9;">
+                            <div style="font-size: 4rem; margin-bottom: 20px;">🚙</div>
+                            <h3 style="font-size: 1.8rem; font-weight: bold; color: ${primaryColor}; margin-bottom: 15px;">SUV Premium</h3>
+                            <div style="font-size: 2rem; font-weight: 900; color: #10b981; margin-bottom: 15px;">45€<span style="font-size: 1rem; font-weight: normal;">/jour</span></div>
+                            <p style="color: #64748b; margin-bottom: 20px;">Confort et espace</p>
+                            <div style="background: ${primaryColor}; color: white; padding: 12px 25px; border-radius: 25px; display: inline-block; font-weight: bold;">BMW X3 • Audi Q5</div>
+                        </div>
+                        <div style="background: linear-gradient(135deg, ${primaryColor}22, #ffffff); padding: 35px; border-radius: 20px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.12); border: 2px solid ${primaryColor};">
+                            <div style="font-size: 4rem; margin-bottom: 20px;">🏎️</div>
+                            <h3 style="font-size: 1.8rem; font-weight: bold; color: ${primaryColor}; margin-bottom: 15px;">Luxury</h3>
+                            <div style="font-size: 2rem; font-weight: 900; color: #10b981; margin-bottom: 15px;">89€<span style="font-size: 1rem; font-weight: normal;">/jour</span></div>
+                            <p style="color: #64748b; margin-bottom: 20px;">Prestige absolu</p>
+                            <div style="background: ${primaryColor}; color: white; padding: 12px 25px; border-radius: 25px; display: inline-block; font-weight: bold;">Mercedes • BMW Série 5</div>
+                        </div>
+                    </div>
+                `;
+                    break;
+
+                case 'restaurant':
+                    sectorContent += `🍽️ Notre Menu Gastronomique</h2>
+                        <p style="font-size: 1.2rem; color: #64748b; max-width: 600px; margin: 0 auto;">Une expérience culinaire exceptionnelle vous attend</p>
+                        <div style="width: 100px; height: 4px; background: ${primaryColor}; margin: 20px auto; border-radius: 2px;"></div>
+                    </div>
+                    <div style="display: grid; gap: 40px; max-width: 800px; margin: 0 auto;">
+                        <div style="background: linear-gradient(135deg, #ffffff, #f8fafc); padding: 40px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.08);">
+                            <h3 style="font-size: 1.8rem; font-weight: bold; color: ${primaryColor}; margin-bottom: 25px; display: flex; align-items: center;"><span style="margin-right: 15px;">🥗</span>Entrées Signature</h3>
+                            <div style="space-y: 15px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 2px dotted #e2e8f0;">
+                                    <div>
+                                        <div style="font-weight: bold; font-size: 1.1rem;">Salade Caesar Revisitée</div>
+                                        <div style="color: #64748b; font-size: 0.9rem;">Parmesan 24 mois, croûtons artisanaux</div>
+                                    </div>
+                                    <span style="font-weight: 900; color: ${primaryColor}; font-size: 1.2rem;">14€</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 2px dotted #e2e8f0;">
+                                    <div>
+                                        <div style="font-weight: bold; font-size: 1.1rem;">Carpaccio de Saint-Jacques</div>
+                                        <div style="color: #64748b; font-size: 0.9rem;">Agrumes, huile d'olive premium</div>
+                                    </div>
+                                    <span style="font-weight: 900; color: ${primaryColor}; font-size: 1.2rem;">18€</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                    break;
+
+                case 'salon':
+                    sectorContent += `💇 Nos Services Beauté</h2>
+                        <p style="font-size: 1.2rem; color: #64748b; max-width: 600px; margin: 0 auto;">Révélez votre beauté naturelle avec nos experts</p>
+                        <div style="width: 100px; height: 4px; background: ${primaryColor}; margin: 20px auto; border-radius: 2px;"></div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px;">
+                        ${['💇‍♀️ Coupe & Brushing - 45€', '🎨 Coloration Premium - 85€', '✨ Soins Réparateurs - 35€', '💆‍♀️ Massage Crânien - 28€', '👰 Chignon Mariage - 75€', '🔥 Lissage Keratin - 150€'].map(service => `
+                            <div style="background: linear-gradient(135deg, #ffffff, ${primaryColor}11); padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.08); border: 1px solid #f1f5f9;">
+                                <div style="font-weight: bold; color: ${primaryColor}; font-size: 1.1rem; line-height: 1.4;">${service}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                    break;
+
+                default:
+                    sectorContent += `✨ Nos Services Excellence</h2>
+                        <p style="font-size: 1.2rem; color: #64748b; max-width: 600px; margin: 0 auto;">Des solutions professionnelles adaptées à vos besoins</p>
+                        <div style="width: 100px; height: 4px; background: ${primaryColor}; margin: 20px auto; border-radius: 2px;"></div>
+                    </div>
+                    <div style="display: grid; gap: 30px; max-width: 800px; margin: 0 auto;">
+                        <div style="background: linear-gradient(135deg, #ffffff, ${primaryColor}11); padding: 35px; border-radius: 20px; border-left: 6px solid ${primaryColor}; box-shadow: 0 15px 35px rgba(0,0,0,0.08);">
+                            <h3 style="font-weight: 900; color: ${primaryColor}; font-size: 1.6rem; margin-bottom: 15px;">🎯 Service Premium</h3>
+                            <p style="color: #64748b; font-size: 1.1rem; line-height: 1.6;">Découvrez nos services de qualité exceptionnelle, conçus pour dépasser vos attentes et vous offrir une expérience unique.</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            return sectorContent + '</div>';
+        }
+
+        function goBackToTemplates() {
+            document.getElementById('previewSection').style.display = 'none';
+            document.getElementById('qualityTemplates').style.display = 'block';
+        }
+
+        function selectOffer(type) {
+            currentOffer = type;
+            
+            // Calculer le prix final
+            let basePrice = (type === 'site') ? 15 : 49;
+            let templateCost = 0;
+            
+            if (type === 'site' && templates[selectedTemplate] && templates[selectedTemplate].isPremium) {
+                templateCost = 5;
+            }
+            // Pour la conciergerie, tous les thèmes premium sont inclus
+            
+            let finalPrice = basePrice + templateCost;
+            
+            // Mettre à jour l'affichage des prix
+            document.getElementById('sitePrice').textContent = type === 'site' ? `${finalPrice}€` : '15€';
+            
+            // Mettre à jour les radio buttons
+            document.querySelectorAll('.offer-radio').forEach(radio => {
+                radio.checked = radio.value === type;
+            });
+            
+            // Mettre à jour le bouton de paiement
+            const payButton = document.getElementById('payButton');
+            payButton.innerHTML = `💳 COMMANDER MAINTENANT - ${finalPrice}€`;
+            payButton.style.backgroundColor = type === 'site' ? '#3b82f6' : '#10b981';
+        }
+
+        function processPayment() {
+            if (!currentUser) {
+                showNotification('❌ Vous devez être connecté pour effectuer un achat !');
+                showLogin();
+                return;
+            }
+
+            // Calculer le prix final
+            let basePrice = (currentOffer === 'site') ? 15 : 49;
+            let templateCost = 0;
+            
+            if (currentOffer === 'site' && templates[selectedTemplate] && templates[selectedTemplate].isPremium) {
+                templateCost = 5;
+            }
+            
+            let finalPrice = basePrice + templateCost;
+            
+            let paypalUrl;
+            if (currentOffer === 'site') {
+                paypalUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=assakourc@gmail.com&item_name=Site+IA+Pro+Theme+${templates[selectedTemplate].name}+-+IA+WebGen&amount=${finalPrice}.00&currency_code=EUR&return=${encodeURIComponent(window.location.href)}&cancel_return=${encodeURIComponent(window.location.href)}`;
+            } else {
+                paypalUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=assakourc@gmail.com&item_name=Conciergerie+IA+Complete+Premium+-+IA+WebGen&amount=49.00&currency_code=EUR&return=${encodeURIComponent(window.location.href)}&cancel_return=${encodeURIComponent(window.location.href)}`;
+            }
+
+            const orderData = {
+                user: currentUser,
+                websiteData: websiteData,
+                selectedTemplate: selectedTemplate,
+                templateInfo: templates[selectedTemplate],
+                offer: currentOffer,
+                price: finalPrice,
+                date: new Date().toISOString()
+            };
+            localStorage.setItem('pendingOrder', JSON.stringify(orderData));
+
+            const templateName = templates[selectedTemplate] ? templates[selectedTemplate].name : 'Standard';
+            const message = `🎉 Commande confirmée !\n\n` +
+                          `📋 Récapitulatif :\n` +
+                          `• Thème: ${templateName} ${templates[selectedTemplate] && templates[selectedTemplate].isPremium ? '(Premium)' : '(Gratuit)'}\n` +
+                          `• Offre: ${currentOffer === 'site' ? 'Site IA Pro' : 'Conciergerie IA Complète'}\n` +
+                          `• Prix total: ${finalPrice}€\n\n` +
+                          `📧 Vous recevrez après paiement :\n` +
+                          `• Email de confirmation\n` +
+                          `• ${currentOffer === 'site' ? 'Fichiers du site' : 'Site mis en ligne automatiquement'}\n` +
+                          `• Support inclus\n\n` +
+                          `Procéder au paiement PayPal ?`;
+
+            if (confirm(message)) {
+                window.open(paypalUrl, '_blank');
+                showNotification('🎉 Redirection PayPal... Commande en cours !');
+            }
         }
 
         // Fonctions d'authentification
@@ -802,7 +1043,7 @@
             localStorage.setItem('currentUser', JSON.stringify(user));
             showUserMenu();
             closeAuthModal();
-            showNotification('Connexion réussie !');
+            showNotification('✅ Connexion réussie !');
         }
 
         function register(event) {
@@ -814,7 +1055,7 @@
             localStorage.setItem('currentUser', JSON.stringify(user));
             showUserMenu();
             closeAuthModal();
-            showNotification('Inscription réussie !');
+            showNotification('✅ Inscription réussie !');
         }
 
         function logout() {
@@ -829,266 +1070,6 @@
             document.getElementById('authButtons').style.display = 'none';
             document.getElementById('userMenu').style.display = 'block';
             document.getElementById('userName').textContent = `👋 ${currentUser.name}`;
-        }
-
-        // Génération de la prévisualisation (CORRIGÉE)
-        function generatePreview() {
-            document.getElementById('previewBusinessName').textContent = websiteData.businessName;
-            document.getElementById('mainTitle').value = websiteData.businessName;
-            document.getElementById('subtitle').value = websiteData.description;
-            
-            // Générer immédiatement l'aperçu
-            updatePreview();
-            
-            // Afficher la section de prévisualisation
-            document.getElementById('qualityTemplates').style.display = 'none';
-            document.getElementById('previewSection').style.display = 'block';
-            
-            window.scrollTo(0, 0);
-            showNotification('✅ Prévisualisation générée ! Personnalisez votre site.');
-        }
-
-        function updatePreview() {
-            const mainTitle = document.getElementById('mainTitle').value || websiteData.businessName;
-            const subtitle = document.getElementById('subtitle').value || websiteData.description;
-            const primaryColor = document.getElementById('primaryColor').value;
-            const phone = document.getElementById('phone').value;
-            const address = document.getElementById('address').value;
-
-            websiteData.mainTitle = mainTitle;
-            websiteData.subtitle = subtitle;
-            websiteData.primaryColor = primaryColor;
-            websiteData.phone = phone;
-            websiteData.address = address;
-
-            const siteContent = generateSiteContentByType();
-            document.getElementById('websitePreview').innerHTML = siteContent;
-        }
-
-        function generateSiteContentByType() {
-            const { mainTitle, subtitle, primaryColor, phone, address, siteType, photos } = websiteData;
-            
-            let baseContent = `
-                <div style="background: linear-gradient(135deg, ${primaryColor}, #6366f1); color: white; padding: 20px; text-align: center; border-radius: 10px; margin-bottom: 20px;">
-                    <h1 style="font-size: 2rem; font-weight: bold; margin-bottom: 10px;">${mainTitle}</h1>
-                    <p style="font-size: 1.1rem; opacity: 0.9;">${subtitle}</p>
-                </div>
-            `;
-
-            // Ajouter galerie photos si disponibles
-            if (photos && photos.length > 0) {
-                baseContent += `
-                    <div style="background: #f8fafc; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-                        <h2 style="color: ${primaryColor}; font-size: 1.5rem; margin-bottom: 15px;">📸 Nos Réalisations</h2>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px;">
-                            ${photos.slice(0, 6).map(photo => `
-                                <img src="${photo.data}" alt="${photo.name}" style="width: 100%; height: 100px; object-fit: cover; border-radius: 8px;">
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-
-            // Contenu spécifique selon le type
-            let specificContent = '';
-            
-            switch(siteType) {
-                case 'location-voiture':
-                    specificContent = `
-                        <div style="background: #f8fafc; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-                            <h2 style="color: ${primaryColor}; font-size: 1.5rem; margin-bottom: 15px;">🚗 Notre Flotte de Véhicules</h2>
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-                                <div style="background: white; padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                                    <div style="font-size: 2rem; margin-bottom: 10px;">🚗</div>
-                                    <h3 style="font-weight: bold; color: ${primaryColor};">Citadines</h3>
-                                    <p style="color: #64748b; font-size: 0.9rem;">À partir de 25€/jour</p>
-                                    <p style="font-size: 0.8rem;">Peugeot 208, Renault Clio</p>
-                                </div>
-                                <div style="background: white; padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                                    <div style="font-size: 2rem; margin-bottom: 10px;">🚙</div>
-                                    <h3 style="font-weight: bold; color: ${primaryColor};">SUV</h3>
-                                    <p style="color: #64748b; font-size: 0.9rem;">À partir de 45€/jour</p>
-                                    <p style="font-size: 0.8rem;">BMW X3, Audi Q5</p>
-                                </div>
-                                <div style="background: white; padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                                    <div style="font-size: 2rem; margin-bottom: 10px;">🏎️</div>
-                                    <h3 style="font-weight: bold; color: ${primaryColor};">Premium</h3>
-                                    <p style="color: #64748b; font-size: 0.9rem;">À partir de 89€/jour</p>
-                                    <p style="font-size: 0.8rem;">Mercedes, BMW Série 5</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="background: ${primaryColor}; color: white; padding: 20px; border-radius: 10px; text-align: center;">
-                            <h3 style="font-size: 1.3rem; margin-bottom: 10px;">🎯 Réservation Rapide</h3>
-                            <p style="margin-bottom: 15px;">Réservez en ligne en 2 minutes</p>
-                            <div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 8px; display: inline-block;">
-                                <span style="font-weight: bold;">📞 Disponible 24h/24 - 7j/7</span>
-                            </div>
-                        </div>
-                    `;
-                    break;
-
-                case 'restaurant':
-                    specificContent = `
-                        <div style="background: #f8fafc; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-                            <h2 style="color: ${primaryColor}; font-size: 1.5rem; margin-bottom: 15px;">🍽️ Notre Menu</h2>
-                            <div style="display: grid; gap: 15px;">
-                                <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid ${primaryColor};">
-                                    <h3 style="font-weight: bold; color: ${primaryColor};">🥗 Entrées</h3>
-                                    <div style="margin-top: 8px;">
-                                        <div style="display: flex; justify-content: space-between; padding: 5px 0;">
-                                            <span>Salade Caesar</span><span style="font-weight: bold;">12€</span>
-                                        </div>
-                                        <div style="display: flex; justify-content: space-between; padding: 5px 0;">
-                                            <span>Carpaccio de saumon</span><span style="font-weight: bold;">15€</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid ${primaryColor};">
-                                    <h3 style="font-weight: bold; color: ${primaryColor};">🥩 Plats Principaux</h3>
-                                    <div style="margin-top: 8px;">
-                                        <div style="display: flex; justify-content: space-between; padding: 5px 0;">
-                                            <span>Filet de bœuf aux morilles</span><span style="font-weight: bold;">28€</span>
-                                        </div>
-                                        <div style="display: flex; justify-content: space-between; padding: 5px 0;">
-                                            <span>Saumon grillé</span><span style="font-weight: bold;">22€</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    break;
-
-                case 'garage':
-                    specificContent = `
-                        <div style="background: #f8fafc; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-                            <h2 style="color: ${primaryColor}; font-size: 1.5rem; margin-bottom: 15px;">🔧 Nos Services Auto</h2>
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-                                ${['🔧 Mécanique générale - 60€/h', '🛞 Pneumatiques - À partir de 80€', '🔋 Électricité auto - 70€/h', '🚗 Carrosserie - Devis gratuit'].map(service => `
-                                    <div style="background: white; padding: 15px; border-radius: 8px; text-align: center; border: 1px solid #e2e8f0;">
-                                        <div style="font-weight: bold; color: ${primaryColor};">${service}</div>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                    `;
-                    break;
-
-                case 'photographe':
-                    specificContent = `
-                        <div style="background: #f8fafc; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-                            <h2 style="color: ${primaryColor}; font-size: 1.5rem; margin-bottom: 15px;">📸 Mes Spécialités Photo</h2>
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
-                                ${['👰 Mariages - 800€', '👨‍👩‍👧‍👦 Portraits famille - 150€', '🎂 Événements - 300€', '🏢 Corporate - 200€/h'].map(service => `
-                                    <div style="background: white; padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                                        <div style="font-weight: bold; color: ${primaryColor}; font-size: 0.9rem;">${service}</div>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                    `;
-                    break;
-
-                default:
-                    specificContent = `
-                        <div style="background: #f8fafc; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-                            <h2 style="color: ${primaryColor}; font-size: 1.5rem; margin-bottom: 15px;">✨ Nos Services</h2>
-                            <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid ${primaryColor};">
-                                <h3 style="font-weight: bold; color: ${primaryColor};">Service Premium</h3>
-                                <p style="color: #64748b; margin-top: 8px;">Découvrez nos services de qualité professionnelle adaptés à vos besoins spécifiques.</p>
-                            </div>
-                        </div>
-                    `;
-            }
-
-            // Section contact si informations disponibles
-            let contactSection = '';
-            if (phone || address) {
-                contactSection = `
-                    <div style="background: ${primaryColor}; color: white; padding: 20px; border-radius: 10px; margin-top: 20px;">
-                        <h3 style="font-size: 1.3rem; margin-bottom: 15px;">📞 Contactez-nous</h3>
-                        <div style="display: grid; gap: 10px;">
-                            ${phone ? `<div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 6px;">📱 ${phone}</div>` : ''}
-                            ${address ? `<div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 6px;">📍 ${address}</div>` : ''}
-                        </div>
-                    </div>
-                `;
-            }
-
-            return baseContent + specificContent + contactSection;
-        }
-
-        function goBackToMain() {
-            document.getElementById('previewSection').style.display = 'none';
-            document.getElementById('qualityTemplates').style.display = 'none';
-            document.getElementById('mainSection').style.display = 'block';
-        }
-
-        function selectOffer(type, price) {
-            currentOffer = type;
-            currentPrice = price;
-            
-            document.querySelectorAll('.offer-radio').forEach(radio => {
-                radio.checked = radio.value === type;
-            });
-            
-            const payButton = document.getElementById('payButton');
-            if (type === 'site') {
-                payButton.innerHTML = '💳 COMMANDER MAINTENANT - 15€';
-                payButton.style.backgroundColor = '#3b82f6';
-            } else {
-                payButton.innerHTML = '💳 COMMANDER MAINTENANT - 49€';
-                payButton.style.backgroundColor = '#10b981';
-            }
-        }
-
-        function processPayment() {
-            if (!currentUser) {
-                showNotification('❌ Vous devez être connecté pour effectuer un achat !');
-                showLogin();
-                return;
-            }
-
-            let paypalUrl;
-            if (currentOffer === 'site') {
-                paypalUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=assakourc@gmail.com&item_name=Site+IA+Professionnel+-+IA+WebGen&amount=15.00&currency_code=EUR&return=${encodeURIComponent(window.location.href)}&cancel_return=${encodeURIComponent(window.location.href)}`;
-            } else {
-                paypalUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=assakourc@gmail.com&item_name=Service+Conciergerie+IA+Complete+-+IA+WebGen&amount=49.00&currency_code=EUR&return=${encodeURIComponent(window.location.href)}&cancel_return=${encodeURIComponent(window.location.href)}`;
-            }
-
-            const orderData = {
-                user: currentUser,
-                websiteData: websiteData,
-                selectedTemplate: selectedTemplate,
-                offer: currentOffer,
-                price: currentPrice,
-                date: new Date().toISOString()
-            };
-            localStorage.setItem('pendingOrder', JSON.stringify(orderData));
-
-            const message = `🎉 Excellent choix ! Redirection vers PayPal pour ${currentPrice}€\n\n` +
-                          `📧 Après paiement, vous recevrez :\n` +
-                          `• ${currentOffer === 'site' ? 'Site professionnel avec vos photos' : 'Site mis en ligne + domaine + hébergement'}\n` +
-                          `• Email de confirmation détaillé\n` +
-                          `• ${currentOffer === 'conciergerie' ? 'Formation utilisateur incluse' : 'Instructions complètes'}\n\n` +
-                          `Continuer vers PayPal ?`;
-
-            if (confirm(message)) {
-                simulateEmailConfirmation();
-                window.open(paypalUrl, '_blank');
-                showNotification('🎉 Redirection PayPal... Email de confirmation envoyé !');
-            }
-        }
-
-        function simulateEmailConfirmation() {
-            const orderData = JSON.parse(localStorage.getItem('pendingOrder'));
-            if (!orderData) return;
-
-            console.log('📧 EMAIL DE CONFIRMATION ENVOYÉ À:', orderData.websiteData.userEmail);
-            setTimeout(() => {
-                showNotification('📧 Email de confirmation envoyé avec succès !');
-            }, 2000);
         }
 
         // Fonctions de partage
@@ -1107,7 +1088,7 @@
 
         function shareOnTwitter() {
             const url = window.location.href;
-            const text = "🤖 Incroyable ! IA WebGen crée des sites professionnels en 2-4h !";
+            const text = "🤖 Incroyable ! IA WebGen crée des sites pros avec 10 thèmes magnifiques !";
             const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
             window.open(twitterUrl, '_blank', 'width=600,height=400');
             showNotification('🎁 Code SHARE10 activé ! 10% de réduction !');
@@ -1116,7 +1097,7 @@
 
         function shareOnWhatsApp() {
             const url = window.location.href;
-            const text = "🤖 Regarde ! IA WebGen crée des sites pro en 2h : ";
+            const text = "🤖 Regarde ! IA WebGen crée des sites magnifiques en 2h : ";
             const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text + url)}`;
             window.open(whatsappUrl, '_blank');
             showNotification('🎁 Code SHARE10 activé ! Économisez 10% !');
@@ -1125,7 +1106,7 @@
 
         function copyLink() {
             navigator.clipboard.writeText(window.location.href).then(() => {
-                showNotification('🔗 Lien copié ! Code promo SHARE10 = -10% ! 🎁');
+                showNotification('🔗 Lien copié ! Code promo SHARE10 = -10% !');
                 document.getElementById('shareMenu').classList.add('hidden');
             });
         }
