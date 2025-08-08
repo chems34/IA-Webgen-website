@@ -13,12 +13,17 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .preview-section { display: none; }
         .auth-section { display: none; }
-        .edit-section { display: none; }
-        .payment-section { display: none; }
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); }
         .modal-content { background-color: white; margin: 5% auto; padding: 20px; border-radius: 10px; width: 90%; max-width: 800px; max-height: 80vh; overflow-y: auto; }
-        .share-buttons { position: fixed; top: 20px; right: 20px; z-index: 100; }
         .notification { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1001; display: none; }
+        .share-widget { position: fixed; bottom: 20px; right: 20px; z-index: 100; }
+        .quality-templates { display: none; }
+        .photo-upload-area { border: 2px dashed #cbd5e0; border-radius: 8px; padding: 20px; text-align: center; transition: all 0.3s; }
+        .photo-upload-area:hover { border-color: #3b82f6; background-color: #f0f9ff; }
+        .photo-upload-area.drag-over { border-color: #10b981; background-color: #f0fdf4; }
+        .template-card { cursor: pointer; transition: all 0.3s; }
+        .template-card:hover { transform: scale(1.05); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .template-card.selected { border: 3px solid #10b981; }
     </style>
 </head>
 <body class="font-sans">
@@ -28,25 +33,31 @@
         <span id="notificationText">Message</span>
     </div>
 
-    <!-- Boutons de partage -->
-    <div class="share-buttons">
-        <div class="bg-white rounded-lg shadow-lg p-3">
-            <p class="text-sm font-bold text-gray-800 mb-2">🎁 Partager & Économiser</p>
-            <div class="flex gap-2">
-                <button onclick="shareOnFacebook()" class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 text-xs">
-                    <i class="fab fa-facebook-f"></i>
-                </button>
-                <button onclick="shareOnTwitter()" class="bg-blue-400 text-white p-2 rounded hover:bg-blue-500 text-xs">
-                    <i class="fab fa-twitter"></i>
-                </button>
-                <button onclick="shareOnWhatsApp()" class="bg-green-500 text-white p-2 rounded hover:bg-green-600 text-xs">
-                    <i class="fab fa-whatsapp"></i>
-                </button>
-                <button onclick="copyLink()" class="bg-gray-600 text-white p-2 rounded hover:bg-gray-700 text-xs">
-                    <i class="fas fa-link"></i>
-                </button>
+    <!-- Widget de partage (repositionné) -->
+    <div class="share-widget">
+        <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full shadow-lg p-3 relative">
+            <button onclick="toggleShareMenu()" class="flex items-center space-x-2 text-sm font-medium">
+                <i class="fas fa-share-alt"></i>
+                <span>Partager = -10%</span>
+            </button>
+            <div id="shareMenu" class="hidden absolute bottom-full right-0 mb-2 bg-white rounded-lg shadow-xl p-3 min-w-48">
+                <p class="text-gray-800 text-xs font-bold mb-2">🎁 Partagez et économisez 10% !</p>
+                <div class="flex gap-2">
+                    <button onclick="shareOnFacebook()" class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 text-xs">
+                        <i class="fab fa-facebook-f"></i>
+                    </button>
+                    <button onclick="shareOnTwitter()" class="bg-blue-400 text-white p-2 rounded hover:bg-blue-500 text-xs">
+                        <i class="fab fa-twitter"></i>
+                    </button>
+                    <button onclick="shareOnWhatsApp()" class="bg-green-500 text-white p-2 rounded hover:bg-green-600 text-xs">
+                        <i class="fab fa-whatsapp"></i>
+                    </button>
+                    <button onclick="copyLink()" class="bg-gray-600 text-white p-2 rounded hover:bg-gray-700 text-xs">
+                        <i class="fas fa-link"></i>
+                    </button>
+                </div>
+                <p class="text-gray-600 text-xs mt-2">Code: SHARE10</p>
             </div>
-            <p class="text-xs text-gray-600 mt-1">Partagez pour 10% de réduction !</p>
         </div>
     </div>
 
@@ -86,40 +97,111 @@
         <section class="gradient-bg text-white py-20 fade-in">
             <div class="container mx-auto px-4 text-center">
                 <h2 class="text-3xl sm:text-5xl font-bold mb-6">
-                    🚀 Créez votre site web en quelques minutes
+                    🚀 Créez votre site web professionnel avec l'IA
                 </h2>
                 <p class="text-lg sm:text-xl mb-8 opacity-90">
-                    Intelligence artificielle + Service conciergerie automatisé = Votre site en ligne en 2-4h !
+                    Intelligence artificielle avancée + Photos personnalisées + Templates premium = Site professionnel en 2-4h !
                 </p>
                 
-                <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-6 sm:p-8 max-w-md mx-auto">
-                    <h3 class="text-xl sm:text-2xl font-bold mb-6">🎯 Créer mon site maintenant</h3>
+                <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-6 sm:p-8 max-w-2xl mx-auto">
+                    <h3 class="text-xl sm:text-2xl font-bold mb-6">🎯 Créer mon site professionnel</h3>
                     
                     <form id="websiteForm" class="space-y-4">
-                        <input type="text" id="businessName" placeholder="Nom de votre entreprise" 
-                               class="w-full p-3 rounded-lg text-gray-800 font-medium" required>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <input type="text" id="businessName" placeholder="Nom de votre entreprise" 
+                                   class="w-full p-3 rounded-lg text-gray-800 font-medium" required>
+                            
+                            <select id="siteType" class="w-full p-3 rounded-lg text-gray-800 font-medium" required>
+                                <option value="">Type de site</option>
+                                <option value="restaurant">🍽️ Restaurant</option>
+                                <option value="salon">💇 Salon de beauté</option>
+                                <option value="commerce">🏪 Commerce/Boutique</option>
+                                <option value="service">🔧 Service professionnel</option>
+                                <option value="medical">🏥 Cabinet médical</option>
+                                <option value="immobilier">🏠 Immobilier</option>
+                                <option value="hotel">🏨 Hôtel/Hébergement</option>
+                                <option value="fitness">💪 Salle de sport</option>
+                                <option value="autre">✨ Autre activité</option>
+                            </select>
+                        </div>
                         
-                        <textarea id="description" placeholder="Décrivez votre activité (ex: Restaurant italien, Salon de coiffure...)" 
+                        <textarea id="description" placeholder="Décrivez votre activité et vos services en détail..." 
                                   class="w-full p-3 rounded-lg text-gray-800 font-medium h-24" required></textarea>
-                        
-                        <select id="siteType" class="w-full p-3 rounded-lg text-gray-800 font-medium" required>
-                            <option value="">Choisissez le type de site</option>
-                            <option value="restaurant">🍽️ Restaurant</option>
-                            <option value="salon">💇 Salon de beauté</option>
-                            <option value="commerce">🏪 Commerce/Boutique</option>
-                            <option value="service">🔧 Service professionnel</option>
-                            <option value="medical">🏥 Cabinet médical</option>
-                            <option value="immobilier">🏠 Immobilier</option>
-                            <option value="autre">✨ Autre activité</option>
-                        </select>
                         
                         <input type="email" id="userEmail" placeholder="Votre email pour recevoir le site" 
                                class="w-full p-3 rounded-lg text-gray-800 font-medium" required>
                         
-                        <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transform hover:scale-105 transition-all duration-200">
-                            👁️ VOIR LA PRÉVISUALISATION GRATUITE
+                        <!-- Upload de photos -->
+                        <div class="photo-upload-area" id="photoUploadArea">
+                            <div class="mb-4">
+                                <i class="fas fa-camera text-4xl text-gray-400 mb-2"></i>
+                                <h4 class="text-gray-800 font-bold text-lg mb-2">📸 Ajoutez vos photos (optionnel)</h4>
+                                <p class="text-gray-600 text-sm mb-4">
+                                    Glissez vos images ici ou cliquez pour sélectionner<br>
+                                    <span class="text-xs">JPG, PNG, WebP - Max 5 Mo par image</span>
+                                </p>
+                                <input type="file" id="photoInput" multiple accept="image/*" class="hidden">
+                                <button type="button" onclick="document.getElementById('photoInput').click()" 
+                                        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-sm">
+                                    <i class="fas fa-upload mr-2"></i>Choisir des photos
+                                </button>
+                            </div>
+                            <div id="photoPreview" class="grid grid-cols-3 gap-2 mt-4 hidden"></div>
+                        </div>
+                        
+                        <!-- Niveau de qualité -->
+                        <div class="border rounded-lg p-4 bg-white bg-opacity-20">
+                            <h4 class="text-white font-bold mb-3">🎨 Niveau de qualité souhaité</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                <label class="flex items-center p-3 bg-white bg-opacity-10 rounded cursor-pointer hover:bg-opacity-20">
+                                    <input type="radio" name="quality" value="standard" class="mr-3" checked>
+                                    <div>
+                                        <div class="font-bold text-sm">Standard</div>
+                                        <div class="text-xs opacity-75">Site simple et efficace</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center p-3 bg-white bg-opacity-10 rounded cursor-pointer hover:bg-opacity-20">
+                                    <input type="radio" name="quality" value="premium" class="mr-3">
+                                    <div>
+                                        <div class="font-bold text-sm">Premium ⭐</div>
+                                        <div class="text-xs opacity-75">Design avancé + animations</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center p-3 bg-white bg-opacity-10 rounded cursor-pointer hover:bg-opacity-20">
+                                    <input type="radio" name="quality" value="professionnel" class="mr-3">
+                                    <div>
+                                        <div class="font-bold text-sm">Professionnel 🏆</div>
+                                        <div class="text-xs opacity-75">Qualité agence web</div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-bold py-4 px-6 rounded-lg transform hover:scale-105 transition-all duration-200 text-lg">
+                            🤖 GÉNÉRER MON SITE AVEC L'IA
                         </button>
                     </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Templates de qualité (nouvelle section) -->
+        <section id="qualityTemplates" class="quality-templates py-16 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl font-bold text-gray-800 mb-4">🎨 Choisissez votre template professionnel</h3>
+                    <p class="text-xl text-gray-600">L'IA a généré ces designs personnalisés pour votre activité</p>
+                </div>
+                
+                <div id="templateGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <!-- Les templates seront générés dynamiquement -->
+                </div>
+                
+                <div class="text-center mt-8">
+                    <button onclick="proceedWithSelectedTemplate()" id="continueBtn" 
+                            class="bg-green-500 text-white px-8 py-3 rounded-lg font-bold hover:bg-green-600 disabled:opacity-50" disabled>
+                        Continuer avec ce design
+                    </button>
                 </div>
             </div>
         </section>
@@ -129,10 +211,10 @@
             <div class="container mx-auto px-4">
                 <div class="text-center mb-12">
                     <h3 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
-                        🤖 Service Conciergerie Automatisé
+                        🤖 IA Professionnelle + Service Conciergerie
                     </h3>
                     <p class="text-lg sm:text-xl text-gray-600">
-                        78% de nos clients choisissent notre automatisation complète !
+                        Notre IA crée des sites de qualité agence web !
                     </p>
                 </div>
 
@@ -140,14 +222,14 @@
                     <!-- Offre Site Seul -->
                     <div class="bg-white rounded-lg shadow-lg p-6 sm:p-8 card-hover">
                         <div class="text-center">
-                            <h4 class="text-xl sm:text-2xl font-bold text-gray-800 mb-4">📄 Site Seul</h4>
+                            <h4 class="text-xl sm:text-2xl font-bold text-gray-800 mb-4">📄 Site IA Professionnel</h4>
                             <div class="text-3xl sm:text-4xl font-bold text-blue-600 mb-4">15€</div>
                             <ul class="text-left space-y-2 mb-6 text-sm sm:text-base">
-                                <li>✅ Site web créé par intelligence artificielle</li>
-                                <li>✅ Design professionnel adaptatif</li>
-                                <li>✅ Prévisualisation avant achat</li>
-                                <li>✅ Modifications illimitées</li>
-                                <li>✅ Code source complet inclus</li>
+                                <li>✅ Site créé par IA professionnelle</li>
+                                <li>✅ Intégration de vos photos personnelles</li>
+                                <li>✅ Templates premium adaptatifs</li>
+                                <li>✅ Prévisualisation et modifications</li>
+                                <li>✅ Code source optimisé</li>
                                 <li>✅ Livraison par email instantanée</li>
                                 <li>❌ Pas d'hébergement inclus</li>
                                 <li>❌ Installation par vos soins</li>
@@ -161,21 +243,22 @@
                             🔥 LE PLUS POPULAIRE
                         </div>
                         <div class="text-center mt-4">
-                            <h4 class="text-xl sm:text-2xl font-bold mb-4">🤖 Conciergerie Automatisée</h4>
+                            <h4 class="text-xl sm:text-2xl font-bold mb-4">🤖 Conciergerie IA Complète</h4>
                             <div class="text-3xl sm:text-4xl font-bold mb-4">49€</div>
                             <ul class="text-left space-y-2 mb-6 text-sm sm:text-base">
-                                <li>✅ Tout inclus de l'offre Site Seul</li>
-                                <li>✅ <strong>Nom de domaine acheté automatiquement</strong></li>
-                                <li>✅ <strong>Hébergement web configuré automatiquement</strong></li>
-                                <li>✅ <strong>Site mis en ligne en 2-4h maximum</strong></li>
-                                <li>✅ <strong>Certificat SSL et DNS automatiques</strong></li>
-                                <li>✅ <strong>Support technique 3 mois inclus</strong></li>
-                                <li>✅ <strong>Surveillance et sauvegardes automatiques</strong></li>
-                                <li>✅ <strong>Email de confirmation détaillé</strong></li>
+                                <li>✅ Tout inclus de l'offre Site IA</li>
+                                <li>✅ <strong>Nom de domaine automatique</strong></li>
+                                <li>✅ <strong>Hébergement premium configuré</strong></li>
+                                <li>✅ <strong>Site en ligne en 2-4h maximum</strong></li>
+                                <li>✅ <strong>Optimisation SEO automatique</strong></li>
+                                <li>✅ <strong>Certificat SSL et sécurité</strong></li>
+                                <li>✅ <strong>Support technique 3 mois</strong></li>
+                                <li>✅ <strong>Maintenance et sauvegardes</strong></li>
+                                <li>✅ <strong>Formation utilisateur incluse</strong></li>
                             </ul>
                             <div class="bg-yellow-400 text-gray-800 p-3 rounded-lg text-xs sm:text-sm font-bold mb-4">
-                                ⏰ Délai garanti : 2-4 heures maximum !<br>
-                                🤖 100% automatisé par intelligence artificielle
+                                ⏰ Site professionnel en ligne en 2-4h !<br>
+                                🤖 IA de qualité agence web
                             </div>
                         </div>
                     </div>
@@ -187,39 +270,45 @@
         <section class="py-16 fade-in">
             <div class="container mx-auto px-4">
                 <h3 class="text-3xl sm:text-4xl font-bold text-center text-gray-800 mb-12">
-                    🤖 Comment ça fonctionne ? (100% Automatisé)
+                    🤖 Notre IA Professionnelle en Action
                 </h3>
                 
                 <div class="max-w-6xl mx-auto">
-                    <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-6 gap-6">
                         <div class="text-center p-4">
                             <div class="bg-blue-500 text-white rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-2xl font-bold mx-auto mb-4">1</div>
-                            <h4 class="font-bold text-base sm:text-lg mb-2">📝 Formulaire</h4>
-                            <p class="text-gray-600 text-sm sm:text-base">Remplissez vos informations</p>
+                            <h4 class="font-bold text-base sm:text-lg mb-2">📝 Analyse</h4>
+                            <p class="text-gray-600 text-sm sm:text-base">IA analyse votre activité</p>
                         </div>
                         
                         <div class="text-center p-4">
                             <div class="bg-green-500 text-white rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-2xl font-bold mx-auto mb-4">2</div>
-                            <h4 class="font-bold text-base sm:text-lg mb-2">👁️ Prévisualisation</h4>
-                            <p class="text-gray-600 text-sm sm:text-base">Voyez votre site avant d'acheter</p>
+                            <h4 class="font-bold text-base sm:text-lg mb-2">🎨 Templates</h4>
+                            <p class="text-gray-600 text-sm sm:text-base">Génération de designs premium</p>
                         </div>
                         
                         <div class="text-center p-4">
                             <div class="bg-purple-500 text-white rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-2xl font-bold mx-auto mb-4">3</div>
-                            <h4 class="font-bold text-base sm:text-lg mb-2">✏️ Modifications</h4>
-                            <p class="text-gray-600 text-sm sm:text-base">Personnalisez comme vous voulez</p>
+                            <h4 class="font-bold text-base sm:text-lg mb-2">📸 Photos</h4>
+                            <p class="text-gray-600 text-sm sm:text-base">Intégration photos personnelles</p>
                         </div>
                         
                         <div class="text-center p-4">
                             <div class="bg-orange-500 text-white rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-2xl font-bold mx-auto mb-4">4</div>
-                            <h4 class="font-bold text-base sm:text-lg mb-2">💳 Paiement</h4>
-                            <p class="text-gray-600 text-sm sm:text-base">PayPal sécurisé au prix exact</p>
+                            <h4 class="font-bold text-base sm:text-lg mb-2">✏️ Personnalisation</h4>
+                            <p class="text-gray-600 text-sm sm:text-base">Modifications à volonté</p>
                         </div>
                         
                         <div class="text-center p-4">
                             <div class="bg-red-500 text-white rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-2xl font-bold mx-auto mb-4">5</div>
-                            <h4 class="font-bold text-base sm:text-lg mb-2">📧 Livraison</h4>
-                            <p class="text-gray-600 text-sm sm:text-base">Recevez tout par email instantanément</p>
+                            <h4 class="font-bold text-base sm:text-lg mb-2">💳 Paiement</h4>
+                            <p class="text-gray-600 text-sm sm:text-base">Paiement sécurisé</p>
+                        </div>
+                        
+                        <div class="text-center p-4">
+                            <div class="bg-indigo-500 text-white rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-lg sm:text-2xl font-bold mx-auto mb-4">6</div>
+                            <h4 class="font-bold text-base sm:text-lg mb-2">🌐 En ligne</h4>
+                            <p class="text-gray-600 text-sm sm:text-base">Site professionnel livré</p>
                         </div>
                     </div>
                 </div>
@@ -230,7 +319,7 @@
         <section class="gradient-bg text-white py-16 fade-in">
             <div class="container mx-auto px-4 text-center">
                 <h3 class="text-2xl sm:text-3xl font-bold mb-8">💬 Besoin d'aide ou d'informations ?</h3>
-                <p class="text-lg sm:text-xl mb-8">Notre équipe est disponible pour vous accompagner dans votre projet !</p>
+                <p class="text-lg sm:text-xl mb-8">Notre équipe d'experts IA est disponible pour vous accompagner !</p>
                 <div class="flex flex-wrap justify-center gap-4">
                     <a href="mailto:contact@iawebgen.com" 
                        class="bg-white text-blue-600 px-6 py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors">
@@ -243,9 +332,9 @@
                 </div>
                 
                 <div class="mt-8 text-sm opacity-75">
-                    <p>🤖 Propulsé par IA WebGen - Création automatisée de sites web</p>
-                    <p>⚡ Service conciergerie disponible 24h/24 - Délai garanti 2-4 heures</p>
-                    <p>📧 Email de confirmation et livraison automatique après chaque achat</p>
+                    <p>🤖 Propulsé par IA WebGen - Intelligence artificielle professionnelle</p>
+                    <p>⚡ Service premium disponible 24h/24 - Sites de qualité agence</p>
+                    <p>📧 Livraison instantanée avec formation utilisateur incluse</p>
                 </div>
             </div>
         </section>
@@ -257,7 +346,7 @@
             <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-2xl font-bold text-gray-800">
-                        🎉 Prévisualisation de votre site : <span id="previewBusinessName"></span>
+                        🎉 Votre site professionnel : <span id="previewBusinessName"></span>
                     </h2>
                     <button onclick="goBackToMain()" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
                         <i class="fas fa-arrow-left"></i> Retour
@@ -267,8 +356,8 @@
                 <div class="grid lg:grid-cols-2 gap-8">
                     <!-- Aperçu du site -->
                     <div>
-                        <h3 class="text-lg font-bold mb-4">📱 Aperçu de votre site web</h3>
-                        <div id="websitePreview" class="border-2 border-gray-300 rounded-lg p-4 bg-white min-h-96">
+                        <h3 class="text-lg font-bold mb-4">📱 Aperçu de votre site professionnel</h3>
+                        <div id="websitePreview" class="border-2 border-gray-300 rounded-lg p-4 bg-white min-h-96 overflow-hidden">
                             <!-- Le contenu sera généré dynamiquement -->
                         </div>
                     </div>
@@ -309,8 +398,8 @@
                                 <div class="border rounded-lg p-4 cursor-pointer hover:bg-blue-50" onclick="selectOffer('site', 15)">
                                     <div class="flex justify-between items-center">
                                         <div>
-                                            <h4 class="font-bold">📄 Site Seul - 15€</h4>
-                                            <p class="text-sm text-gray-600">Code source + Livraison email</p>
+                                            <h4 class="font-bold">📄 Site IA Pro - 15€</h4>
+                                            <p class="text-sm text-gray-600">Code source + Photos + Livraison email</p>
                                         </div>
                                         <input type="radio" name="offer" value="site" class="offer-radio">
                                     </div>
@@ -318,8 +407,8 @@
                                 <div class="border rounded-lg p-4 cursor-pointer hover:bg-green-50 border-green-500" onclick="selectOffer('conciergerie', 49)">
                                     <div class="flex justify-between items-center">
                                         <div>
-                                            <h4 class="font-bold">🤖 Conciergerie - 49€ ⭐</h4>
-                                            <p class="text-sm text-gray-600">Site + Domaine + Hébergement + Mise en ligne</p>
+                                            <h4 class="font-bold">🤖 Conciergerie IA - 49€ ⭐</h4>
+                                            <p class="text-sm text-gray-600">Site + Domaine + Hébergement + Formation</p>
                                         </div>
                                         <input type="radio" name="offer" value="conciergerie" class="offer-radio" checked>
                                     </div>
@@ -327,7 +416,7 @@
                             </div>
                             
                             <button id="payButton" onclick="processPayment()" class="w-full mt-6 bg-green-500 text-white py-3 px-6 rounded-lg font-bold hover:bg-green-600 transform hover:scale-105 transition-all">
-                                💳 PAYER MAINTENANT - 49€
+                                💳 COMMANDER MAINTENANT - 49€
                             </button>
                         </div>
                     </div>
@@ -396,6 +485,8 @@
         let currentOffer = 'conciergerie';
         let currentPrice = 49;
         let websiteData = {};
+        let selectedTemplate = null;
+        let uploadedPhotos = [];
 
         // Initialisation
         document.addEventListener('DOMContentLoaded', function() {
@@ -407,10 +498,247 @@
             if (form) {
                 form.addEventListener('submit', function(e) {
                     e.preventDefault();
-                    generatePreview();
+                    generateTemplates();
                 });
             }
+
+            // Gestion du drag & drop pour les photos
+            setupPhotoUpload();
         });
+
+        // Configuration de l'upload de photos
+        function setupPhotoUpload() {
+            const uploadArea = document.getElementById('photoUploadArea');
+            const photoInput = document.getElementById('photoInput');
+            
+            // Drag & drop
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('drag-over');
+            });
+            
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('drag-over');
+            });
+            
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('drag-over');
+                handleFiles(e.dataTransfer.files);
+            });
+            
+            // Sélection de fichiers
+            photoInput.addEventListener('change', (e) => {
+                handleFiles(e.target.files);
+            });
+        }
+
+        function handleFiles(files) {
+            for (let file of files) {
+                if (file.type.startsWith('image/') && file.size <= 5 * 1024 * 1024) { // 5MB max
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        uploadedPhotos.push({
+                            name: file.name,
+                            data: e.target.result
+                        });
+                        displayPhotoPreview();
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        }
+
+        function displayPhotoPreview() {
+            const preview = document.getElementById('photoPreview');
+            preview.innerHTML = '';
+            preview.classList.remove('hidden');
+            
+            uploadedPhotos.forEach((photo, index) => {
+                const div = document.createElement('div');
+                div.className = 'relative';
+                div.innerHTML = `
+                    <img src="${photo.data}" alt="${photo.name}" class="w-full h-24 object-cover rounded">
+                    <button onclick="removePhoto(${index})" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 text-xs">×</button>
+                `;
+                preview.appendChild(div);
+            });
+        }
+
+        function removePhoto(index) {
+            uploadedPhotos.splice(index, 1);
+            displayPhotoPreview();
+            if (uploadedPhotos.length === 0) {
+                document.getElementById('photoPreview').classList.add('hidden');
+            }
+        }
+
+        // Génération de templates par l'IA
+        function generateTemplates() {
+            const businessName = document.getElementById('businessName').value.trim();
+            const description = document.getElementById('description').value.trim();
+            const siteType = document.getElementById('siteType').value;
+            const userEmail = document.getElementById('userEmail').value.trim();
+            const quality = document.querySelector('input[name="quality"]:checked').value;
+
+            if (!businessName || !description || !siteType || !userEmail) {
+                showNotification('❌ Veuillez remplir tous les champs obligatoires !');
+                return;
+            }
+
+            websiteData = {
+                businessName,
+                description,
+                siteType,
+                userEmail,
+                quality,
+                photos: uploadedPhotos,
+                mainTitle: businessName,
+                subtitle: description,
+                primaryColor: '#3b82f6',
+                phone: '',
+                address: ''
+            };
+
+            // Afficher la section des templates
+            document.getElementById('mainSection').style.display = 'none';
+            document.getElementById('qualityTemplates').style.display = 'block';
+            
+            showNotification('🤖 L\'IA génère vos templates personnalisés...');
+            
+            // Simuler la génération de templates
+            setTimeout(() => {
+                generateTemplateOptions();
+            }, 2000);
+        }
+
+        function generateTemplateOptions() {
+            const templateGrid = document.getElementById('templateGrid');
+            templateGrid.innerHTML = '';
+            
+            const templates = getTemplatesForType(websiteData.siteType, websiteData.quality);
+            
+            templates.forEach((template, index) => {
+                const templateCard = document.createElement('div');
+                templateCard.className = 'template-card bg-white rounded-lg shadow-lg p-4 border-2 border-gray-200';
+                templateCard.onclick = () => selectTemplate(index);
+                
+                templateCard.innerHTML = `
+                    <div class="mb-4">
+                        <div class="bg-gradient-to-br ${template.gradient} h-32 rounded-lg flex items-center justify-center text-white font-bold">
+                            ${template.preview}
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg mb-2">${template.name}</h4>
+                        <p class="text-gray-600 text-sm mb-3">${template.description}</p>
+                        <div class="flex flex-wrap gap-1 mb-3">
+                            ${template.features.map(f => `<span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">${f}</span>`).join('')}
+                        </div>
+                        <div class="text-center">
+                            <span class="text-sm font-bold text-green-600">${template.level}</span>
+                        </div>
+                    </div>
+                `;
+                
+                templateGrid.appendChild(templateCard);
+            });
+            
+            showNotification('✅ Templates générés ! Choisissez votre préféré.');
+        }
+
+        function getTemplatesForType(siteType, quality) {
+            const baseTemplates = {
+                restaurant: [
+                    {
+                        name: 'Gourmet Élégant',
+                        description: 'Design sophistiqué pour restaurant haut de gamme',
+                        preview: '🍽️ MENU',
+                        gradient: 'from-amber-500 to-orange-600',
+                        features: ['Menu interactif', 'Réservations', 'Galerie photos'],
+                        level: 'Premium'
+                    },
+                    {
+                        name: 'Bistrot Moderne',
+                        description: 'Style décontracté et chaleureux',
+                        preview: '☕ BISTROT',
+                        gradient: 'from-green-500 to-teal-600',
+                        features: ['Carte simple', 'Horaires', 'Contact'],
+                        level: 'Standard'
+                    },
+                    {
+                        name: 'Chef Professionnel',
+                        description: 'Présentation gastronomique premium',
+                        preview: '👨‍🍳 CHEF',
+                        gradient: 'from-purple-500 to-pink-600',
+                        features: ['Portfolio chef', 'Services traiteur', 'Blog culinaire'],
+                        level: 'Professionnel'
+                    }
+                ],
+                salon: [
+                    {
+                        name: 'Beauty Spa',
+                        description: 'Ambiance relaxante et zen',
+                        preview: '💆‍♀️ SPA',
+                        gradient: 'from-pink-500 to-rose-600',
+                        features: ['Services beauté', 'Réservations', 'Galerie avant/après'],
+                        level: 'Premium'
+                    },
+                    {
+                        name: 'Coiffure Moderne',
+                        description: 'Style contemporain et dynamique',
+                        preview: '✂️ COIFFURE',
+                        gradient: 'from-blue-500 to-indigo-600',
+                        features: ['Tarifs', 'Équipe', 'Produits'],
+                        level: 'Standard'
+                    }
+                ],
+                // Ajout d'autres types...
+            };
+
+            const templates = baseTemplates[siteType] || [
+                {
+                    name: 'Professionnel Classic',
+                    description: 'Design polyvalent et efficace',
+                    preview: '⭐ PRO',
+                    gradient: 'from-gray-500 to-gray-700',
+                    features: ['Présentation', 'Services', 'Contact'],
+                    level: quality === 'professionnel' ? 'Professionnel' : 'Standard'
+                }
+            ];
+
+            // Adapter selon la qualité demandée
+            return templates.filter(t => {
+                if (quality === 'standard') return t.level !== 'Professionnel';
+                if (quality === 'premium') return t.level !== 'Standard';
+                return true; // Professionnel : tous les templates
+            });
+        }
+
+        function selectTemplate(index) {
+            // Désélectionner les autres templates
+            document.querySelectorAll('.template-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Sélectionner le template actuel
+            const selectedCard = document.querySelectorAll('.template-card')[index];
+            selectedCard.classList.add('selected');
+            
+            selectedTemplate = index;
+            
+            // Activer le bouton continuer
+            const continueBtn = document.getElementById('continueBtn');
+            continueBtn.disabled = false;
+            continueBtn.classList.remove('disabled:opacity-50');
+        }
+
+        function proceedWithSelectedTemplate() {
+            if (selectedTemplate === null) return;
+            
+            // Passer à la prévisualisation
+            generatePreview();
+        }
 
         // Fonctions d'authentification
         function showLogin() {
@@ -427,28 +755,16 @@
             document.getElementById('authModal').style.display = 'block';
         }
 
-        function showLoginForm() {
-            showLogin();
-        }
-
-        function showRegisterForm() {
-            showRegister();
-        }
-
-        function closeAuthModal() {
-            document.getElementById('authModal').style.display = 'none';
-        }
+        function showLoginForm() { showLogin(); }
+        function showRegisterForm() { showRegister(); }
+        function closeAuthModal() { document.getElementById('authModal').style.display = 'none'; }
 
         function login(event) {
             event.preventDefault();
             const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-            
-            // Simulation de connexion
             const user = { email, name: email.split('@')[0] };
             currentUser = user;
             localStorage.setItem('currentUser', JSON.stringify(user));
-            
             showUserMenu();
             closeAuthModal();
             showNotification('Connexion réussie !');
@@ -458,13 +774,9 @@
             event.preventDefault();
             const name = document.getElementById('registerName').value;
             const email = document.getElementById('registerEmail').value;
-            const password = document.getElementById('registerPassword').value;
-            
-            // Simulation d'inscription
             const user = { email, name };
             currentUser = user;
             localStorage.setItem('currentUser', JSON.stringify(user));
-            
             showUserMenu();
             closeAuthModal();
             showNotification('Inscription réussie !');
@@ -486,38 +798,16 @@
 
         // Génération de la prévisualisation
         function generatePreview() {
-            const businessName = document.getElementById('businessName').value.trim();
-            const description = document.getElementById('description').value.trim();
-            const siteType = document.getElementById('siteType').value;
-            const userEmail = document.getElementById('userEmail').value.trim();
-
-            if (!businessName || !description || !siteType || !userEmail) {
-                showNotification('❌ Veuillez remplir tous les champs !');
-                return;
-            }
-
-            websiteData = {
-                businessName,
-                description,
-                siteType,
-                userEmail,
-                mainTitle: businessName,
-                subtitle: description,
-                primaryColor: '#3b82f6',
-                phone: '',
-                address: ''
-            };
-
             // Pré-remplir les champs de personnalisation
-            document.getElementById('previewBusinessName').textContent = businessName;
-            document.getElementById('mainTitle').value = businessName;
-            document.getElementById('subtitle').value = description;
+            document.getElementById('previewBusinessName').textContent = websiteData.businessName;
+            document.getElementById('mainTitle').value = websiteData.businessName;
+            document.getElementById('subtitle').value = websiteData.description;
             
-            // Générer l'aperçu
+            // Générer l'aperçu avec le template sélectionné
             updatePreview();
             
             // Afficher la section de prévisualisation
-            document.getElementById('mainSection').style.display = 'none';
+            document.getElementById('qualityTemplates').style.display = 'none';
             document.getElementById('previewSection').style.display = 'block';
             
             window.scrollTo(0, 0);
@@ -537,76 +827,156 @@
             websiteData.phone = phone;
             websiteData.address = address;
 
-            // Générer le contenu du site selon le type
-            let siteContent = generateSiteContent();
+            // Générer le contenu du site avec le template sélectionné
+            let siteContent = generateAdvancedSiteContent();
             document.getElementById('websitePreview').innerHTML = siteContent;
         }
 
-        function generateSiteContent() {
-            const { mainTitle, subtitle, primaryColor, phone, address, siteType } = websiteData;
+        function generateAdvancedSiteContent() {
+            const { mainTitle, subtitle, primaryColor, phone, address, siteType, photos, quality } = websiteData;
             
             let content = `
-                <div style="background: linear-gradient(135deg, ${primaryColor}, #6366f1); color: white; padding: 20px; text-align: center; border-radius: 8px; margin-bottom: 20px;">
-                    <h1 style="font-size: 2rem; font-weight: bold; margin-bottom: 10px;">${mainTitle}</h1>
-                    <p style="font-size: 1.1rem; opacity: 0.9;">${subtitle}</p>
+                <div style="background: linear-gradient(135deg, ${primaryColor}, #6366f1); color: white; padding: 30px; text-align: center; border-radius: 12px; margin-bottom: 20px; position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: -50px; right: -50px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+                    <h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 15px; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">${mainTitle}</h1>
+                    <p style="font-size: 1.2rem; opacity: 0.95; max-width: 600px; margin: 0 auto;">${subtitle}</p>
+                    ${quality === 'professionnel' ? '<div style="margin-top: 20px;"><span style="background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 20px; font-size: 0.9rem;">🏆 Site Professionnel</span></div>' : ''}
                 </div>
                 
-                <div style="display: grid; gap: 20px; padding: 20px;">
+                <div style="display: grid; gap: 25px; padding: 25px;">
             `;
 
-            // Contenu spécifique selon le type
-            switch(siteType) {
-                case 'restaurant':
-                    content += `
-                        <div style="background: #f9fafb; padding: 20px; border-radius: 8px;">
-                            <h2 style="color: ${primaryColor}; font-size: 1.5rem; margin-bottom: 15px;">🍽️ Notre Menu</h2>
-                            <div style="display: grid; gap: 10px;">
-                                <div>Entrées - À partir de 8€</div>
-                                <div>Plats principaux - À partir de 15€</div>
-                                <div>Desserts - À partir de 6€</div>
-                            </div>
-                        </div>
-                        <div style="background: #f9fafb; padding: 20px; border-radius: 8px;">
-                            <h2 style="color: ${primaryColor}; font-size: 1.5rem; margin-bottom: 15px;">📅 Horaires</h2>
-                            <p>Lundi - Dimanche: 12h - 14h & 19h - 22h</p>
-                        </div>
-                    `;
-                    break;
-                case 'salon':
-                    content += `
-                        <div style="background: #f9fafb; padding: 20px; border-radius: 8px;">
-                            <h2 style="color: ${primaryColor}; font-size: 1.5rem; margin-bottom: 15px;">💇 Nos Services</h2>
-                            <div style="display: grid; gap: 10px;">
-                                <div>Coupe & Brushing - À partir de 35€</div>
-                                <div>Coloration - À partir de 60€</div>
-                                <div>Soins capillaires - À partir de 25€</div>
-                            </div>
-                        </div>
-                    `;
-                    break;
-                default:
-                    content += `
-                        <div style="background: #f9fafb; padding: 20px; border-radius: 8px;">
-                            <h2 style="color: ${primaryColor}; font-size: 1.5rem; margin-bottom: 15px;">✨ Nos Services</h2>
-                            <p>Découvrez nos services de qualité adaptés à vos besoins.</p>
-                        </div>
-                    `;
-            }
-
-            if (phone || address) {
+            // Galerie de photos si des photos ont été uploadées
+            if (photos && photos.length > 0) {
                 content += `
-                    <div style="background: #f9fafb; padding: 20px; border-radius: 8px;">
-                        <h2 style="color: ${primaryColor}; font-size: 1.5rem; margin-bottom: 15px;">📞 Contact</h2>
-                        ${phone ? `<p><strong>Téléphone:</strong> ${phone}</p>` : ''}
-                        ${address ? `<p><strong>Adresse:</strong> ${address}</p>` : ''}
+                    <div style="background: #f9fafb; padding: 25px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                        <h2 style="color: ${primaryColor}; font-size: 1.8rem; margin-bottom: 20px; display: flex; align-items: center;">
+                            <span style="margin-right: 10px;">📸</span> Nos Réalisations
+                        </h2>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+                            ${photos.slice(0, 6).map(photo => `
+                                <img src="${photo.data}" alt="${photo.name}" style="width: 100%; height: 120px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                            `).join('')}
+                        </div>
                     </div>
                 `;
             }
 
+            // Contenu spécifique selon le type d'activité
+            switch(siteType) {
+                case 'restaurant':
+                    content += `
+                        <div style="background: linear-gradient(45deg, #f9fafb, #ffffff); padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                            <h2 style="color: ${primaryColor}; font-size: 1.8rem; margin-bottom: 20px; display: flex; align-items: center;">
+                                <span style="margin-right: 10px;">🍽️</span> Notre Menu Gastronomique
+                            </h2>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                                <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid ${primaryColor};">
+                                    <h3 style="font-weight: bold; margin-bottom: 10px; color: ${primaryColor};">🥗 Entrées</h3>
+                                    <div style="space-y: 8px;">
+                                        <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dotted #ddd;">
+                                            <span>Salade Caesar</span><span style="font-weight: bold;">12€</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dotted #ddd;">
+                                            <span>Carpaccio de saumon</span><span style="font-weight: bold;">15€</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid ${primaryColor};">
+                                    <h3 style="font-weight: bold; margin-bottom: 10px; color: ${primaryColor};">🥩 Plats Principaux</h3>
+                                    <div>
+                                        <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dotted #ddd;">
+                                            <span>Filet de bœuf</span><span style="font-weight: bold;">28€</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dotted #ddd;">
+                                            <span>Saumon grillé</span><span style="font-weight: bold;">22€</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="background: ${primaryColor}; color: white; padding: 20px; border-radius: 12px; text-align: center;">
+                            <h3 style="font-size: 1.5rem; margin-bottom: 10px;">📅 Réservations</h3>
+                            <p style="margin-bottom: 15px;">Ouvert du lundi au dimanche</p>
+                            <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; display: inline-block;">
+                                <p style="font-weight: bold;">12h - 14h & 19h - 22h</p>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                
+                case 'salon':
+                    content += `
+                        <div style="background: linear-gradient(135deg, #fef7ff, #f3e8ff); padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                            <h2 style="color: ${primaryColor}; font-size: 1.8rem; margin-bottom: 20px; display: flex; align-items: center;">
+                                <span style="margin-right: 10px;">💇</span> Nos Services Beauté
+                            </h2>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                                ${['Coupe & Brushing - 35€', 'Coloration complète - 65€', 'Mèches - 45€', 'Soins capillaires - 25€', 'Chignon de mariage - 50€', 'Lissage brésilien - 120€'].map(service => `
+                                    <div style="background: white; padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                                        <div style="font-weight: bold; color: ${primaryColor};">${service}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                    break;
+
+                default:
+                    content += `
+                        <div style="background: linear-gradient(135deg, #f0f9ff, #e0f2fe); padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                            <h2 style="color: ${primaryColor}; font-size: 1.8rem; margin-bottom: 20px; display: flex; align-items: center;">
+                                <span style="margin-right: 10px;">✨</span> Nos Services Premium
+                            </h2>
+                            <div style="display: grid; gap: 15px;">
+                                <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid ${primaryColor};">
+                                    <h3 style="font-weight: bold; color: ${primaryColor}; margin-bottom: 10px;">Service Excellence</h3>
+                                    <p style="color: #64748b;">Découvrez nos services de qualité professionnelle adaptés à vos besoins spécifiques.</p>
+                                </div>
+                                <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid ${primaryColor};">
+                                    <h3 style="font-weight: bold; color: ${primaryColor}; margin-bottom: 10px;">Expertise Reconnue</h3>
+                                    <p style="color: #64748b;">Une équipe d'experts à votre service pour des résultats exceptionnels.</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+            }
+
+            // Section contact si informations disponibles
+            if (phone || address) {
+                content += `
+                    <div style="background: linear-gradient(135deg, ${primaryColor}, #6366f1); color: white; padding: 25px; border-radius: 12px; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: -30px; right: -30px; width: 80px; height: 80px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+                        <h2 style="font-size: 1.8rem; margin-bottom: 20px; display: flex; align-items: center;">
+                            <span style="margin-right: 10px;">📞</span> Contactez-nous
+                        </h2>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                            ${phone ? `
+                                <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 8px;">
+                                    <div style="font-weight: bold; margin-bottom: 5px;">📱 Téléphone</div>
+                                    <div style="font-size: 1.1rem;">${phone}</div>
+                                </div>
+                            ` : ''}
+                            ${address ? `
+                                <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 8px;">
+                                    <div style="font-weight: bold; margin-bottom: 5px;">📍 Adresse</div>
+                                    <div style="font-size: 1.1rem;">${address}</div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Footer avec CTA
             content += `
                 </div>
-                <div style="text-align: center; padding: 20px; background: ${primaryColor}; color: white; border-radius: 8px;">
-                    <p style="font-weight: bold;">Contactez-nous pour plus d'informations !</p>
+                <div style="text-align: center; padding: 30px; background: linear-gradient(135deg, ${primaryColor}, #6366f1); color: white; border-radius: 12px; margin-top: 20px;">
+                    <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 10px;">🌟 Contactez-nous dès maintenant !</h3>
+                    <p style="opacity: 0.9; margin-bottom: 20px;">Découvrez l'excellence de nos services</p>
+                    <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; display: inline-block;">
+                        <span style="font-weight: bold; font-size: 1.1rem;">Devis gratuit & personnalisé</span>
+                    </div>
                 </div>
             `;
 
@@ -615,6 +985,7 @@
 
         function goBackToMain() {
             document.getElementById('previewSection').style.display = 'none';
+            document.getElementById('qualityTemplates').style.display = 'none';
             document.getElementById('mainSection').style.display = 'block';
         }
 
@@ -622,18 +993,16 @@
             currentOffer = type;
             currentPrice = price;
             
-            // Mettre à jour les radio buttons
             document.querySelectorAll('.offer-radio').forEach(radio => {
                 radio.checked = radio.value === type;
             });
             
-            // Mettre à jour le bouton de paiement
             const payButton = document.getElementById('payButton');
             if (type === 'site') {
-                payButton.innerHTML = '💳 PAYER MAINTENANT - 15€';
+                payButton.innerHTML = '💳 COMMANDER MAINTENANT - 15€';
                 payButton.style.backgroundColor = '#3b82f6';
             } else {
-                payButton.innerHTML = '💳 PAYER MAINTENANT - 49€';
+                payButton.innerHTML = '💳 COMMANDER MAINTENANT - 49€';
                 payButton.style.backgroundColor = '#10b981';
             }
         }
@@ -645,42 +1014,34 @@
                 return;
             }
 
-            // Créer l'URL PayPal avec le bon montant - NOUVEAUX LIENS FONCTIONNELS
             let paypalUrl;
             if (currentOffer === 'site') {
-                // PayPal avec paramètres corrects pour 15€
-                paypalUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=assakourc@gmail.com&item_name=Site+Web+Seul+-+IA+WebGen&amount=15.00&currency_code=EUR&return=${encodeURIComponent(window.location.href)}&cancel_return=${encodeURIComponent(window.location.href)}`;
+                paypalUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=assakourc@gmail.com&item_name=Site+IA+Professionnel+-+IA+WebGen&amount=15.00&currency_code=EUR&return=${encodeURIComponent(window.location.href)}&cancel_return=${encodeURIComponent(window.location.href)}`;
             } else {
-                // PayPal avec paramètres corrects pour 49€
-                paypalUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=assakourc@gmail.com&item_name=Service+Conciergerie+Automatise+-+IA+WebGen&amount=49.00&currency_code=EUR&return=${encodeURIComponent(window.location.href)}&cancel_return=${encodeURIComponent(window.location.href)}`;
+                paypalUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=assakourc@gmail.com&item_name=Service+Conciergerie+IA+Complete+-+IA+WebGen&amount=49.00&currency_code=EUR&return=${encodeURIComponent(window.location.href)}&cancel_return=${encodeURIComponent(window.location.href)}`;
             }
 
-            // Sauvegarder les données de commande
             const orderData = {
                 user: currentUser,
                 websiteData: websiteData,
+                selectedTemplate: selectedTemplate,
                 offer: currentOffer,
                 price: currentPrice,
                 date: new Date().toISOString()
             };
             localStorage.setItem('pendingOrder', JSON.stringify(orderData));
 
-            // Message de confirmation
-            const message = `🎉 Parfait ! Vous allez être redirigé vers PayPal pour payer ${currentPrice}€.\n\n` +
-                          `📧 Après le paiement, vous recevrez immédiatement :\n` +
-                          `• Email de confirmation de commande\n` +
-                          `• ${currentOffer === 'site' ? 'Fichiers du site web' : 'Informations de mise en ligne'}\n` +
-                          `• Instructions détaillées\n\n` +
-                          `Continuer vers PayPal ?`;
+            const message = `🎉 Excellent choix ! Redirection vers PayPal pour ${currentPrice}€\n\n` +
+                          `📧 Vous recevrez immédiatement après paiement :\n` +
+                          `• ${currentOffer === 'site' ? 'Site professionnel avec vos photos' : 'Site mis en ligne + domaine + hébergement'}\n` +
+                          `• Email de confirmation détaillé\n` +
+                          `• ${currentOffer === 'conciergerie' ? 'Formation utilisateur incluse' : 'Instructions complètes'}\n\n` +
+                          `Procéder au paiement sécurisé ?`;
 
             if (confirm(message)) {
-                // Simuler l'envoi de l'email de confirmation
                 simulateEmailConfirmation();
-                
-                // Rediriger vers PayPal
                 window.open(paypalUrl, '_blank');
-                
-                showNotification('🎉 Redirection vers PayPal... Email de confirmation envoyé !');
+                showNotification('🎉 Redirection PayPal... Email de confirmation envoyé !');
             }
         }
 
@@ -688,94 +1049,124 @@
             const orderData = JSON.parse(localStorage.getItem('pendingOrder'));
             if (!orderData) return;
 
-            // Simuler l'envoi d'email (dans la vraie vie, cela serait fait côté serveur)
-            console.log('📧 EMAIL DE CONFIRMATION ENVOYÉ À:', orderData.websiteData.userEmail);
-            console.log('📄 CONTENU:', {
+            console.log('📧 EMAIL DE CONFIRMATION PREMIUM ENVOYÉ À:', orderData.websiteData.userEmail);
+            console.log('📄 CONTENU DÉTAILLÉ:', {
                 destinataire: orderData.websiteData.userEmail,
-                sujet: `✅ Confirmation de commande - ${orderData.websiteData.businessName}`,
+                sujet: `✅ [IA WebGen] Site ${orderData.websiteData.businessName} - Commande confirmée`,
                 contenu: `
                 Bonjour ${orderData.user.name},
 
-                🎉 Nous avons bien reçu votre commande !
+                🎉 Votre commande IA WebGen est confirmée !
 
-                📋 DÉTAILS DE VOTRE COMMANDE:
-                • Site web: ${orderData.websiteData.businessName}
+                📋 DÉTAILS DE VOTRE SITE PROFESSIONNEL:
+                • Entreprise: ${orderData.websiteData.businessName}
                 • Type: ${orderData.websiteData.siteType}
-                • Offre: ${orderData.offer === 'site' ? 'Site seul' : 'Service conciergerie'}
+                • Qualité: ${orderData.websiteData.quality}
+                • Template: ${orderData.selectedTemplate !== null ? `Template Premium #${orderData.selectedTemplate + 1}` : 'Standard'}
+                • Photos personnelles: ${orderData.websiteData.photos?.length || 0} image(s)
+                • Offre: ${orderData.offer === 'site' ? 'Site IA Professionnel' : 'Conciergerie IA Complète'}
                 • Prix: ${orderData.price}€
 
                 ${orderData.offer === 'site' ? 
-                    `📦 LIVRAISON IMMÉDIATE:
-                    Vos fichiers sont en cours de préparation et vous les recevrez dans les 15 minutes suivant le paiement.
+                    `📦 LIVRAISON SITE IA PROFESSIONNEL:
+                    ✅ Site généré par IA avancée dans les 15 minutes
+                    ✅ Intégration de vos ${orderData.websiteData.photos?.length || 0} photos personnelles
+                    ✅ Design responsive et moderne
+                    ✅ Code source optimisé (HTML/CSS/JS)
+                    ✅ Images optimisées pour le web
+                    ✅ Guide d'installation détaillé
+                    ✅ Support technique par email` :
                     
-                    📁 CONTENU LIVRÉ:
-                    • Code HTML/CSS complet
-                    • Images optimisées
-                    • Instructions d'installation
-                    • Documentation technique` :
+                    `🚀 MISE EN LIGNE CONCIERGERIE IA COMPLÈTE:
+                    ✅ Site IA professionnel généré automatiquement
+                    ✅ Nom de domaine personnalisé acheté et configuré
+                    ✅ Hébergement premium sécurisé (SSL inclus)
+                    ✅ Mise en ligne automatique en 2-4h maximum
+                    ✅ Optimisation SEO et performance
+                    ✅ Formation utilisateur personnalisée (1h par vidéo)
+                    ✅ Support technique premium 3 mois
+                    ✅ Sauvegardes automatiques quotidiennes
                     
-                    `🚀 MISE EN LIGNE AUTOMATIQUE:
-                    Votre site sera mis en ligne automatiquement dans les 2-4 heures suivant le paiement.
-                    
-                    📋 PROCESSUS AUTOMATISÉ:
-                    • Achat automatique du nom de domaine
-                    • Configuration de l'hébergement
-                    • Installation du site
-                    • Configuration SSL/DNS
-                    • Tests de fonctionnement
-                    
-                    📧 Vous recevrez un nouvel email avec les détails d'accès dès que votre site sera en ligne.`
+                    📧 Vous recevrez un second email avec vos accès dès que votre site sera en ligne.`
                 }
 
+                🤖 TECHNOLOGIE IA UTILISÉE:
+                • Analyse sémantique de votre activité
+                • Génération de contenu personnalisé
+                • Optimisation automatique des images
+                • Création de design adaptatif
+                • Integration intelligente des éléments
+
                 💳 PAIEMENT:
-                Votre paiement PayPal est en cours de traitement.
+                PayPal - Traitement sécurisé en cours
 
-                📞 SUPPORT:
-                En cas de question, contactez-nous à contact@iawebgen.com
+                📞 SUPPORT PREMIUM:
+                Email: contact@iawebgen.com
+                Réponse garantie sous 2h (7j/7)
 
-                Merci de votre confiance !
+                🎁 BONUS INCLUS:
+                • Guide marketing digital (PDF)
+                • 30 jours de support email gratuit
+                • Mises à jour de sécurité incluses
+
+                Merci de faire confiance à notre IA professionnelle !
                 
                 🤖 L'équipe IA WebGen
+                Site: https://ia-webgen.ct.ws
                 `
             });
 
-            // Afficher une notification de succès
             setTimeout(() => {
-                showNotification('📧 Email de confirmation envoyé avec succès !');
+                showNotification('📧 Email de confirmation premium envoyé !');
             }, 2000);
         }
 
         // Fonctions de partage
+        function toggleShareMenu() {
+            const menu = document.getElementById('shareMenu');
+            menu.classList.toggle('hidden');
+        }
+
         function shareOnFacebook() {
             const url = window.location.href;
             const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
             window.open(fbUrl, '_blank', 'width=600,height=400');
-            showNotification('🎁 Code de réduction: SHARE10 (10% de réduction) !');
+            showNotification('🎁 Code SHARE10 activé ! 10% de réduction sur votre commande !');
+            document.getElementById('shareMenu').classList.add('hidden');
         }
 
         function shareOnTwitter() {
             const url = window.location.href;
-            const text = "🤖 Découvrez IA WebGen - Créateur de sites web automatisé ! Site professionnel en 2-4h.";
+            const text = "🤖 Incroyable ! IA WebGen crée des sites professionnels avec photos personnelles en 2-4h !";
             const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
             window.open(twitterUrl, '_blank', 'width=600,height=400');
-            showNotification('🎁 Code de réduction: SHARE10 (10% de réduction) !');
+            showNotification('🎁 Code SHARE10 activé ! 10% de réduction disponible !');
+            document.getElementById('shareMenu').classList.add('hidden');
         }
 
         function shareOnWhatsApp() {
             const url = window.location.href;
-            const text = "🤖 Regarde ça ! IA WebGen crée ton site web automatiquement en 2-4h : ";
+            const text = "🤖 Tu dois voir ça ! IA WebGen crée des sites pro avec tes photos perso en 2h : ";
             const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text + url)}`;
             window.open(whatsappUrl, '_blank');
-            showNotification('🎁 Code de réduction: SHARE10 (10% de réduction) !');
+            showNotification('🎁 Code SHARE10 activé ! Économisez 10% maintenant !');
+            document.getElementById('shareMenu').classList.add('hidden');
         }
 
         function copyLink() {
             navigator.clipboard.writeText(window.location.href).then(() => {
-                showNotification('🔗 Lien copié ! Code de réduction: SHARE10');
+                showNotification('🔗 Lien copié ! Code promo SHARE10 = -10% ! 🎁');
+                document.getElementById('shareMenu').classList.add('hidden');
             });
         }
 
-        // Fonction de notification
+        // Fermer le menu de partage en cliquant ailleurs
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.share-widget')) {
+                document.getElementById('shareMenu').classList.add('hidden');
+            }
+        });
+
         function showNotification(message) {
             const notification = document.getElementById('notification');
             const text = document.getElementById('notificationText');
