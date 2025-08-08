@@ -34,6 +34,8 @@
 .checkbox-item { display: flex; align-items: center; padding: 8px; border: 1px solid #d1d5db; border-radius: 6px; cursor: pointer; transition: all 0.3s; }
 .checkbox-item:hover { background: #f9fafb; border-color: #3b82f6; }
 .checkbox-item input:checked + .checkbox-item { background: #eff6ff; border-color: #3b82f6; }
+.loading-spinner { display: none; }
+.email-section { display: none; }
 </style>
 </head>
 <body class="font-sans">
@@ -167,7 +169,7 @@ class="w-full p-3 rounded-lg text-gray-800 font-medium h-24" required></textarea
 </label>
 <label class="checkbox-item">
 <input type="checkbox" id="page-equipe" class="mr-2">
-<span class="text-white text-sm">👨‍💼 Équipe</span>
+<span class="text-white text-sm">👨\u200d💼 Équipe</span>
 </label>
 <label class="checkbox-item">
 <input type="checkbox" id="page-temoignages" class="mr-2">
@@ -269,17 +271,17 @@ Notre IA crée des sites complets avec toutes les pages demandées !
 <div class="bg-white rounded-lg shadow-lg p-6 sm:p-8 card-hover">
 <div class="text-center">
 <h4 class="text-xl sm:text-2xl font-bold text-gray-800 mb-4">📄 Site IA Pro Multi-Pages</h4>
-<div class="text-3xl sm:text-4xl font-bold text-blue-600 mb-4">25€</div>
+<div class="text-3xl sm:text-4xl font-bold text-blue-600 mb-4">GRATUIT</div>
 <ul class="text-left space-y-2 mb-6 text-sm sm:text-base">
 <li>✅ Site multi-pages complet</li>
-<li>✅ 7 thèmes gratuits + 3 premium (+5€)</li>
+<li>✅ 10 thèmes professionnels</li>
 <li>✅ Contenus professionnels rédigés</li>
 <li>✅ Intégration de vos photos</li>
 <li>✅ Formulaires fonctionnels</li>
 <li>✅ Responsive design</li>
 <li>✅ Optimisation SEO de base</li>
 <li>✅ Code source propre</li>
-<li>❌ Pas d'hébergement inclus</li>
+<li>✅ Livraison par email</li>
 </ul>
 </div>
 </div>
@@ -290,20 +292,20 @@ Notre IA crée des sites complets avec toutes les pages demandées !
 </div>
 <div class="text-center mt-4">
 <h4 class="text-xl sm:text-2xl font-bold mb-4">🤖 Conciergerie IA Complète</h4>
-<div class="text-3xl sm:text-4xl font-bold mb-4">69€</div>
+<div class="text-3xl sm:text-4xl font-bold mb-4">GRATUIT</div>
 <ul class="text-left space-y-2 mb-6 text-sm sm:text-base">
 <li>✅ <strong>Site multi-pages premium</strong></li>
 <li>✅ <strong>Tous les thèmes premium inclus</strong></li>
-<li>✅ <strong>Nom de domaine automatique</strong></li>
-<li>✅ <strong>Hébergement premium configuré</strong></li>
-<li>✅ <strong>Site en ligne en 2-4h maximum</strong></li>
+<li>✅ <strong>Génération instantanée</strong></li>
+<li>✅ <strong>Livraison par email</strong></li>
+<li>✅ <strong>Site prêt en quelques minutes</strong></li>
 <li>✅ <strong>Optimisation SEO avancée</strong></li>
-<li>✅ <strong>Google Analytics intégré</strong></li>
-<li>✅ <strong>Support technique 6 mois</strong></li>
-<li>✅ <strong>Formation utilisateur incluse</strong></li>
+<li>✅ <strong>Code source complet</strong></li>
+<li>✅ <strong>Support technique inclus</strong></li>
+<li>✅ <strong>Personnalisation complète</strong></li>
 </ul>
 <div class="bg-yellow-400 text-gray-800 p-3 rounded-lg text-xs sm:text-sm font-bold mb-4">
-⏰ Site professionnel complet en ligne en 2-4h !<br>
+⏰ Site professionnel complet livré par email !<br>
 🎨 Personnalisation illimitée incluse
 </div>
 </div>
@@ -318,7 +320,7 @@ Notre IA crée des sites complets avec toutes les pages demandées !
 <div class="container mx-auto px-4">
 <div class="text-center mb-12">
 <h3 class="text-3xl font-bold text-gray-800 mb-4">🎨 Choisissez votre thème professionnel</h3>
-<p class="text-xl text-gray-600">7 thèmes gratuits + 3 thèmes premium à 5€</p>
+<p class="text-xl text-gray-600">10 thèmes professionnels gratuits</p>
 <button onclick="goBackToMain()" class="mt-4 bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600">
 <i class="fas fa-arrow-left mr-2"></i>Modifier les informations
 </button>
@@ -398,40 +400,16 @@ class="bg-green-500 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-g
 </button>
 </div>
 
-<!-- Choix de l'offre -->
+<!-- Finaliser commande -->
 <div class="mt-8 border-t pt-6">
-<h3 class="text-lg font-bold mb-4">💳 Finaliser votre commande</h3>
-<div id="templateCostInfo" class="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-<!-- Info sur le coût du template -->
+<h3 class="text-lg font-bold mb-4">🎉 Finaliser et recevoir</h3>
+<div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
+<h4 class="font-bold text-green-800">✅ Site Multi-Pages Complet</h4>
+<p class="text-sm text-green-700">Tous les fichiers sources + Instructions</p>
+<p class="font-bold text-green-600 mt-2">GRATUIT - Livraison par email</p>
 </div>
-<div class="space-y-4">
-<div class="border rounded-lg p-4 cursor-pointer hover:bg-blue-50" onclick="selectOffer('site')">
-<div class="flex justify-between items-center">
-<div>
-<h4 class="font-bold">📄 Site Multi-Pages Pro</h4>
-<p class="text-sm text-gray-600">Site complet + Code source + Formation</p>
-</div>
-<div class="text-right">
-<div class="font-bold text-blue-600" id="sitePrice">25€</div>
-<input type="radio" name="offer" value="site" class="offer-radio mt-1">
-</div>
-</div>
-</div>
-<div class="border rounded-lg p-4 cursor-pointer hover:bg-green-50 border-green-500" onclick="selectOffer('conciergerie')">
-<div class="flex justify-between items-center">
-<div>
-<h4 class="font-bold">🤖 Conciergerie IA Complète - 69€ ⭐</h4>
-<p class="text-sm text-gray-600">Site + Domaine + Hébergement + Support 6 mois</p>
-</div>
-<div class="text-right">
-<div class="font-bold text-green-600">69€</div>
-<input type="radio" name="offer" value="conciergerie" class="offer-radio mt-1" checked>
-</div>
-</div>
-</div>
-</div>
-<button id="payButton" onclick="processPayment()" class="w-full mt-6 bg-green-500 text-white py-4 px-6 rounded-lg font-bold text-lg hover:bg-green-600 transform hover:scale-105 transition-all">
-💳 COMMANDER MAINTENANT - 69€
+<button onclick="finalizeAndSend()" class="w-full bg-green-500 text-white py-4 px-6 rounded-lg font-bold text-lg hover:bg-green-600 transform hover:scale-105 transition-all">
+📧 RECEVOIR MON SITE PAR EMAIL
 </button>
 </div>
 </div>
@@ -440,9 +418,68 @@ class="bg-green-500 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-g
 </div>
 </section>
 
+<!-- Section Email Final -->
+<section id="emailSection" class="email-section min-h-screen bg-gray-100 py-8">
+<div class="container mx-auto px-4 max-w-2xl">
+<div class="bg-white rounded-lg shadow-lg p-8">
+<div class="text-center mb-8">
+<div class="text-6xl mb-4">🎉</div>
+<h2 class="text-3xl font-bold text-gray-800 mb-4">Félicitations !</h2>
+<p class="text-lg text-gray-600">Votre site professionnel complet est prêt</p>
+</div>
+
+<div class="bg-green-50 border border-green-200 rounded-lg p-6 mb-8">
+<h3 class="text-xl font-bold text-green-800 mb-4">📦 Votre package inclut :</h3>
+<ul class="space-y-2 text-green-700">
+<li>✅ <span id="finalPageCount">Site multi-pages complet</span></li>
+<li>✅ Code HTML/CSS/JS professionnel</li>
+<li>✅ Images optimisées intégrées</li>
+<li>✅ Design responsive (mobile/desktop)</li>
+<li>✅ Formulaires de contact fonctionnels</li>
+<li>✅ Instructions de mise en ligne</li>
+<li>✅ Support technique gratuit</li>
+</ul>
+</div>
+
+<form id="finalEmailForm" onsubmit="sendWebsiteEmail(event)" class="space-y-6">
+<div>
+<label class="block text-lg font-bold mb-3">📧 Adresse email de livraison :</label>
+<input type="email" id="deliveryEmail" class="w-full p-4 border-2 rounded-lg text-lg" 
+       placeholder="votre@email.com" required>
+<p class="text-sm text-gray-600 mt-2">Nous enverrons votre site complet avec toutes les instructions</p>
+</div>
+
+<div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+<h4 class="font-bold text-blue-800 mb-2">⏰ Délai de livraison</h4>
+<p class="text-blue-700 text-sm">Vous recevrez votre site dans les 5 minutes suivant la validation</p>
+</div>
+
+<button type="submit" id="sendEmailBtn" class="w-full bg-gradient-to-r from-green-500 to-blue-500 text-white py-4 px-6 rounded-lg font-bold text-xl hover:from-green-600 hover:to-blue-600 transform hover:scale-105 transition-all">
+<i class="fas fa-paper-plane mr-3"></i>ENVOYER MON SITE MAINTENANT
+</button>
+</form>
+
+<div id="loadingSpinner" class="loading-spinner text-center py-8">
+<i class="fas fa-spinner fa-spin text-4xl text-blue-500 mb-4"></i>
+<p class="text-lg font-bold text-gray-700">Préparation de votre site...</p>
+<p class="text-sm text-gray-600">Génération des fichiers et envoi en cours</p>
+</div>
+
+<div id="successMessage" class="loading-spinner text-center py-8">
+<div class="text-6xl mb-4">✅</div>
+<h3 class="text-2xl font-bold text-green-600 mb-4">Site envoyé avec succès !</h3>
+<p class="text-lg text-gray-700 mb-4">Vérifiez votre boîte email (et vos spams)</p>
+<button onclick="createNewSite()" class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600">
+🚀 Créer un nouveau site
+</button>
+</div>
+</div>
+</div>
+</section>
+
 <!-- Modal d'authentification -->
 <div id="authModal" class="modal">
-<div class="modal-content">
+<div class="modal-content max-w-md">
 <div class="flex justify-between items-center mb-6">
 <h2 id="authModalTitle" class="text-2xl font-bold">Connexion</h2>
 <button onclick="closeAuthModal()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
@@ -495,7 +532,6 @@ S'inscrire
 <script>
 // Variables globales
 let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
-let currentOffer = 'conciergerie';
 let websiteData = {};
 let selectedTemplate = null;
 let uploadedPhotos = [];
@@ -503,9 +539,8 @@ let allTemplates = [];
 let currentPage = 'accueil';
 let generatedPages = {};
 
-// Templates professionnels
+// Templates professionnels - TOUS GRATUITS
 const TEMPLATES = [
-// 7 THÈMES GRATUITS
 {
 id: 'modern-clean',
 name: 'Modern Clean',
@@ -562,12 +597,11 @@ isPremium: false,
 colors: { primary: '#6b7280', secondary: '#374151' },
 gradient: 'from-slate-400 to-slate-600'
 },
-// 3 THÈMES PREMIUM (+5€)
 {
 id: 'luxury-gold',
 name: 'Luxury Gold',
 description: 'Premium avec animations dorées',
-isPremium: true,
+isPremium: false,
 colors: { primary: '#f59e0b', secondary: '#d97706' },
 gradient: 'from-yellow-400 to-amber-600'
 },
@@ -575,7 +609,7 @@ gradient: 'from-yellow-400 to-amber-600'
 id: 'royal-purple',
 name: 'Royal Purple',
 description: 'Design royal avec effets premium',
-isPremium: true,
+isPremium: false,
 colors: { primary: '#a855f7', secondary: '#7c3aed' },
 gradient: 'from-purple-500 to-indigo-600'
 },
@@ -583,16 +617,31 @@ gradient: 'from-purple-500 to-indigo-600'
 id: 'diamond-elite',
 name: 'Diamond Elite',
 description: 'Ultra-premium avec cristaux',
-isPremium: true,
+isPremium: false,
 colors: { primary: '#6b7280', secondary: '#374151' },
 gradient: 'from-slate-400 to-slate-700'
 }
 ];
 
-// =========== FONCTION CORRIGÉE POUR LE BUG ===========
-// Gestion du formulaire avec vérification totale
+// ========== INITIALISATION ==========
+document.addEventListener('DOMContentLoaded', function() {
+console.log('🚀 IA WebGen Pro - Initialisation démarrée');
+
+// Vérifier la session utilisateur
+if (currentUser) {
+showUserMenu();
+}
+
+// Initialiser l'upload de photos
+setupPhotoUpload();
+allTemplates = TEMPLATES;
+
+console.log('✅ Initialisation terminée');
+});
+
+// ========== GESTION FORMULAIRE ==========
 function handleFormSubmit(event) {
-console.log('🔥 DEBUT TRAITEMENT FORMULAIRE');
+console.log('🔥 TRAITEMENT FORMULAIRE');
 event.preventDefault();
 event.stopPropagation();
 
@@ -604,52 +653,11 @@ showNotification('❌ Erreur lors de la génération. Veuillez réessayer.');
 }
 }
 
-// Initialisation robuste
-document.addEventListener('DOMContentLoaded', function() {
-console.log('🚀 IA WebGen Pro - Initialisation démarrée');
-
-// Vérifier que tous les éléments existent
-const form = document.getElementById('websiteForm');
-const mainSection = document.getElementById('mainSection');
-const templateSection = document.getElementById('qualityTemplates');
-const previewSection = document.getElementById('previewSection');
-const templateGrid = document.getElementById('templateGrid');
-
-console.log('✅ Éléments trouvés:', {
-form: !!form,
-mainSection: !!mainSection,
-templateSection: !!templateSection,
-previewSection: !!previewSection,
-templateGrid: !!templateGrid
-});
-
-if (currentUser) {
-showUserMenu();
-}
-
-setupPhotoUpload();
-allTemplates = TEMPLATES;
-
-console.log('✅ Initialisation terminée - Templates:', TEMPLATES.length);
-});
-
-// FONCTION PRINCIPALE CORRIGÉE
+// GÉNÉRATION COMPLÈTE DU SITE
 function generateCompleteWebsite() {
-console.log('🎨 ==> GÉNÉRATION DU SITE COMPLET COMMENCÉE');
+console.log('🎨 GÉNÉRATION DU SITE COMPLET');
 
-// Vérification des éléments DOM critiques
-const mainSection = document.getElementById('mainSection');
-const templateSection = document.getElementById('qualityTemplates');
-const previewSection = document.getElementById('previewSection');
-
-if (!mainSection || !templateSection || !previewSection) {
-console.error('❌ ERREUR: Éléments DOM manquants');
-showNotification('❌ Erreur technique. Rechargez la page.');
-return;
-}
-
-try {
-// Récupérer toutes les données du formulaire
+// Récupérer toutes les données
 const businessName = document.getElementById('businessName').value.trim();
 const description = document.getElementById('description').value.trim();
 const siteType = document.getElementById('siteType').value;
@@ -660,13 +668,6 @@ const website = document.getElementById('website').value.trim();
 const slogan = document.getElementById('slogan').value.trim();
 const teamInfo = document.getElementById('teamInfo').value.trim();
 const servicesDetail = document.getElementById('servicesDetail').value.trim();
-
-console.log('📋 Données récupérées:', {
-businessName, 
-siteType, 
-userEmail,
-description: description.substring(0, 50) + '...'
-});
 
 // Réseaux sociaux
 const facebook = document.getElementById('facebook').value.trim();
@@ -680,15 +681,13 @@ document.querySelectorAll('input[id^="page-"]:checked').forEach(checkbox => {
 selectedPages.push(checkbox.id.replace('page-', ''));
 });
 
-console.log('📄 Pages sélectionnées:', selectedPages);
-
-// Validation stricte
+// Validation
 if (!businessName || businessName.length < 2) {
-showNotification('❌ Le nom de votre entreprise est requis (minimum 2 caractères)');
+showNotification('❌ Le nom de votre entreprise est requis');
 return;
 }
 if (!description || description.length < 10) {
-showNotification('❌ Veuillez décrire votre activité (minimum 10 caractères)');
+showNotification('❌ Veuillez décrire votre activité');
 return;
 }
 if (!siteType) {
@@ -699,12 +698,6 @@ if (!userEmail || !userEmail.includes('@')) {
 showNotification('❌ Veuillez saisir un email valide');
 return;
 }
-if (selectedPages.length === 0) {
-showNotification('❌ Au moins une page doit être sélectionnée');
-return;
-}
-
-console.log('✅ Validation passée');
 
 // Stocker toutes les données
 websiteData = {
@@ -727,37 +720,26 @@ primaryColor: '#3b82f6',
 secondaryColor: '#1e40af'
 };
 
-console.log('💾 Données stockées dans websiteData');
+console.log('💾 Données stockées:', websiteData);
 
-// Générer et afficher les templates
-console.log('🎨 Génération des templates...');
+// Afficher les templates
 displayTemplates();
 
-// Navigation avec vérification
-console.log('🔀 Navigation vers les templates...');
-mainSection.style.display = 'none';
-templateSection.style.display = 'block';
-previewSection.style.display = 'none';
+// Navigation
+document.getElementById('mainSection').style.display = 'none';
+document.getElementById('qualityTemplates').style.display = 'block';
+document.getElementById('previewSection').style.display = 'none';
+document.getElementById('emailSection').style.display = 'none';
 window.scrollTo(0, 0);
 
-showNotification(`✅ Site ${websiteData.selectedPages.length} pages prêt ! Choisissez votre thème.`);
-console.log('🎉 GÉNÉRATION TERMINÉE AVEC SUCCÈS');
-
-} catch (error) {
-console.error('❌ ERREUR DANS GÉNÉRATION:', error);
-showNotification('❌ Erreur technique. Veuillez réessayer.');
-}
+showNotification(`✅ Site ${selectedPages.length} pages prêt ! Choisissez votre thème.`);
 }
 
-// Affichage des templates CORRIGÉ
+// ========== AFFICHAGE TEMPLATES ==========
 function displayTemplates() {
 console.log('🖼️ Affichage des templates...');
 const templateGrid = document.getElementById('templateGrid');
-if (!templateGrid) {
-console.error('❌ Template grid introuvable');
-showNotification('❌ Erreur technique lors du chargement des thèmes');
-return;
-}
+if (!templateGrid) return;
 
 templateGrid.innerHTML = '';
 
@@ -766,15 +748,9 @@ const templateCard = document.createElement('div');
 templateCard.className = 'template-card bg-white rounded-xl shadow-lg p-4 border-2 border-gray-200 relative hover:shadow-xl transition-all';
 templateCard.onclick = () => selectTemplate(index);
 
-let premiumBadge = '';
-if (template.isPremium) {
-premiumBadge = '<div class="premium-badge">💎 +5€</div>';
-}
-
 let previewContent = generateTemplatePreview(template);
 
 templateCard.innerHTML = `
-${premiumBadge}
 <div class="mb-4">
 <div class="bg-gradient-to-br ${template.gradient} h-24 rounded-lg flex items-center justify-center text-white font-bold text-sm shadow-inner">
 ${previewContent}
@@ -784,8 +760,8 @@ ${previewContent}
 <h4 class="font-bold text-base mb-1">${template.name}</h4>
 <p class="text-gray-600 text-xs mb-2">${template.description}</p>
 <div class="text-center">
-<span class="text-xs font-bold px-2 py-1 rounded ${template.isPremium ? 'bg-yellow-100 text-yellow-700' : 'bg-green-100 text-green-700'}">
-${template.isPremium ? '💎 Premium +5€' : '✨ Gratuit'}
+<span class="text-xs font-bold px-2 py-1 rounded bg-green-100 text-green-700">
+✨ Gratuit
 </span>
 </div>
 </div>
@@ -793,23 +769,23 @@ ${template.isPremium ? '💎 Premium +5€' : '✨ Gratuit'}
 templateGrid.appendChild(templateCard);
 });
 
-console.log('✅ Templates affichés:', allTemplates.length);
+console.log('✅ Templates affichés');
 }
 
 function generateTemplatePreview(template) {
 switch(template.id) {
 case 'modern-clean':
-return '<div style="text-align: center; padding: 15px;"><div style="width: 60px; height: 4px; background: white; margin: 0 auto 8px; border-radius: 2px; opacity: 0.9;"></div><div style="font-size: 14px; font-weight: bold;">MODERN</div><div style="font-size: 10px; opacity: 0.8;">Clean & Simple</div></div>';
+return '<div style="text-align: center; padding: 15px;"><div style="width: 60px; height: 4px; background: white; margin: 0 auto 8px; border-radius: 2px; opacity: 0.9;"></div><div style="font-size: 14px; font-weight: bold;">MODERN</div></div>';
 case 'business-pro':
-return '<div style="text-align: center; padding: 15px;"><div style="width: 30px; height: 30px; border: 2px solid white; border-radius: 50%; margin: 0 auto 8px; opacity: 0.9;"></div><div style="font-size: 14px; font-weight: bold;">BUSINESS</div><div style="font-size: 10px; opacity: 0.8;">Professional</div></div>';
+return '<div style="text-align: center; padding: 15px;"><div style="width: 30px; height: 30px; border: 2px solid white; border-radius: 50%; margin: 0 auto 8px; opacity: 0.9;"></div><div style="font-size: 14px; font-weight: bold;">BUSINESS</div></div>';
 case 'luxury-gold':
-return '<div style="text-align: center; padding: 15px;"><div style="width: 35px; height: 35px; background: rgba(255,255,255,0.9); margin: 0 auto 8px; border-radius: 50%; display: flex; align-items: center; justify-content: center;"><div style="color: #f59e0b; font-size: 16px;">💎</div></div><div style="font-size: 14px; font-weight: bold;">LUXURY</div><div style="font-size: 10px; opacity: 0.8;">Premium Gold</div></div>';
+return '<div style="text-align: center; padding: 15px;"><div style="font-size: 20px;">💎</div><div style="font-size: 14px; font-weight: bold;">LUXURY</div></div>';
 default:
-return `<div style="text-align: center; padding: 15px;"><div style="font-size: 14px; font-weight: bold;">${template.name.toUpperCase()}</div><div style="font-size: 10px; opacity: 0.8;">${template.description}</div></div>`;
+return `<div style="text-align: center; padding: 15px;"><div style="font-size: 14px; font-weight: bold;">${template.name.toUpperCase()}</div></div>`;
 }
 }
 
-// Sélection template
+// ========== SÉLECTION TEMPLATE ==========
 function selectTemplate(index) {
 console.log('🎯 Template sélectionné:', index);
 document.querySelectorAll('.template-card').forEach(card => {
@@ -829,14 +805,13 @@ websiteData.secondaryColor = allTemplates[index].colors.secondary;
 const continueBtn = document.getElementById('continueBtn');
 if (continueBtn) {
 continueBtn.disabled = false;
-continueBtn.classList.remove('disabled:opacity-50');
 }
 showNotification(`✅ Thème "${allTemplates[index].name}" sélectionné !`);
 }
 
-// Procéder à la prévisualisation
+// ========== PRÉVISUALISATION ==========
 function proceedWithSelectedTemplate() {
-console.log('👁️ Génération de la prévisualisation complète...');
+console.log('👁️ Génération de la prévisualisation...');
 if (selectedTemplate === null) {
 showNotification('❌ Veuillez sélectionner un thème !');
 return;
@@ -846,10 +821,11 @@ try {
 // Générer toutes les pages
 generateAllPages();
 
-// Naviguer vers la prévisualisation
+// Navigation
 document.getElementById('qualityTemplates').style.display = 'none';
 document.getElementById('previewSection').style.display = 'block';
 document.getElementById('mainSection').style.display = 'none';
+document.getElementById('emailSection').style.display = 'none';
 
 // Initialiser la prévisualisation
 initializeCompletePreview();
@@ -860,7 +836,6 @@ showNotification('❌ Erreur lors de la prévisualisation');
 }
 }
 
-// Génération de toutes les pages
 function generateAllPages() {
 console.log('📄 Génération de toutes les pages...');
 generatedPages = {};
@@ -871,9 +846,8 @@ generatedPages[page] = generatePageContent(page);
 console.log('✅ Pages générées:', Object.keys(generatedPages));
 }
 
-// Initialisation prévisualisation complète
 function initializeCompletePreview() {
-console.log('🔄 Initialisation de la prévisualisation complète...');
+console.log('🔄 Initialisation prévisualisation...');
 const previewBusinessName = document.getElementById('previewBusinessName');
 const mainTitle = document.getElementById('mainTitle');
 const subtitle = document.getElementById('subtitle');
@@ -886,36 +860,29 @@ if (subtitle) subtitle.value = websiteData.subtitle;
 if (primaryColor) primaryColor.value = websiteData.primaryColor;
 if (secondaryColor) secondaryColor.value = websiteData.secondaryColor;
 
-// Créer la navigation des pages
 createPageNavigation();
-
-// Mettre à jour l'info sur le coût du template
-updateTemplateCostInfo();
-
-// Afficher la première page
 showPage('accueil');
 
-showNotification('✅ Prévisualisation complète chargée ! Naviguez entre les pages.');
+showNotification('✅ Prévisualisation chargée ! Naviguez entre les pages.');
 }
 
-// Création navigation des pages
 function createPageNavigation() {
 const pageNav = document.getElementById('pageNavigation');
 if (!pageNav) return;
 
-pageNav.innerHTML = '';
-websiteData.selectedPages.forEach(page => {
 const pageNames = {
 'accueil': '🏠 Accueil',
 'apropos': '👥 À propos',
 'services': '⚙️ Services',
 'portfolio': '🎨 Portfolio',
-'equipe': '👨‍💼 Équipe',
+'equipe': '👨\u200d💼 Équipe',
 'temoignages': '💬 Témoignages',
 'blog': '📝 Blog',
 'contact': '📞 Contact'
 };
 
+pageNav.innerHTML = '';
+websiteData.selectedPages.forEach(page => {
 const tab = document.createElement('div');
 tab.className = `page-tab ${page === 'accueil' ? 'active' : ''}`;
 tab.textContent = pageNames[page] || page;
@@ -924,7 +891,6 @@ pageNav.appendChild(tab);
 });
 }
 
-// Affichage d'une page
 function showPage(page) {
 currentPage = page;
 
@@ -932,12 +898,12 @@ currentPage = page;
 document.querySelectorAll('.page-tab').forEach(tab => {
 tab.classList.remove('active');
 });
-const activeTab = document.querySelector(`.page-tab:nth-child(${websiteData.selectedPages.indexOf(page) + 1})`);
+const activeTab = [...document.querySelectorAll('.page-tab')][websiteData.selectedPages.indexOf(page)];
 if (activeTab) {
 activeTab.classList.add('active');
 }
 
-// Afficher le contenu de la page
+// Afficher le contenu
 const previewEl = document.getElementById('websitePreview');
 if (previewEl && generatedPages[page]) {
 previewEl.innerHTML = generatedPages[page];
@@ -946,10 +912,30 @@ previewEl.innerHTML = '<div style="padding: 50px; text-align: center; color: #6b
 }
 }
 
-// Génération du contenu d'une page
+function updatePreview() {
+console.log('🔄 Mise à jour prévisualisation...');
+const primaryColor = document.getElementById('primaryColor').value;
+const secondaryColor = document.getElementById('secondaryColor').value;
+const mainTitle = document.getElementById('mainTitle').value;
+const subtitle = document.getElementById('subtitle').value;
+
+// Mettre à jour les données
+websiteData.primaryColor = primaryColor;
+websiteData.secondaryColor = secondaryColor;
+websiteData.mainTitle = mainTitle;
+websiteData.subtitle = subtitle;
+
+// Regénérer la page actuelle
+generatedPages[currentPage] = generatePageContent(currentPage);
+showPage(currentPage);
+
+showNotification('✅ Aperçu mis à jour !');
+}
+
+// ========== GÉNÉRATION DE CONTENU ==========
 function generatePageContent(page) {
-const { businessName, siteType, description, phone, address, photos, primaryColor, secondaryColor, slogan, teamInfo, servicesDetail, socialMedia } = websiteData;
 const template = allTemplates[selectedTemplate];
+const { businessName, siteType, description, phone, address, photos, primaryColor, secondaryColor, slogan, teamInfo, servicesDetail, socialMedia } = websiteData;
 
 let content = '';
 
@@ -983,17 +969,684 @@ content += generateContactContent();
 break;
 }
 
-// Pied de page commun
 content += generatePageFooter();
-
 return content;
 }
 
-// [Le reste du JavaScript continue avec toutes les fonctions de génération de contenu...]
+function generatePageHeader() {
+const { businessName, primaryColor, secondaryColor } = websiteData;
+return `
+<header style="background: linear-gradient(135deg, ${primaryColor}, ${secondaryColor}); color: white; padding: 20px 0;">
+<div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+<h1 style="font-size: 1.8rem; font-weight: bold; margin: 0;">${businessName}</h1>
+<nav style="display: flex; gap: 20px; flex-wrap: wrap;">
+${websiteData.selectedPages.map(page => {
+const pageNames = {
+'accueil': 'Accueil',
+'apropos': 'À propos', 
+'services': 'Services',
+'portfolio': 'Portfolio',
+'equipe': 'Équipe',
+'temoignages': 'Témoignages',
+'blog': 'Blog',
+'contact': 'Contact'
+};
+return `<a href="#${page}" style="color: white; text-decoration: none; opacity: 0.9; font-weight: 500;">${pageNames[page]}</a>`;
+}).join('')}
+</nav>
+</div>
+</div>
+</header>
+`;
+}
 
-// Navigation, authentification, partage, etc...
-// [Toutes les autres fonctions restent identiques]
+function generateAccueilContent() {
+const { businessName, description, slogan, photos, primaryColor } = websiteData;
+const mainImage = photos.length > 0 ? photos[0].dataURL : 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=600&fit=crop';
 
+return `
+<main style="padding: 0;">
+<!-- Hero Section -->
+<section style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('${mainImage}'); background-size: cover; background-position: center; color: white; padding: 100px 20px; text-align: center;">
+<div style="max-width: 800px; margin: 0 auto;">
+<h2 style="font-size: 3rem; font-weight: bold; margin-bottom: 20px; line-height: 1.2;">${businessName}</h2>
+<p style="font-size: 1.3rem; margin-bottom: 30px; opacity: 0.9;">${slogan || description}</p>
+<button style="background: ${primaryColor}; color: white; padding: 15px 30px; border: none; border-radius: 5px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transform: translateY(0); transition: all 0.3s;">
+Découvrir nos services
+</button>
+</div>
+</section>
+
+<!-- Services Section -->
+<section style="padding: 80px 20px; background: #f8fafc;">
+<div style="max-width: 1200px; margin: 0 auto; text-align: center;">
+<h3 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 20px; color: #1f2937;">Nos Services</h3>
+<p style="font-size: 1.1rem; color: #6b7280; margin-bottom: 50px;">${description}</p>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+${generateServiceCards()}
+</div>
+</div>
+</section>
+
+<!-- CTA Section -->
+<section style="padding: 80px 20px; background: ${primaryColor}; color: white; text-align: center;">
+<div style="max-width: 800px; margin: 0 auto;">
+<h3 style="font-size: 2.2rem; font-weight: bold; margin-bottom: 20px;">Prêt à commencer ?</h3>
+<p style="font-size: 1.1rem; margin-bottom: 30px; opacity: 0.9;">Contactez-nous dès aujourd'hui pour discuter de votre projet</p>
+<button style="background: white; color: ${primaryColor}; padding: 15px 30px; border: none; border-radius: 5px; font-size: 1.1rem; font-weight: bold; cursor: pointer;">
+Nous contacter
+</button>
+</div>
+</section>
+</main>
+`;
+}
+
+function generateServiceCards() {
+const services = getServicesByType(websiteData.siteType);
+return services.map(service => `
+<div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center;">
+<div style="font-size: 3rem; margin-bottom: 20px;">${service.icon}</div>
+<h4 style="font-size: 1.3rem; font-weight: bold; margin-bottom: 15px; color: #1f2937;">${service.title}</h4>
+<p style="color: #6b7280; line-height: 1.6;">${service.description}</p>
+</div>
+`).join('');
+}
+
+function getServicesByType(siteType) {
+const serviceTypes = {
+restaurant: [
+{ icon: '🍽️', title: 'Cuisine Gastronomique', description: 'Des plats préparés avec des ingrédients frais et de qualité' },
+{ icon: '🍷', title: 'Cave à Vins', description: 'Une sélection exceptionnelle de vins pour accompagner vos repas' },
+{ icon: '👨\u200d🍳', title: 'Chef Expérimenté', description: 'Une équipe de cuisiniers passionnés et talentueux' }
+],
+salon: [
+{ icon: '💇\u200d♀️', title: 'Coiffure', description: 'Coupes, colorations et soins capillaires personnalisés' },
+{ icon: '💅', title: 'Manucure', description: 'Soins des ongles et nail art professionnel' },
+{ icon: '✨', title: 'Soins Esthétiques', description: 'Soins du visage et épilations dans un cadre relaxant' }
+],
+default: [
+{ icon: '⭐', title: 'Excellence', description: 'Un service de qualité supérieure adapté à vos besoins' },
+{ icon: '🎯', title: 'Sur Mesure', description: 'Des solutions personnalisées pour chaque client' },
+{ icon: '📞', title: 'Support', description: 'Un accompagnement complet et un suivi personnalisé' }
+]
+};
+return serviceTypes[siteType] || serviceTypes.default;
+}
+
+function generateAproposContent() {
+const { businessName, description, teamInfo } = websiteData;
+return `
+<main style="padding: 60px 20px;">
+<div style="max-width: 1000px; margin: 0 auto;">
+<h2 style="font-size: 2.5rem; font-weight: bold; text-align: center; margin-bottom: 30px; color: #1f2937;">À propos de ${businessName}</h2>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; margin-bottom: 50px;">
+<div>
+<p style="font-size: 1.1rem; line-height: 1.8; color: #4b5563; margin-bottom: 25px;">${description}</p>
+<p style="font-size: 1.1rem; line-height: 1.8; color: #4b5563;">${teamInfo || 'Notre équipe est composée de professionnels expérimentés, passionnés par leur métier et dédiés à la satisfaction de nos clients.'}</p>
+</div>
+<div style="text-align: center;">
+<div style="width: 300px; height: 200px; background: linear-gradient(135deg, ${websiteData.primaryColor}, ${websiteData.secondaryColor}); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; margin: 0 auto;">
+Image de l'équipe
+</div>
+</div>
+</div>
+</div>
+</main>
+`;
+}
+
+function generateServicesContent() {
+const { servicesDetail } = websiteData;
+return `
+<main style="padding: 60px 20px;">
+<div style="max-width: 1200px; margin: 0 auto;">
+<h2 style="font-size: 2.5rem; font-weight: bold; text-align: center; margin-bottom: 50px; color: #1f2937;">Nos Services</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px;">
+${generateServiceCards()}
+</div>
+${servicesDetail ? `
+<div style="background: #f8fafc; padding: 40px; border-radius: 10px; margin-top: 50px;">
+<h3 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 20px; color: #1f2937;">Détails de nos Services</h3>
+<p style="font-size: 1.1rem; line-height: 1.8; color: #4b5563;">${servicesDetail}</p>
+</div>
+` : ''}
+</div>
+</main>
+`;
+}
+
+function generatePortfolioContent() {
+return `
+<main style="padding: 60px 20px;">
+<div style="max-width: 1200px; margin: 0 auto;">
+<h2 style="font-size: 2.5rem; font-weight: bold; text-align: center; margin-bottom: 50px; color: #1f2937;">Portfolio</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+${Array(6).fill().map((_, i) => `
+<div style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+<div style="width: 100%; height: 200px; background: linear-gradient(45deg, ${websiteData.primaryColor}, ${websiteData.secondaryColor}); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.1rem;">
+Projet ${i + 1}
+</div>
+<div style="padding: 20px;">
+<h4 style="font-size: 1.2rem; font-weight: bold; margin-bottom: 10px; color: #1f2937;">Réalisation ${i + 1}</h4>
+<p style="color: #6b7280; line-height: 1.6;">Description du projet réalisé avec succès pour notre client.</p>
+</div>
+</div>
+`).join('')}
+</div>
+</div>
+</main>
+`;
+}
+
+function generateEquipeContent() {
+const { teamInfo } = websiteData;
+return `
+<main style="padding: 60px 20px;">
+<div style="max-width: 1000px; margin: 0 auto;">
+<h2 style="font-size: 2.5rem; font-weight: bold; text-align: center; margin-bottom: 50px; color: #1f2937;">Notre Équipe</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-bottom: 50px;">
+${Array(3).fill().map((_, i) => `
+<div style="text-align: center; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+<div style="width: 120px; height: 120px; background: linear-gradient(135deg, ${websiteData.primaryColor}, ${websiteData.secondaryColor}); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
+👤
+</div>
+<h4 style="font-size: 1.3rem; font-weight: bold; margin-bottom: 10px; color: #1f2937;">Membre ${i + 1}</h4>
+<p style="color: #6b7280; margin-bottom: 15px;">Poste / Spécialité</p>
+<p style="color: #4b5563; font-size: 0.9rem; line-height: 1.6;">Expert dans son domaine avec plusieurs années d'expérience.</p>
+</div>
+`).join('')}
+</div>
+${teamInfo ? `
+<div style="background: #f8fafc; padding: 40px; border-radius: 10px; text-align: center;">
+<p style="font-size: 1.1rem; line-height: 1.8; color: #4b5563;">${teamInfo}</p>
+</div>
+` : ''}
+</div>
+</main>
+`;
+}
+
+function generateTemoignagesContent() {
+return `
+<main style="padding: 60px 20px;">
+<div style="max-width: 1000px; margin: 0 auto;">
+<h2 style="font-size: 2.5rem; font-weight: bold; text-align: center; margin-bottom: 50px; color: #1f2937;">Témoignages Clients</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+${Array(4).fill().map((_, i) => `
+<div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); position: relative;">
+<div style="font-size: 3rem; color: ${websiteData.primaryColor}; margin-bottom: 15px;">"</div>
+<p style="color: #4b5563; line-height: 1.7; margin-bottom: 20px; font-style: italic;">Excellent service, je recommande vivement ! L'équipe est professionnelle et à l'écoute.</p>
+<div style="display: flex; align-items: center; gap: 15px;">
+<div style="width: 50px; height: 50px; background: linear-gradient(135deg, ${websiteData.primaryColor}, ${websiteData.secondaryColor}); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+${String.fromCharCode(65 + i)}
+</div>
+<div>
+<h5 style="font-weight: bold; color: #1f2937; margin-bottom: 5px;">Client ${i + 1}</h5>
+<div style="display: flex; color: #fbbf24;">
+${'★'.repeat(5)}
+</div>
+</div>
+</div>
+</div>
+`).join('')}
+</div>
+</div>
+</main>
+`;
+}
+
+function generateBlogContent() {
+return `
+<main style="padding: 60px 20px;">
+<div style="max-width: 1000px; margin: 0 auto;">
+<h2 style="font-size: 2.5rem; font-weight: bold; text-align: center; margin-bottom: 50px; color: #1f2937;">Blog & Actualités</h2>
+<div style="display: grid; gap: 40px;">
+${Array(3).fill().map((_, i) => `
+<article style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: grid; grid-template-columns: 300px 1fr; gap: 30px;">
+<div style="width: 300px; height: 200px; background: linear-gradient(45deg, ${websiteData.primaryColor}, ${websiteData.secondaryColor}); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.1rem;">
+Image Article ${i + 1}
+</div>
+<div style="padding: 30px;">
+<h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 15px; color: #1f2937;">Titre de l'article ${i + 1}</h3>
+<p style="color: #6b7280; line-height: 1.7; margin-bottom: 20px;">Découvrez nos dernières actualités et conseils d'experts dans notre domaine. Restez informé des tendances et innovations...</p>
+<div style="display: flex; justify-between; align-items: center;">
+<span style="color: #9ca3af; font-size: 0.9rem;">Publié le ${new Date().toLocaleDateString()}</span>
+<a href="#" style="color: ${websiteData.primaryColor}; text-decoration: none; font-weight: 600;">Lire la suite →</a>
+</div>
+</div>
+</article>
+`).join('')}
+</div>
+</div>
+</main>
+`;
+}
+
+function generateContactContent() {
+const { businessName, phone, address, userEmail, socialMedia } = websiteData;
+return `
+<main style="padding: 60px 20px;">
+<div style="max-width: 1000px; margin: 0 auto;">
+<h2 style="font-size: 2.5rem; font-weight: bold; text-align: center; margin-bottom: 50px; color: #1f2937;">Nous Contacter</h2>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px;">
+<!-- Informations de contact -->
+<div>
+<h3 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 30px; color: #1f2937;">Nos Coordonnées</h3>
+<div style="space-y: 20px;">
+${address ? `
+<div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+<div style="width: 50px; height: 50px; background: ${websiteData.primaryColor}; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;">
+📍
+</div>
+<div>
+<h4 style="font-weight: bold; color: #1f2937;">Adresse</h4>
+<p style="color: #6b7280;">${address}</p>
+</div>
+</div>
+` : ''}
+${phone ? `
+<div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+<div style="width: 50px; height: 50px; background: ${websiteData.primaryColor}; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;">
+📞
+</div>
+<div>
+<h4 style="font-weight: bold; color: #1f2937;">Téléphone</h4>
+<p style="color: #6b7280;">${phone}</p>
+</div>
+</div>
+` : ''}
+<div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+<div style="width: 50px; height: 50px; background: ${websiteData.primaryColor}; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;">
+✉️
+</div>
+<div>
+<h4 style="font-weight: bold; color: #1f2937;">Email</h4>
+<p style="color: #6b7280;">${userEmail}</p>
+</div>
+</div>
+</div>
+
+${Object.values(socialMedia).some(url => url) ? `
+<div style="margin-top: 30px;">
+<h4 style="font-weight: bold; color: #1f2937; margin-bottom: 15px;">Suivez-nous</h4>
+<div style="display: flex; gap: 15px;">
+${socialMedia.facebook ? `<a href="${socialMedia.facebook}" style="color: ${websiteData.primaryColor}; font-size: 1.5rem;">📘</a>` : ''}
+${socialMedia.instagram ? `<a href="${socialMedia.instagram}" style="color: ${websiteData.primaryColor}; font-size: 1.5rem;">📷</a>` : ''}
+${socialMedia.linkedin ? `<a href="${socialMedia.linkedin}" style="color: ${websiteData.primaryColor}; font-size: 1.5rem;">💼</a>` : ''}
+${socialMedia.twitter ? `<a href="${socialMedia.twitter}" style="color: ${websiteData.primaryColor}; font-size: 1.5rem;">🐦</a>` : ''}
+</div>
+</div>
+` : ''}
+</div>
+
+<!-- Formulaire de contact -->
+<div>
+<h3 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 30px; color: #1f2937;">Envoyez-nous un message</h3>
+<form style="display: flex; flex-direction: column; gap: 20px;">
+<input type="text" placeholder="Votre nom" style="padding: 15px; border: 1px solid #d1d5db; border-radius: 5px; font-size: 1rem;">
+<input type="email" placeholder="Votre email" style="padding: 15px; border: 1px solid #d1d5db; border-radius: 5px; font-size: 1rem;">
+<input type="text" placeholder="Sujet" style="padding: 15px; border: 1px solid #d1d5db; border-radius: 5px; font-size: 1rem;">
+<textarea placeholder="Votre message" rows="5" style="padding: 15px; border: 1px solid #d1d5db; border-radius: 5px; font-size: 1rem; resize: vertical;"></textarea>
+<button type="submit" style="background: ${websiteData.primaryColor}; color: white; padding: 15px; border: none; border-radius: 5px; font-size: 1.1rem; font-weight: bold; cursor: pointer;">
+Envoyer le message
+</button>
+</form>
+</div>
+</div>
+</div>
+</main>
+`;
+}
+
+function generatePageFooter() {
+const { businessName, userEmail, phone, socialMedia } = websiteData;
+return `
+<footer style="background: #1f2937; color: white; padding: 50px 20px 20px;">
+<div style="max-width: 1200px; margin: 0 auto;">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 30px;">
+<div>
+<h3 style="font-size: 1.3rem; font-weight: bold; margin-bottom: 15px;">${businessName}</h3>
+<p style="color: #9ca3af; line-height: 1.6;">Merci de votre confiance. Nous sommes à votre service pour tous vos besoins.</p>
+</div>
+<div>
+<h4 style="font-size: 1.1rem; font-weight: bold; margin-bottom: 15px;">Contact</h4>
+${userEmail ? `<p style="color: #9ca3af; margin-bottom: 8px;">📧 ${userEmail}</p>` : ''}
+${phone ? `<p style="color: #9ca3af; margin-bottom: 8px;">📞 ${phone}</p>` : ''}
+</div>
+<div>
+<h4 style="font-size: 1.1rem; font-weight: bold; margin-bottom: 15px;">Navigation</h4>
+<div style="display: flex; flex-direction: column; gap: 8px;">
+${websiteData.selectedPages.map(page => {
+const pageNames = {
+'accueil': 'Accueil', 'apropos': 'À propos', 'services': 'Services',
+'portfolio': 'Portfolio', 'equipe': 'Équipe', 'temoignages': 'Témoignages',
+'blog': 'Blog', 'contact': 'Contact'
+};
+return `<a href="#${page}" style="color: #9ca3af; text-decoration: none;">${pageNames[page]}</a>`;
+}).join('')}
+</div>
+</div>
+</div>
+<div style="border-top: 1px solid #374151; padding-top: 20px; text-align: center; color: #9ca3af;">
+<p>&copy; ${new Date().getFullYear()} ${businessName}. Tous droits réservés.</p>
+</div>
+</div>
+</footer>
+`;
+}
+
+// ========== FINALISATION ET ENVOI ==========
+function finalizeAndSend() {
+console.log('🎉 Finalisation du site...');
+
+// Navigation vers la section email
+document.getElementById('previewSection').style.display = 'none';
+document.getElementById('emailSection').style.display = 'block';
+document.getElementById('mainSection').style.display = 'none';
+document.getElementById('qualityTemplates').style.display = 'none';
+
+// Mettre à jour les infos finales
+const finalPageCount = document.getElementById('finalPageCount');
+if (finalPageCount) {
+finalPageCount.textContent = `Site ${websiteData.selectedPages.length} pages complet`;
+}
+
+// Préremplir l'email si disponible
+const deliveryEmail = document.getElementById('deliveryEmail');
+if (deliveryEmail && websiteData.userEmail) {
+deliveryEmail.value = websiteData.userEmail;
+}
+
+window.scrollTo(0, 0);
+showNotification('✅ Prêt pour la livraison ! Confirmez votre email.');
+}
+
+function sendWebsiteEmail(event) {
+event.preventDefault();
+console.log('📧 Envoi du site par email...');
+
+const deliveryEmail = document.getElementById('deliveryEmail').value.trim();
+if (!deliveryEmail || !deliveryEmail.includes('@')) {
+showNotification('❌ Veuillez saisir un email valide');
+return;
+}
+
+// Afficher le loading
+document.getElementById('finalEmailForm').style.display = 'none';
+document.getElementById('loadingSpinner').style.display = 'block';
+document.getElementById('successMessage').style.display = 'none';
+
+// Simuler l'envoi (dans un vrai projet, ici on ferait l'appel API)
+setTimeout(() => {
+// Masquer le loading
+document.getElementById('loadingSpinner').style.display = 'none';
+document.getElementById('successMessage').style.display = 'block';
+
+// Enregistrer dans localStorage pour le suivi
+const sentWebsites = JSON.parse(localStorage.getItem('sentWebsites') || '[]');
+sentWebsites.push({
+businessName: websiteData.businessName,
+email: deliveryEmail,
+pages: websiteData.selectedPages,
+template: allTemplates[selectedTemplate].name,
+dateSent: new Date().toISOString(),
+websiteData: websiteData
+});
+localStorage.setItem('sentWebsites', JSON.stringify(sentWebsites));
+
+showNotification(`✅ Site envoyé à ${deliveryEmail} avec succès !`);
+console.log('✅ Site livré avec succès');
+}, 3000);
+}
+
+function createNewSite() {
+// Réinitialiser toutes les variables
+websiteData = {};
+selectedTemplate = null;
+uploadedPhotos = [];
+currentPage = 'accueil';
+generatedPages = {};
+
+// Réinitialiser le formulaire
+document.getElementById('websiteForm').reset();
+document.getElementById('photoPreview').innerHTML = '';
+document.getElementById('photoPreview').classList.add('hidden');
+
+// Navigation vers le début
+document.getElementById('mainSection').style.display = 'block';
+document.getElementById('qualityTemplates').style.display = 'none';
+document.getElementById('previewSection').style.display = 'none';
+document.getElementById('emailSection').style.display = 'none';
+
+window.scrollTo(0, 0);
+showNotification('🚀 Prêt pour un nouveau site !');
+}
+
+// ========== NAVIGATION ==========
+function goBackToMain() {
+document.getElementById('mainSection').style.display = 'block';
+document.getElementById('qualityTemplates').style.display = 'none';
+document.getElementById('previewSection').style.display = 'none';
+document.getElementById('emailSection').style.display = 'none';
+window.scrollTo(0, 0);
+}
+
+function goBackToTemplates() {
+document.getElementById('qualityTemplates').style.display = 'block';
+document.getElementById('previewSection').style.display = 'none';
+document.getElementById('mainSection').style.display = 'none';
+document.getElementById('emailSection').style.display = 'none';
+window.scrollTo(0, 0);
+}
+
+// ========== UPLOAD PHOTOS ==========
+function setupPhotoUpload() {
+const photoInput = document.getElementById('photoInput');
+const photoUploadArea = document.getElementById('photoUploadArea');
+const photoPreview = document.getElementById('photoPreview');
+
+if (!photoInput || !photoUploadArea) return;
+
+photoInput.addEventListener('change', handlePhotoUpload);
+
+// Drag & Drop
+photoUploadArea.addEventListener('dragover', (e) => {
+e.preventDefault();
+photoUploadArea.classList.add('drag-over');
+});
+
+photoUploadArea.addEventListener('dragleave', () => {
+photoUploadArea.classList.remove('drag-over');
+});
+
+photoUploadArea.addEventListener('drop', (e) => {
+e.preventDefault();
+photoUploadArea.classList.remove('drag-over');
+const files = Array.from(e.dataTransfer.files);
+processPhotos(files);
+});
+}
+
+function handlePhotoUpload(event) {
+const files = Array.from(event.target.files);
+processPhotos(files);
+}
+
+function processPhotos(files) {
+const validFiles = files.filter(file => {
+const isValidType = file.type.startsWith('image/');
+const isValidSize = file.size <= 5 * 1024 * 1024; // 5MB
+return isValidType && isValidSize;
+});
+
+if (validFiles.length !== files.length) {
+showNotification('❌ Certains fichiers ont été ignorés (type non valide ou trop volumineux)');
+}
+
+validFiles.forEach(file => {
+const reader = new FileReader();
+reader.onload = (e) => {
+const photo = {
+file: file,
+dataURL: e.target.result,
+name: file.name
+};
+uploadedPhotos.push(photo);
+displayPhotoPreview();
+};
+reader.readAsDataURL(file);
+});
+}
+
+function displayPhotoPreview() {
+const photoPreview = document.getElementById('photoPreview');
+if (!photoPreview) return;
+
+if (uploadedPhotos.length === 0) {
+photoPreview.classList.add('hidden');
+return;
+}
+
+photoPreview.classList.remove('hidden');
+photoPreview.innerHTML = uploadedPhotos.map((photo, index) => `
+<div style="position: relative;">
+<img src="${photo.dataURL}" alt="${photo.name}" style="width: 100%; height: 100px; object-fit: cover; border-radius: 5px;">
+<button onclick="removePhoto(${index})" style="position: absolute; top: 5px; right: 5px; background: rgba(220, 38, 38, 0.8); color: white; border: none; border-radius: 50%; width: 25px; height: 25px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+×
+</button>
+</div>
+`).join('');
+
+showNotification(`✅ ${uploadedPhotos.length} photo(s) ajoutée(s)`);
+}
+
+function removePhoto(index) {
+uploadedPhotos.splice(index, 1);
+displayPhotoPreview();
+showNotification('🗑️ Photo supprimée');
+}
+
+// ========== AUTHENTIFICATION ==========
+function showLogin() {
+document.getElementById('authModal').style.display = 'block';
+document.getElementById('authModalTitle').textContent = 'Connexion';
+document.getElementById('loginForm').style.display = 'block';
+document.getElementById('registerForm').style.display = 'none';
+}
+
+function showRegister() {
+document.getElementById('authModal').style.display = 'block';
+document.getElementById('authModalTitle').textContent = 'Inscription';
+document.getElementById('loginForm').style.display = 'none';
+document.getElementById('registerForm').style.display = 'block';
+}
+
+function showLoginForm() {
+document.getElementById('authModalTitle').textContent = 'Connexion';
+document.getElementById('loginForm').style.display = 'block';
+document.getElementById('registerForm').style.display = 'none';
+}
+
+function showRegisterForm() {
+document.getElementById('authModalTitle').textContent = 'Inscription';
+document.getElementById('loginForm').style.display = 'none';
+document.getElementById('registerForm').style.display = 'block';
+}
+
+function closeAuthModal() {
+document.getElementById('authModal').style.display = 'none';
+}
+
+function login(event) {
+event.preventDefault();
+const email = document.getElementById('loginEmail').value;
+const password = document.getElementById('loginPassword').value;
+
+// Simulation de connexion
+const users = JSON.parse(localStorage.getItem('users') || '[]');
+const user = users.find(u => u.email === email && u.password === password);
+
+if (user) {
+currentUser = user;
+localStorage.setItem('currentUser', JSON.stringify(currentUser));
+showUserMenu();
+closeAuthModal();
+showNotification(`✅ Connexion réussie, bienvenue ${user.name} !`);
+} else {
+showNotification('❌ Email ou mot de passe incorrect');
+}
+}
+
+function register(event) {
+event.preventDefault();
+const name = document.getElementById('registerName').value;
+const email = document.getElementById('registerEmail').value;
+const password = document.getElementById('registerPassword').value;
+
+const users = JSON.parse(localStorage.getItem('users') || '[]');
+
+if (users.find(u => u.email === email)) {
+showNotification('❌ Cet email est déjà utilisé');
+return;
+}
+
+const newUser = { name, email, password, id: Date.now() };
+users.push(newUser);
+localStorage.setItem('users', JSON.stringify(users));
+
+currentUser = newUser;
+localStorage.setItem('currentUser', JSON.stringify(currentUser));
+showUserMenu();
+closeAuthModal();
+showNotification(`✅ Inscription réussie, bienvenue ${name} !`);
+}
+
+function showUserMenu() {
+document.getElementById('authButtons').style.display = 'none';
+document.getElementById('userMenu').style.display = 'block';
+document.getElementById('userName').textContent = `Bonjour, ${currentUser.name}`;
+}
+
+function logout() {
+currentUser = null;
+localStorage.removeItem('currentUser');
+document.getElementById('authButtons').style.display = 'flex';
+document.getElementById('userMenu').style.display = 'none';
+showNotification('👋 Déconnexion réussie');
+}
+
+// ========== PARTAGE ==========
+function toggleShareMenu() {
+const shareMenu = document.getElementById('shareMenu');
+shareMenu.classList.toggle('hidden');
+}
+
+function shareOnFacebook() {
+const url = encodeURIComponent(window.location.href);
+window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+}
+
+function shareOnTwitter() {
+const url = encodeURIComponent(window.location.href);
+const text = encodeURIComponent('Créez votre site web professionnel avec IA WebGen Pro !');
+window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+}
+
+function shareOnWhatsApp() {
+const url = encodeURIComponent(window.location.href);
+const text = encodeURIComponent('Découvrez IA WebGen Pro pour créer votre site web professionnel !');
+window.open(`https://wa.me/?text=${text} ${url}`, '_blank');
+}
+
+function copyLink() {
+navigator.clipboard.writeText(window.location.href).then(() => {
+showNotification('✅ Lien copié dans le presse-papier !');
+});
+}
+
+// ========== NOTIFICATIONS ==========
 function showNotification(message) {
 const notification = document.getElementById('notification');
 const text = document.getElementById('notificationText');
@@ -1003,6 +1656,15 @@ notification.style.display = 'block';
 setTimeout(() => {
 notification.style.display = 'none';
 }, 5000);
+}
+console.log('📢', message);
+}
+
+// ========== FERMETURE MODALES ==========
+window.onclick = function(event) {
+const authModal = document.getElementById('authModal');
+if (event.target === authModal) {
+closeAuthModal();
 }
 }
 </script>
