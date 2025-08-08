@@ -33,7 +33,7 @@
         <span id="notificationText">Message</span>
     </div>
 
-    <!-- Widget de partage (repositionné) -->
+    <!-- Widget de partage -->
     <div class="share-widget">
         <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full shadow-lg p-3 relative">
             <button onclick="toggleShareMenu()" class="flex items-center space-x-2 text-sm font-medium">
@@ -121,6 +121,12 @@
                                 <option value="immobilier">🏠 Immobilier</option>
                                 <option value="hotel">🏨 Hôtel/Hébergement</option>
                                 <option value="fitness">💪 Salle de sport</option>
+                                <option value="location-voiture">🚗 Location de voiture</option>
+                                <option value="avocat">⚖️ Cabinet d'avocat</option>
+                                <option value="photographe">📸 Photographe</option>
+                                <option value="plombier">🔧 Plomberie</option>
+                                <option value="electricien">⚡ Électricien</option>
+                                <option value="garage">🔧 Garage automobile</option>
                                 <option value="autre">✨ Autre activité</option>
                             </select>
                         </div>
@@ -185,7 +191,7 @@
             </div>
         </section>
 
-        <!-- Templates de qualité (nouvelle section) -->
+        <!-- Templates de qualité -->
         <section id="qualityTemplates" class="quality-templates py-16 bg-gray-50">
             <div class="container mx-auto px-4">
                 <div class="text-center mb-12">
@@ -357,7 +363,7 @@
                     <!-- Aperçu du site -->
                     <div>
                         <h3 class="text-lg font-bold mb-4">📱 Aperçu de votre site professionnel</h3>
-                        <div id="websitePreview" class="border-2 border-gray-300 rounded-lg p-4 bg-white min-h-96 overflow-hidden">
+                        <div id="websitePreview" class="border-2 border-gray-300 rounded-lg p-4 bg-white min-h-96 overflow-auto" style="max-height: 600px;">
                             <!-- Le contenu sera généré dynamiquement -->
                         </div>
                     </div>
@@ -502,7 +508,6 @@
                 });
             }
 
-            // Gestion du drag & drop pour les photos
             setupPhotoUpload();
         });
 
@@ -511,7 +516,6 @@
             const uploadArea = document.getElementById('photoUploadArea');
             const photoInput = document.getElementById('photoInput');
             
-            // Drag & drop
             uploadArea.addEventListener('dragover', (e) => {
                 e.preventDefault();
                 uploadArea.classList.add('drag-over');
@@ -527,7 +531,6 @@
                 handleFiles(e.dataTransfer.files);
             });
             
-            // Sélection de fichiers
             photoInput.addEventListener('change', (e) => {
                 handleFiles(e.target.files);
             });
@@ -535,7 +538,7 @@
 
         function handleFiles(files) {
             for (let file of files) {
-                if (file.type.startsWith('image/') && file.size <= 5 * 1024 * 1024) { // 5MB max
+                if (file.type.startsWith('image/') && file.size <= 5 * 1024 * 1024) {
                     const reader = new FileReader();
                     reader.onload = (e) => {
                         uploadedPhotos.push({
@@ -606,7 +609,6 @@
             
             showNotification('🤖 L\'IA génère vos templates personnalisés...');
             
-            // Simuler la génération de templates
             setTimeout(() => {
                 generateTemplateOptions();
             }, 2000);
@@ -625,7 +627,7 @@
                 
                 templateCard.innerHTML = `
                     <div class="mb-4">
-                        <div class="bg-gradient-to-br ${template.gradient} h-32 rounded-lg flex items-center justify-center text-white font-bold">
+                        <div class="bg-gradient-to-br ${template.gradient} h-32 rounded-lg flex items-center justify-center text-white font-bold text-lg">
                             ${template.preview}
                         </div>
                     </div>
@@ -649,11 +651,37 @@
 
         function getTemplatesForType(siteType, quality) {
             const baseTemplates = {
+                'location-voiture': [
+                    {
+                        name: 'Auto Premium',
+                        description: 'Design élégant pour location de véhicules haut de gamme',
+                        preview: '🚗 PREMIUM<br>BMW • AUDI<br>MERCEDES',
+                        gradient: 'from-gray-800 to-gray-600',
+                        features: ['Catalogue véhicules', 'Réservations', 'Prix en temps réel'],
+                        level: 'Premium'
+                    },
+                    {
+                        name: 'Drive Easy',
+                        description: 'Interface simple et efficace pour location rapide',
+                        preview: '🚙 LOCATION<br>RAPIDE<br>24H/7J',
+                        gradient: 'from-blue-500 to-blue-700',
+                        features: ['Booking rapide', 'Calcul prix', 'Contact direct'],
+                        level: 'Standard'
+                    },
+                    {
+                        name: 'Fleet Pro',
+                        description: 'Solution professionnelle pour flottes d\'entreprise',
+                        preview: '🚐 FLOTTE<br>ENTREPRISE<br>PRO',
+                        gradient: 'from-green-600 to-teal-700',
+                        features: ['Gestion flotte', 'Contrats B2B', 'Statistiques'],
+                        level: 'Professionnel'
+                    }
+                ],
                 restaurant: [
                     {
                         name: 'Gourmet Élégant',
                         description: 'Design sophistiqué pour restaurant haut de gamme',
-                        preview: '🍽️ MENU',
+                        preview: '🍽️ MENU<br>GASTRONOMIE<br>⭐⭐⭐',
                         gradient: 'from-amber-500 to-orange-600',
                         features: ['Menu interactif', 'Réservations', 'Galerie photos'],
                         level: 'Premium'
@@ -661,73 +689,82 @@
                     {
                         name: 'Bistrot Moderne',
                         description: 'Style décontracté et chaleureux',
-                        preview: '☕ BISTROT',
+                        preview: '☕ BISTROT<br>CONVIVIAL<br>LOCAL',
                         gradient: 'from-green-500 to-teal-600',
                         features: ['Carte simple', 'Horaires', 'Contact'],
                         level: 'Standard'
-                    },
-                    {
-                        name: 'Chef Professionnel',
-                        description: 'Présentation gastronomique premium',
-                        preview: '👨‍🍳 CHEF',
-                        gradient: 'from-purple-500 to-pink-600',
-                        features: ['Portfolio chef', 'Services traiteur', 'Blog culinaire'],
-                        level: 'Professionnel'
                     }
                 ],
                 salon: [
                     {
                         name: 'Beauty Spa',
                         description: 'Ambiance relaxante et zen',
-                        preview: '💆‍♀️ SPA',
+                        preview: '💆‍♀️ SPA<br>BEAUTÉ<br>RELAX',
                         gradient: 'from-pink-500 to-rose-600',
-                        features: ['Services beauté', 'Réservations', 'Galerie avant/après'],
+                        features: ['Services beauté', 'Réservations', 'Galerie'],
                         level: 'Premium'
-                    },
+                    }
+                ],
+                garage: [
                     {
-                        name: 'Coiffure Moderne',
-                        description: 'Style contemporain et dynamique',
-                        preview: '✂️ COIFFURE',
-                        gradient: 'from-blue-500 to-indigo-600',
-                        features: ['Tarifs', 'Équipe', 'Produits'],
+                        name: 'Auto Service Pro',
+                        description: 'Interface professionnelle pour garage automobile',
+                        preview: '🔧 GARAGE<br>RÉPARATION<br>AUTO',
+                        gradient: 'from-red-600 to-red-800',
+                        features: ['Services auto', 'Devis', 'Rendez-vous'],
                         level: 'Standard'
                     }
                 ],
-                // Ajout d'autres types...
+                plombier: [
+                    {
+                        name: 'Plomberie Express',
+                        description: 'Site d\'urgence pour plombier',
+                        preview: '🔧 PLOMBIER<br>URGENCE<br>24H/24',
+                        gradient: 'from-blue-600 to-cyan-700',
+                        features: ['Urgences', 'Devis', 'Interventions'],
+                        level: 'Standard'
+                    }
+                ],
+                photographe: [
+                    {
+                        name: 'Portfolio Artist',
+                        description: 'Galerie élégante pour photographe',
+                        preview: '📸 PORTFOLIO<br>PHOTOS<br>ART',
+                        gradient: 'from-purple-600 to-indigo-700',
+                        features: ['Galerie photos', 'Portfolio', 'Contact'],
+                        level: 'Premium'
+                    }
+                ]
             };
 
             const templates = baseTemplates[siteType] || [
                 {
                     name: 'Professionnel Classic',
                     description: 'Design polyvalent et efficace',
-                    preview: '⭐ PRO',
+                    preview: '⭐ PRO<br>SERVICE<br>QUALITÉ',
                     gradient: 'from-gray-500 to-gray-700',
                     features: ['Présentation', 'Services', 'Contact'],
                     level: quality === 'professionnel' ? 'Professionnel' : 'Standard'
                 }
             ];
 
-            // Adapter selon la qualité demandée
             return templates.filter(t => {
                 if (quality === 'standard') return t.level !== 'Professionnel';
                 if (quality === 'premium') return t.level !== 'Standard';
-                return true; // Professionnel : tous les templates
+                return true;
             });
         }
 
         function selectTemplate(index) {
-            // Désélectionner les autres templates
             document.querySelectorAll('.template-card').forEach(card => {
                 card.classList.remove('selected');
             });
             
-            // Sélectionner le template actuel
             const selectedCard = document.querySelectorAll('.template-card')[index];
             selectedCard.classList.add('selected');
             
             selectedTemplate = index;
             
-            // Activer le bouton continuer
             const continueBtn = document.getElementById('continueBtn');
             continueBtn.disabled = false;
             continueBtn.classList.remove('disabled:opacity-50');
@@ -735,8 +772,6 @@
 
         function proceedWithSelectedTemplate() {
             if (selectedTemplate === null) return;
-            
-            // Passer à la prévisualisation
             generatePreview();
         }
 
@@ -796,14 +831,13 @@
             document.getElementById('userName').textContent = `👋 ${currentUser.name}`;
         }
 
-        // Génération de la prévisualisation
+        // Génération de la prévisualisation (CORRIGÉE)
         function generatePreview() {
-            // Pré-remplir les champs de personnalisation
             document.getElementById('previewBusinessName').textContent = websiteData.businessName;
             document.getElementById('mainTitle').value = websiteData.businessName;
             document.getElementById('subtitle').value = websiteData.description;
             
-            // Générer l'aperçu avec le template sélectionné
+            // Générer immédiatement l'aperçu
             updatePreview();
             
             // Afficher la section de prévisualisation
@@ -811,6 +845,7 @@
             document.getElementById('previewSection').style.display = 'block';
             
             window.scrollTo(0, 0);
+            showNotification('✅ Prévisualisation générée ! Personnalisez votre site.');
         }
 
         function updatePreview() {
@@ -820,100 +855,118 @@
             const phone = document.getElementById('phone').value;
             const address = document.getElementById('address').value;
 
-            // Mettre à jour les données
             websiteData.mainTitle = mainTitle;
             websiteData.subtitle = subtitle;
             websiteData.primaryColor = primaryColor;
             websiteData.phone = phone;
             websiteData.address = address;
 
-            // Générer le contenu du site avec le template sélectionné
-            let siteContent = generateAdvancedSiteContent();
+            const siteContent = generateSiteContentByType();
             document.getElementById('websitePreview').innerHTML = siteContent;
         }
 
-        function generateAdvancedSiteContent() {
-            const { mainTitle, subtitle, primaryColor, phone, address, siteType, photos, quality } = websiteData;
+        function generateSiteContentByType() {
+            const { mainTitle, subtitle, primaryColor, phone, address, siteType, photos } = websiteData;
             
-            let content = `
-                <div style="background: linear-gradient(135deg, ${primaryColor}, #6366f1); color: white; padding: 30px; text-align: center; border-radius: 12px; margin-bottom: 20px; position: relative; overflow: hidden;">
-                    <div style="position: absolute; top: -50px; right: -50px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
-                    <h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 15px; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">${mainTitle}</h1>
-                    <p style="font-size: 1.2rem; opacity: 0.95; max-width: 600px; margin: 0 auto;">${subtitle}</p>
-                    ${quality === 'professionnel' ? '<div style="margin-top: 20px;"><span style="background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 20px; font-size: 0.9rem;">🏆 Site Professionnel</span></div>' : ''}
+            let baseContent = `
+                <div style="background: linear-gradient(135deg, ${primaryColor}, #6366f1); color: white; padding: 20px; text-align: center; border-radius: 10px; margin-bottom: 20px;">
+                    <h1 style="font-size: 2rem; font-weight: bold; margin-bottom: 10px;">${mainTitle}</h1>
+                    <p style="font-size: 1.1rem; opacity: 0.9;">${subtitle}</p>
                 </div>
-                
-                <div style="display: grid; gap: 25px; padding: 25px;">
             `;
 
-            // Galerie de photos si des photos ont été uploadées
+            // Ajouter galerie photos si disponibles
             if (photos && photos.length > 0) {
-                content += `
-                    <div style="background: #f9fafb; padding: 25px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-                        <h2 style="color: ${primaryColor}; font-size: 1.8rem; margin-bottom: 20px; display: flex; align-items: center;">
-                            <span style="margin-right: 10px;">📸</span> Nos Réalisations
-                        </h2>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+                baseContent += `
+                    <div style="background: #f8fafc; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                        <h2 style="color: ${primaryColor}; font-size: 1.5rem; margin-bottom: 15px;">📸 Nos Réalisations</h2>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px;">
                             ${photos.slice(0, 6).map(photo => `
-                                <img src="${photo.data}" alt="${photo.name}" style="width: 100%; height: 120px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                <img src="${photo.data}" alt="${photo.name}" style="width: 100%; height: 100px; object-fit: cover; border-radius: 8px;">
                             `).join('')}
                         </div>
                     </div>
                 `;
             }
 
-            // Contenu spécifique selon le type d'activité
+            // Contenu spécifique selon le type
+            let specificContent = '';
+            
             switch(siteType) {
+                case 'location-voiture':
+                    specificContent = `
+                        <div style="background: #f8fafc; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                            <h2 style="color: ${primaryColor}; font-size: 1.5rem; margin-bottom: 15px;">🚗 Notre Flotte de Véhicules</h2>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                                <div style="background: white; padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                    <div style="font-size: 2rem; margin-bottom: 10px;">🚗</div>
+                                    <h3 style="font-weight: bold; color: ${primaryColor};">Citadines</h3>
+                                    <p style="color: #64748b; font-size: 0.9rem;">À partir de 25€/jour</p>
+                                    <p style="font-size: 0.8rem;">Peugeot 208, Renault Clio</p>
+                                </div>
+                                <div style="background: white; padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                    <div style="font-size: 2rem; margin-bottom: 10px;">🚙</div>
+                                    <h3 style="font-weight: bold; color: ${primaryColor};">SUV</h3>
+                                    <p style="color: #64748b; font-size: 0.9rem;">À partir de 45€/jour</p>
+                                    <p style="font-size: 0.8rem;">BMW X3, Audi Q5</p>
+                                </div>
+                                <div style="background: white; padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                    <div style="font-size: 2rem; margin-bottom: 10px;">🏎️</div>
+                                    <h3 style="font-weight: bold; color: ${primaryColor};">Premium</h3>
+                                    <p style="color: #64748b; font-size: 0.9rem;">À partir de 89€/jour</p>
+                                    <p style="font-size: 0.8rem;">Mercedes, BMW Série 5</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="background: ${primaryColor}; color: white; padding: 20px; border-radius: 10px; text-align: center;">
+                            <h3 style="font-size: 1.3rem; margin-bottom: 10px;">🎯 Réservation Rapide</h3>
+                            <p style="margin-bottom: 15px;">Réservez en ligne en 2 minutes</p>
+                            <div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 8px; display: inline-block;">
+                                <span style="font-weight: bold;">📞 Disponible 24h/24 - 7j/7</span>
+                            </div>
+                        </div>
+                    `;
+                    break;
+
                 case 'restaurant':
-                    content += `
-                        <div style="background: linear-gradient(45deg, #f9fafb, #ffffff); padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-                            <h2 style="color: ${primaryColor}; font-size: 1.8rem; margin-bottom: 20px; display: flex; align-items: center;">
-                                <span style="margin-right: 10px;">🍽️</span> Notre Menu Gastronomique
-                            </h2>
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-                                <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid ${primaryColor};">
-                                    <h3 style="font-weight: bold; margin-bottom: 10px; color: ${primaryColor};">🥗 Entrées</h3>
-                                    <div style="space-y: 8px;">
-                                        <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dotted #ddd;">
+                    specificContent = `
+                        <div style="background: #f8fafc; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                            <h2 style="color: ${primaryColor}; font-size: 1.5rem; margin-bottom: 15px;">🍽️ Notre Menu</h2>
+                            <div style="display: grid; gap: 15px;">
+                                <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid ${primaryColor};">
+                                    <h3 style="font-weight: bold; color: ${primaryColor};">🥗 Entrées</h3>
+                                    <div style="margin-top: 8px;">
+                                        <div style="display: flex; justify-content: space-between; padding: 5px 0;">
                                             <span>Salade Caesar</span><span style="font-weight: bold;">12€</span>
                                         </div>
-                                        <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dotted #ddd;">
+                                        <div style="display: flex; justify-content: space-between; padding: 5px 0;">
                                             <span>Carpaccio de saumon</span><span style="font-weight: bold;">15€</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid ${primaryColor};">
-                                    <h3 style="font-weight: bold; margin-bottom: 10px; color: ${primaryColor};">🥩 Plats Principaux</h3>
-                                    <div>
-                                        <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dotted #ddd;">
-                                            <span>Filet de bœuf</span><span style="font-weight: bold;">28€</span>
+                                <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid ${primaryColor};">
+                                    <h3 style="font-weight: bold; color: ${primaryColor};">🥩 Plats Principaux</h3>
+                                    <div style="margin-top: 8px;">
+                                        <div style="display: flex; justify-content: space-between; padding: 5px 0;">
+                                            <span>Filet de bœuf aux morilles</span><span style="font-weight: bold;">28€</span>
                                         </div>
-                                        <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dotted #ddd;">
+                                        <div style="display: flex; justify-content: space-between; padding: 5px 0;">
                                             <span>Saumon grillé</span><span style="font-weight: bold;">22€</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div style="background: ${primaryColor}; color: white; padding: 20px; border-radius: 12px; text-align: center;">
-                            <h3 style="font-size: 1.5rem; margin-bottom: 10px;">📅 Réservations</h3>
-                            <p style="margin-bottom: 15px;">Ouvert du lundi au dimanche</p>
-                            <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; display: inline-block;">
-                                <p style="font-weight: bold;">12h - 14h & 19h - 22h</p>
-                            </div>
-                        </div>
                     `;
                     break;
-                
-                case 'salon':
-                    content += `
-                        <div style="background: linear-gradient(135deg, #fef7ff, #f3e8ff); padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-                            <h2 style="color: ${primaryColor}; font-size: 1.8rem; margin-bottom: 20px; display: flex; align-items: center;">
-                                <span style="margin-right: 10px;">💇</span> Nos Services Beauté
-                            </h2>
+
+                case 'garage':
+                    specificContent = `
+                        <div style="background: #f8fafc; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                            <h2 style="color: ${primaryColor}; font-size: 1.5rem; margin-bottom: 15px;">🔧 Nos Services Auto</h2>
                             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-                                ${['Coupe & Brushing - 35€', 'Coloration complète - 65€', 'Mèches - 45€', 'Soins capillaires - 25€', 'Chignon de mariage - 50€', 'Lissage brésilien - 120€'].map(service => `
-                                    <div style="background: white; padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                                ${['🔧 Mécanique générale - 60€/h', '🛞 Pneumatiques - À partir de 80€', '🔋 Électricité auto - 70€/h', '🚗 Carrosserie - Devis gratuit'].map(service => `
+                                    <div style="background: white; padding: 15px; border-radius: 8px; text-align: center; border: 1px solid #e2e8f0;">
                                         <div style="font-weight: bold; color: ${primaryColor};">${service}</div>
                                     </div>
                                 `).join('')}
@@ -922,65 +975,48 @@
                     `;
                     break;
 
+                case 'photographe':
+                    specificContent = `
+                        <div style="background: #f8fafc; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                            <h2 style="color: ${primaryColor}; font-size: 1.5rem; margin-bottom: 15px;">📸 Mes Spécialités Photo</h2>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+                                ${['👰 Mariages - 800€', '👨‍👩‍👧‍👦 Portraits famille - 150€', '🎂 Événements - 300€', '🏢 Corporate - 200€/h'].map(service => `
+                                    <div style="background: white; padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                        <div style="font-weight: bold; color: ${primaryColor}; font-size: 0.9rem;">${service}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                    break;
+
                 default:
-                    content += `
-                        <div style="background: linear-gradient(135deg, #f0f9ff, #e0f2fe); padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-                            <h2 style="color: ${primaryColor}; font-size: 1.8rem; margin-bottom: 20px; display: flex; align-items: center;">
-                                <span style="margin-right: 10px;">✨</span> Nos Services Premium
-                            </h2>
-                            <div style="display: grid; gap: 15px;">
-                                <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid ${primaryColor};">
-                                    <h3 style="font-weight: bold; color: ${primaryColor}; margin-bottom: 10px;">Service Excellence</h3>
-                                    <p style="color: #64748b;">Découvrez nos services de qualité professionnelle adaptés à vos besoins spécifiques.</p>
-                                </div>
-                                <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid ${primaryColor};">
-                                    <h3 style="font-weight: bold; color: ${primaryColor}; margin-bottom: 10px;">Expertise Reconnue</h3>
-                                    <p style="color: #64748b;">Une équipe d'experts à votre service pour des résultats exceptionnels.</p>
-                                </div>
+                    specificContent = `
+                        <div style="background: #f8fafc; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                            <h2 style="color: ${primaryColor}; font-size: 1.5rem; margin-bottom: 15px;">✨ Nos Services</h2>
+                            <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid ${primaryColor};">
+                                <h3 style="font-weight: bold; color: ${primaryColor};">Service Premium</h3>
+                                <p style="color: #64748b; margin-top: 8px;">Découvrez nos services de qualité professionnelle adaptés à vos besoins spécifiques.</p>
                             </div>
                         </div>
                     `;
             }
 
             // Section contact si informations disponibles
+            let contactSection = '';
             if (phone || address) {
-                content += `
-                    <div style="background: linear-gradient(135deg, ${primaryColor}, #6366f1); color: white; padding: 25px; border-radius: 12px; position: relative; overflow: hidden;">
-                        <div style="position: absolute; top: -30px; right: -30px; width: 80px; height: 80px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
-                        <h2 style="font-size: 1.8rem; margin-bottom: 20px; display: flex; align-items: center;">
-                            <span style="margin-right: 10px;">📞</span> Contactez-nous
-                        </h2>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
-                            ${phone ? `
-                                <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 8px;">
-                                    <div style="font-weight: bold; margin-bottom: 5px;">📱 Téléphone</div>
-                                    <div style="font-size: 1.1rem;">${phone}</div>
-                                </div>
-                            ` : ''}
-                            ${address ? `
-                                <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 8px;">
-                                    <div style="font-weight: bold; margin-bottom: 5px;">📍 Adresse</div>
-                                    <div style="font-size: 1.1rem;">${address}</div>
-                                </div>
-                            ` : ''}
+                contactSection = `
+                    <div style="background: ${primaryColor}; color: white; padding: 20px; border-radius: 10px; margin-top: 20px;">
+                        <h3 style="font-size: 1.3rem; margin-bottom: 15px;">📞 Contactez-nous</h3>
+                        <div style="display: grid; gap: 10px;">
+                            ${phone ? `<div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 6px;">📱 ${phone}</div>` : ''}
+                            ${address ? `<div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 6px;">📍 ${address}</div>` : ''}
                         </div>
                     </div>
                 `;
             }
 
-            // Footer avec CTA
-            content += `
-                </div>
-                <div style="text-align: center; padding: 30px; background: linear-gradient(135deg, ${primaryColor}, #6366f1); color: white; border-radius: 12px; margin-top: 20px;">
-                    <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 10px;">🌟 Contactez-nous dès maintenant !</h3>
-                    <p style="opacity: 0.9; margin-bottom: 20px;">Découvrez l'excellence de nos services</p>
-                    <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; display: inline-block;">
-                        <span style="font-weight: bold; font-size: 1.1rem;">Devis gratuit & personnalisé</span>
-                    </div>
-                </div>
-            `;
-
-            return content;
+            return baseContent + specificContent + contactSection;
         }
 
         function goBackToMain() {
@@ -1032,11 +1068,11 @@
             localStorage.setItem('pendingOrder', JSON.stringify(orderData));
 
             const message = `🎉 Excellent choix ! Redirection vers PayPal pour ${currentPrice}€\n\n` +
-                          `📧 Vous recevrez immédiatement après paiement :\n` +
+                          `📧 Après paiement, vous recevrez :\n` +
                           `• ${currentOffer === 'site' ? 'Site professionnel avec vos photos' : 'Site mis en ligne + domaine + hébergement'}\n` +
                           `• Email de confirmation détaillé\n` +
                           `• ${currentOffer === 'conciergerie' ? 'Formation utilisateur incluse' : 'Instructions complètes'}\n\n` +
-                          `Procéder au paiement sécurisé ?`;
+                          `Continuer vers PayPal ?`;
 
             if (confirm(message)) {
                 simulateEmailConfirmation();
@@ -1049,75 +1085,9 @@
             const orderData = JSON.parse(localStorage.getItem('pendingOrder'));
             if (!orderData) return;
 
-            console.log('📧 EMAIL DE CONFIRMATION PREMIUM ENVOYÉ À:', orderData.websiteData.userEmail);
-            console.log('📄 CONTENU DÉTAILLÉ:', {
-                destinataire: orderData.websiteData.userEmail,
-                sujet: `✅ [IA WebGen] Site ${orderData.websiteData.businessName} - Commande confirmée`,
-                contenu: `
-                Bonjour ${orderData.user.name},
-
-                🎉 Votre commande IA WebGen est confirmée !
-
-                📋 DÉTAILS DE VOTRE SITE PROFESSIONNEL:
-                • Entreprise: ${orderData.websiteData.businessName}
-                • Type: ${orderData.websiteData.siteType}
-                • Qualité: ${orderData.websiteData.quality}
-                • Template: ${orderData.selectedTemplate !== null ? `Template Premium #${orderData.selectedTemplate + 1}` : 'Standard'}
-                • Photos personnelles: ${orderData.websiteData.photos?.length || 0} image(s)
-                • Offre: ${orderData.offer === 'site' ? 'Site IA Professionnel' : 'Conciergerie IA Complète'}
-                • Prix: ${orderData.price}€
-
-                ${orderData.offer === 'site' ? 
-                    `📦 LIVRAISON SITE IA PROFESSIONNEL:
-                    ✅ Site généré par IA avancée dans les 15 minutes
-                    ✅ Intégration de vos ${orderData.websiteData.photos?.length || 0} photos personnelles
-                    ✅ Design responsive et moderne
-                    ✅ Code source optimisé (HTML/CSS/JS)
-                    ✅ Images optimisées pour le web
-                    ✅ Guide d'installation détaillé
-                    ✅ Support technique par email` :
-                    
-                    `🚀 MISE EN LIGNE CONCIERGERIE IA COMPLÈTE:
-                    ✅ Site IA professionnel généré automatiquement
-                    ✅ Nom de domaine personnalisé acheté et configuré
-                    ✅ Hébergement premium sécurisé (SSL inclus)
-                    ✅ Mise en ligne automatique en 2-4h maximum
-                    ✅ Optimisation SEO et performance
-                    ✅ Formation utilisateur personnalisée (1h par vidéo)
-                    ✅ Support technique premium 3 mois
-                    ✅ Sauvegardes automatiques quotidiennes
-                    
-                    📧 Vous recevrez un second email avec vos accès dès que votre site sera en ligne.`
-                }
-
-                🤖 TECHNOLOGIE IA UTILISÉE:
-                • Analyse sémantique de votre activité
-                • Génération de contenu personnalisé
-                • Optimisation automatique des images
-                • Création de design adaptatif
-                • Integration intelligente des éléments
-
-                💳 PAIEMENT:
-                PayPal - Traitement sécurisé en cours
-
-                📞 SUPPORT PREMIUM:
-                Email: contact@iawebgen.com
-                Réponse garantie sous 2h (7j/7)
-
-                🎁 BONUS INCLUS:
-                • Guide marketing digital (PDF)
-                • 30 jours de support email gratuit
-                • Mises à jour de sécurité incluses
-
-                Merci de faire confiance à notre IA professionnelle !
-                
-                🤖 L'équipe IA WebGen
-                Site: https://ia-webgen.ct.ws
-                `
-            });
-
+            console.log('📧 EMAIL DE CONFIRMATION ENVOYÉ À:', orderData.websiteData.userEmail);
             setTimeout(() => {
-                showNotification('📧 Email de confirmation premium envoyé !');
+                showNotification('📧 Email de confirmation envoyé avec succès !');
             }, 2000);
         }
 
@@ -1131,25 +1101,25 @@
             const url = window.location.href;
             const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
             window.open(fbUrl, '_blank', 'width=600,height=400');
-            showNotification('🎁 Code SHARE10 activé ! 10% de réduction sur votre commande !');
+            showNotification('🎁 Code SHARE10 activé ! 10% de réduction !');
             document.getElementById('shareMenu').classList.add('hidden');
         }
 
         function shareOnTwitter() {
             const url = window.location.href;
-            const text = "🤖 Incroyable ! IA WebGen crée des sites professionnels avec photos personnelles en 2-4h !";
+            const text = "🤖 Incroyable ! IA WebGen crée des sites professionnels en 2-4h !";
             const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
             window.open(twitterUrl, '_blank', 'width=600,height=400');
-            showNotification('🎁 Code SHARE10 activé ! 10% de réduction disponible !');
+            showNotification('🎁 Code SHARE10 activé ! 10% de réduction !');
             document.getElementById('shareMenu').classList.add('hidden');
         }
 
         function shareOnWhatsApp() {
             const url = window.location.href;
-            const text = "🤖 Tu dois voir ça ! IA WebGen crée des sites pro avec tes photos perso en 2h : ";
+            const text = "🤖 Regarde ! IA WebGen crée des sites pro en 2h : ";
             const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text + url)}`;
             window.open(whatsappUrl, '_blank');
-            showNotification('🎁 Code SHARE10 activé ! Économisez 10% maintenant !');
+            showNotification('🎁 Code SHARE10 activé ! Économisez 10% !');
             document.getElementById('shareMenu').classList.add('hidden');
         }
 
@@ -1160,7 +1130,6 @@
             });
         }
 
-        // Fermer le menu de partage en cliquant ailleurs
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.share-widget')) {
                 document.getElementById('shareMenu').classList.add('hidden');
