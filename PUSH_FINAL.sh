@@ -1,0 +1,30 @@
+#!/bin/bash
+echo "🚀 Push final vers GitHub..."
+echo "Repository: https://github.com/votre-username/ia-webgen-pro"
+echo ""
+
+if git push -u origin main; then
+    echo ""
+    echo "🎉 ================================="
+    echo "    SUCCÈS TOTAL !"
+    echo "================================== 🎉"
+    echo ""
+    echo "✅ Code poussé sur GitHub"
+    echo "🌐 URL: https://github.com/votre-username/ia-webgen-pro"
+    echo "📖 README consultable en ligne"
+    echo "🔧 Documentation API incluse"
+    echo ""
+    echo "🧪 TESTS LOCAUX:"
+    echo "1. Backend: cd backend && python -m uvicorn server:app --host 0.0.0.0 --port 8001"
+    echo "2. Frontend: python -m http.server 3000"
+    echo "3. App: http://localhost:3000"
+    echo "4. API: http://localhost:8001/docs"
+    echo ""
+    echo "🎯 Votre IA WebGen Pro est maintenant sur GitHub !"
+else
+    echo "❌ Erreur lors du push"
+    echo "💡 Solutions:"
+    echo "1. Vérifier que le repository existe: https://github.com/votre-username/ia-webgen-pro"
+    echo "2. Vérifier vos permissions GitHub"
+    echo "3. Essayer: git push origin main --force (attention!)"
+fi
