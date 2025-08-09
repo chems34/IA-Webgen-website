@@ -248,8 +248,263 @@ Comment puis-je t'aider ?
 </div>
 
 <!-- Application principale -->
-<div id="app">
-<p>Application en cours de chargement...</p>
+<div id="app" class="min-h-screen bg-gray-100">
+<div class="max-w-6xl mx-auto p-8">
+<h1 class="text-5xl font-bold text-center mb-8 text-gray-800">🚀 IA WebGen Pro</h1>
+<p class="text-xl text-center text-gray-600 mb-12">Générateur de sites web avec IA, ChatGPT intégré et mode édition complet</p>
+
+<!-- Section Tarification -->
+<div class="bg-white rounded-2xl shadow-xl p-8 mb-12">
+<h2 class="text-3xl font-bold text-center mb-8 text-gray-800">💰 Nos Tarifs</h2>
+<div class="grid md:grid-cols-2 gap-8">
+<!-- Création de Site -->
+<div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 border-2 border-blue-200">
+<div class="text-center">
+<div class="text-4xl mb-4">🌐</div>
+<h3 class="text-2xl font-bold text-blue-800 mb-4">Création de Site Web</h3>
+<div class="text-5xl font-bold text-blue-600 mb-2">15€</div>
+<p class="text-blue-700 mb-6">Paiement unique</p>
+<ul class="text-left space-y-3 text-blue-800 mb-6">
+<li>✅ Site web professionnel complet</li>
+<li>✅ ChatGPT intégré pour assistance</li>
+<li>✅ Mode édition après prévisualisation</li>
+<li>✅ Recherche d'images automatique</li>
+<li>✅ Design responsive moderne</li>
+<li>✅ Hébergement inclus (1 an)</li>
+<li>✅ Support technique inclus</li>
+</ul>
+<!-- Bouton PayPal pour le site -->
+<div class="text-center">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="VOTRE_BUTTON_ID_SITE">
+<input type="hidden" name="currency_code" value="EUR">
+<button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-xl transition-colors shadow-lg">
+<i class="fab fa-paypal mr-2 text-xl"></i>
+Commander mon site - 15€
+</button>
+</form>
+<p class="text-xs text-blue-600 mt-2">Paiement sécurisé via PayPal</p>
+</div>
+</div>
+</div>
+
+<!-- Service Conciergerie -->
+<div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-6 border-2 border-purple-200">
+<div class="text-center">
+<div class="text-4xl mb-4">🛎️</div>
+<h3 class="text-2xl font-bold text-purple-800 mb-4">Service Conciergerie</h3>
+<div class="text-5xl font-bold text-purple-600 mb-2">15€</div>
+<p class="text-purple-700 mb-6">par mois</p>
+<ul class="text-left space-y-3 text-purple-800 mb-6">
+<li>✅ Modifications illimitées de votre site</li>
+<li>✅ Mise à jour de contenu mensuelle</li>
+<li>✅ Ajout de nouvelles pages</li>
+<li>✅ Optimisation SEO continue</li>
+<li>✅ Sauvegarde automatique quotidienne</li>
+<li>✅ Support prioritaire 7j/7</li>
+<li>✅ Maintenance technique complète</li>
+<li>✅ Rapports de performance mensuels</li>
+</ul>
+<!-- Bouton PayPal pour la conciergerie -->
+<div class="text-center">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="VOTRE_BUTTON_ID_CONCIERGERIE">
+<input type="hidden" name="currency_code" value="EUR">
+<input type="hidden" name="src" value="1">
+<input type="hidden" name="a3" value="15.00">
+<input type="hidden" name="p3" value="1">
+<input type="hidden" name="t3" value="M">
+<button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-6 rounded-xl transition-colors shadow-lg">
+<i class="fab fa-paypal mr-2 text-xl"></i>
+S'abonner - 15€/mois
+</button>
+</form>
+<p class="text-xs text-purple-600 mt-2">Abonnement mensuel via PayPal</p>
+<p class="text-xs text-purple-500 mt-1">Résiliation possible à tout moment</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Offre Combinée -->
+<div class="bg-gradient-to-r from-green-100 to-emerald-100 rounded-xl p-6 border-2 border-green-300 mt-8">
+<div class="text-center">
+<h3 class="text-2xl font-bold text-green-800 mb-4">🎉 Offre Combinée - Économisez !</h3>
+<div class="grid md:grid-cols-3 gap-6 items-center">
+<div class="text-center">
+<div class="text-3xl font-bold text-green-600">Site + Conciergerie</div>
+<p class="text-green-700">Premier mois</p>
+</div>
+<div class="text-center">
+<div class="text-6xl font-bold text-green-600">25€</div>
+<p class="text-sm text-green-700">au lieu de 30€</p>
+<p class="text-xs text-green-600">Économie de 5€</p>
+</div>
+<div>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="VOTRE_BUTTON_ID_COMBO">
+<input type="hidden" name="currency_code" value="EUR">
+<button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-xl transition-colors">
+<i class="fas fa-star mr-2"></i>
+Offre Complète - 25€
+</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="grid md:grid-cols-2 gap-8">
+<!-- Tests ChatGPT -->
+<div class="bg-white p-8 rounded-xl shadow-lg">
+<h2 class="text-2xl font-bold mb-6 text-blue-600">🤖 ChatGPT Intégré</h2>
+<div class="space-y-4">
+<div class="bg-blue-50 p-4 rounded-lg">
+<h3 class="font-semibold text-blue-800 mb-2">✨ Fonctionnalités</h3>
+<ul class="text-sm text-blue-700 space-y-1">
+<li>• Widget flottant en bas à gauche</li>
+<li>• Recherche d'images : <code>/image [description]</code></li>
+<li>• Réponses intelligentes contextuelles</li>
+<li>• Interface moderne et responsive</li>
+</ul>
+</div>
+<div class="bg-green-50 p-4 rounded-lg">
+<h3 class="font-semibold text-green-800 mb-2">🧪 Test rapide</h3>
+<ol class="text-sm text-green-700 space-y-1">
+<li>1. Cliquez sur l'icône robot 🤖 en bas à gauche</li>
+<li>2. Tapez : <code>/image restaurant moderne</code></li>
+<li>3. Vérifiez que 4 images s'affichent</li>
+</ol>
+</div>
+</div>
+</div>
+
+<!-- Mode Édition -->
+<div class="bg-white p-8 rounded-xl shadow-lg">
+<h2 class="text-2xl font-bold mb-6 text-purple-600">✏️ Mode Édition</h2>
+<div class="space-y-4">
+<button id="editModeBtn" onclick="toggleEditMode()" class="w-full bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 px-6 rounded-lg transition-colors">
+Mode Édition: <span id="editModeStatus">Désactivé</span>
+</button>
+<div class="bg-purple-50 p-4 rounded-lg">
+<h3 class="font-semibold text-purple-800 mb-2">🎯 Fonctionnalités</h3>
+<ul class="text-sm text-purple-700 space-y-1">
+<li>• Modification complète après prévisualisation</li>
+<li>• Édition textes, couleurs, styles, images</li>
+<li>• Ajout/suppression d'éléments dynamique</li>
+<li>• Sauvegarde automatique des modifications</li>
+</ul>
+</div>
+<div id="testContent" class="mt-4 p-4 bg-gray-50 rounded-lg">
+<h3 class="text-lg font-semibold text-gray-800 mb-2">Contenu éditable de test</h3>
+<p class="text-gray-600 mb-3">Ce paragraphe peut être modifié en mode édition. Cliquez dessus après avoir activé le mode édition !</p>
+<button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Bouton test</button>
+</div>
+</div>
+</div>
+
+<!-- API Backend -->
+<div class="bg-white p-8 rounded-xl shadow-lg">
+<h2 class="text-2xl font-bold mb-6 text-green-600">🔧 API Backend</h2>
+<div class="space-y-4">
+<button onclick="testBackendAPI()" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg">
+Tester API Backend
+</button>
+<div id="apiResults" class="bg-gray-50 p-4 rounded-lg min-h-24">
+<p class="text-gray-500">Cliquez sur "Tester API Backend" pour vérifier le statut</p>
+</div>
+<div class="bg-green-50 p-4 rounded-lg">
+<h3 class="font-semibold text-green-800 mb-2">📡 Endpoints disponibles</h3>
+<ul class="text-sm text-green-700 space-y-1">
+<li>• <code>GET /api/health</code> - Vérification de santé</li>
+<li>• <code>POST /api/images/search</code> - Recherche d'images</li>
+<li>• <code>POST /api/chat</code> - Réponses ChatGPT</li>
+</ul>
+</div>
+</div>
+</div>
+
+<!-- Ajout de sections -->
+<div class="bg-white p-8 rounded-xl shadow-lg">
+<h2 class="text-2xl font-bold mb-6 text-orange-600">➕ Ajout de Sections</h2>
+<div class="space-y-4">
+<button onclick="addNewSection()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-lg">
+Ajouter une section de test
+</button>
+<div id="newSections" class="space-y-3"></div>
+<div class="bg-orange-50 p-4 rounded-lg">
+<h3 class="font-semibold text-orange-800 mb-2">📝 Types disponibles</h3>
+<ul class="text-sm text-orange-700 space-y-1">
+<li>• Texte - Paragraphes et contenu</li>
+<li>• Titre - En-têtes et sous-titres</li>
+<li>• Image - Photos et illustrations</li>
+<li>• Bouton - Liens et actions</li>
+<li>• Cartes - Services ou produits</li>
+<li>• Contact - Formulaire et infos</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<!-- FAQ Tarification -->
+<div class="bg-white rounded-2xl shadow-xl p-8 mt-12">
+<h2 class="text-3xl font-bold text-center mb-8 text-gray-800">❓ Questions Fréquentes</h2>
+<div class="grid md:grid-cols-2 gap-8">
+<div>
+<h3 class="text-lg font-bold text-blue-600 mb-3">💳 Paiement</h3>
+<div class="space-y-4 text-sm text-gray-700">
+<div>
+<strong>Q: Comment puis-je payer ?</strong><br>
+R: Tous les paiements se font via PayPal de manière sécurisée. Aucune données bancaires ne sont stockées.
+</div>
+<div>
+<strong>Q: Puis-je payer par carte bancaire ?</strong><br>
+R: Oui, PayPal accepte les cartes Visa, MasterCard, American Express même sans compte PayPal.
+</div>
+</div>
+</div>
+<div>
+<h3 class="text-lg font-bold text-purple-600 mb-3">🛎️ Conciergerie</h3>
+<div class="space-y-4 text-sm text-gray-700">
+<div>
+<strong>Q: Que comprend le service conciergerie ?</strong><br>
+R: Modifications illimitées, mises à jour mensuelles, support prioritaire, maintenance technique et optimisation SEO.
+</div>
+<div>
+<strong>Q: Puis-je annuler mon abonnement ?</strong><br>
+R: Oui, vous pouvez résilier à tout moment depuis votre compte PayPal. Aucun engagement minimum.
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="mt-12 text-center">
+<div class="bg-white p-8 rounded-xl shadow-lg">
+<h2 class="text-3xl font-bold mb-4 text-gray-800">🎉 IA WebGen Pro v2.0</h2>
+<p class="text-lg text-gray-600 mb-6">Toutes les fonctionnalités critiques implémentées et validées !</p>
+<div class="grid md:grid-cols-3 gap-6 text-sm">
+<div class="bg-blue-50 p-4 rounded-lg">
+<h3 class="font-bold text-blue-800 mb-2">🤖 Intelligence</h3>
+<p class="text-blue-600">ChatGPT intégré avec recherche d'images et réponses contextuelles</p>
+</div>
+<div class="bg-purple-50 p-4 rounded-lg">
+<h3 class="font-bold text-purple-800 mb-2">✏️ Édition</h3>
+<p class="text-purple-600">Modification complète après prévisualisation en temps réel</p>
+</div>
+<div class="bg-green-50 p-4 rounded-lg">
+<h3 class="font-bold text-green-800 mb-2">🔧 Backend</h3>
+<p class="text-green-600">API FastAPI sécurisée avec documentation automatique</p>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 
 <script>
