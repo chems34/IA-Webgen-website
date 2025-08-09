@@ -386,7 +386,7 @@ def generate_sections_html(data: Dict[str, Any]) -> str:
             <div class="container">
                 <h2>Nos Services</h2>
                 <p>Découvrez l'ensemble de nos prestations professionnelles</p>
-                {f'<div class="services-detail">{data.get("servicesDetail", "")}</div>' if data.get('servicesDetail') else ''}
+        {f'<div class="services-detail">{data.get("servicesDetail", "")}</div>' if data.get('servicesDetail') else ''}
                 <div class="services-grid">
                     {generate_services_grid(data.get('siteType', 'default'))}
                 </div>
