@@ -1,0 +1,29 @@
+# 🚀 COMMANDES RÉSUMÉES POUR GITHUB
+
+## 1. Créer repository sur GitHub
+https://github.com/new
+Nom: ia-webgen-pro
+Ne pas cocher README, .gitignore, license
+
+## 2. Copier et initialiser
+cp -r /app ~/mes-projets/ia-webgen-pro
+cd ~/mes-projets/ia-webgen-pro
+./init_github.sh
+git push -u origin main
+
+## 3. Tester localement  
+./deploy.sh
+./start_all.sh
+
+## URLs après déploiement
+- Application: http://localhost:3000
+- API Backend: http://localhost:8001
+- API Docs: http://localhost:8001/docs
+
+## Tests à effectuer
+1. Cliquer sur robot 🤖 (ChatGPT)
+2. Taper: /image restaurant moderne
+3. Vérifier 4 images s'affichent
+4. Activer mode édition
+5. Cliquer éléments (bordures bleues)
+6. F12 → Console → Vérifier 0 erreur
