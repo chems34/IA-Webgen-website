@@ -1165,7 +1165,7 @@ return `
 <header style="background: linear-gradient(135deg, ${primaryColor}, ${secondaryColor}); color: white; padding: 20px 0;">
 <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
-<h1 style="font-size: 1.8rem; font-weight: bold; margin: 0;">${businessName}</h1>
+<h1 style="font-size: 1.8rem; font-weight: bold; margin: 0;" class="editable-title">${businessName}</h1>
 <nav style="display: flex; gap: 20px; flex-wrap: wrap;">
 ${websiteData.selectedPages.map(page => {
 const pageNames = {
@@ -1178,7 +1178,7 @@ const pageNames = {
 'blog': 'Blog',
 'contact': 'Contact'
 };
-return `<a href="#${page}" style="color: white; text-decoration: none; opacity: 0.9; font-weight: 500;">${pageNames[page]}</a>`;
+return `<a href="#${page}" style="color: white; text-decoration: none; opacity: 0.9; font-weight: 500;" class="editable-nav">${pageNames[page]}</a>`;
 }).join('')}
 </nav>
 </div>
