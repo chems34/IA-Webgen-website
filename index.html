@@ -2410,18 +2410,116 @@ const b = parseInt(result[2]);
 return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 
-function deleteElement(element) {
-if (confirm('Êtes-vous sûr de vouloir supprimer cet élément ?')) {
+function deleteElement(elementId) {
+const element = document.getElementById(elementId);
+if (!element) return;
+
+const elementType = element.tagName.toLowerCase();
+const elementText = element.textContent?.substring(0, 50) || 'cet élément';
+
+if (confirm(`Êtes-vous sûr de vouloir supprimer ${elementType} "${elementText}..." ?`)) {
 element.remove();
 updateCurrentPageData();
 showNotification('🗑️ Élément supprimé !');
+console.log('Élément supprimé:', elementId);
 }
 }
 
-function addNewSection() {
-console.log('Ajout d\'une nouvelle section');
+function removeEditableElements() {
+const editableElements = document.querySelectorAll('.editable');
+editableElements.forEach(element => {
+element.classList.remove('editable');
+element.removeEventListener('click', handleElementClick, true);
+element.removeAttribute('data-edit-type');
+});
 
-const modal = document.createElement('div');
+// Supprimer les barres d'outils existantes
+const toolbars = document.querySelectorAll('.edit-toolbar');
+toolbars.forEach(toolbar => toolbar.remove());
+
+console.log('Éléments éditables nettoyés');
+}
+
+function updateCurrentPageData() {
+const previewEl = document.getElementById('websitePreview');
+if (previewEl && currentPage && generatedPages) {
+generatedPages[currentPage] = previewEl.innerHTML;
+console.log('Données de la page mises à jour:', currentPage);
+}
+}
+
+// Gérer l'envoi avec Entrée dans le ChatGPT
+function setupChatGPTKeyHandlers() {
+const chatInput = document.getElementById('chatgptInput');
+if (chatInput) {
+chatInput.addEventListener('keypress', function(e) {
+if (e.key === 'Enter' && !e.shiftKey) {
+e.preventDefault();
+sendChatGPTMessage();
+}
+});
+console.log('Handlers de clavier ChatGPT configurés');
+}
+}
+
+// Correction de la fonction updatePreview pour les sélecteurs de couleurs
+function updatePreview() {
+console.log('🔄 Mise à jour prévisualisation...');
+try {
+const primaryColorEl = document.getElementById('primaryColor');
+const secondaryColorEl = document.getElementById('secondaryColor');
+const mainTitleEl = document.getElementById('mainTitle');
+const subtitleEl = document.getElementById('subtitle');
+
+if (!primaryColorEl || !secondaryColorEl || !mainTitleEl || !subtitleEl) {
+console.error('Éléments de contrôle introuvables');
+return;
+}
+
+const primaryColor = primaryColorEl.value;
+const secondaryColor = secondaryColorEl.value;
+const mainTitle = mainTitleEl.value;
+const subtitle = subtitleEl.value;
+
+// Mettre à jour les données globales
+websiteData.primaryColor = primaryColor;
+websiteData.secondaryColor = secondaryColor;
+websiteData.mainTitle = mainTitle;
+websiteData.subtitle = subtitle;
+
+// Mettre à jour tous les éléments qui utilisent ces couleurs
+const previewEl = document.getElementById('websitePreview');
+if (previewEl) {
+// Mettre à jour les couleurs primaires dans le contenu
+const elementsWithPrimaryColor = previewEl.querySelectorAll('[style*="' + websiteData.primaryColor + '"]');
+elementsWithPrimaryColor.forEach(el => {
+const currentStyle = el.getAttribute('style') || '';
+const newStyle = currentStyle.replace(new RegExp(websiteData.primaryColor.replace('#', '\\#'), 'g'), primaryColor);
+el.setAttribute('style', newStyle);
+});
+
+// Mettre à jour les titres
+const titleElements = previewEl.querySelectorAll('h1, h2.editable-title');
+titleElements.forEach(el => {
+if (el.textContent.includes(websiteData.businessName)) {
+el.textContent = mainTitle;
+}
+});
+}
+
+// Regénérer la page actuelle avec les nouvelles données
+if (currentPage) {
+generatedPages[currentPage] = generatePageContent(currentPage);
+showPage(currentPage);
+}
+
+showNotification('✅ Aperçu mis à jour !');
+console.log('Prévisualisation mise à jour avec:', {primaryColor, secondaryColor, mainTitle, subtitle});
+} catch (error) {
+console.error('Erreur lors de la mise à jour:', error);
+showNotification('❌ Erreur lors de la mise à jour');
+}
+}
 modal.className = 'modal';
 modal.style.display = 'block';
 modal.innerHTML = `
