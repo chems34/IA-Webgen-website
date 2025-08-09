@@ -1955,6 +1955,8 @@ if (!editMode) return;
 event.preventDefault();
 event.stopPropagation();
 
+console.log('Élément cliqué:', event.target);
+
 // Supprimer les barres d'outils existantes
 const existingToolbars = document.querySelectorAll('.edit-toolbar');
 existingToolbars.forEach(toolbar => toolbar.remove());
@@ -1964,22 +1966,202 @@ showEditToolbar(element);
 }
 
 function showEditToolbar(element) {
+console.log('Affichage de la barre d\'outils pour:', element);
+
+// Assigner un ID unique si nécessaire
+if (!element.id) {
+element.id = 'editable-' + Date.now();
+}
+
+// Déterminer le type d'élément
+const editType = element.getAttribute('data-edit-type') || 'text';
+const isImage = editType === 'image' || element.tagName === 'IMG';
+const isButton = editType === 'button' || element.tagName === 'BUTTON';
+
+// Créer la barre d'outils
 const toolbar = document.createElement('div');
 toolbar.className = 'edit-toolbar';
-toolbar.innerHTML = `
-<button class="edit-btn" onclick="editText(this.parentElement.nextElementSibling)">
-<i class="fas fa-edit"></i> Texte
+toolbar.style.position = 'absolute';
+toolbar.style.top = '-45px';
+toolbar.style.left = '0';
+toolbar.style.background = '#1f2937';
+toolbar.style.borderRadius = '6px';
+toolbar.style.padding = '8px';
+toolbar.style.display = 'flex';
+toolbar.style.gap = '5px';
+toolbar.style.zIndex = '1001';
+toolbar.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
+toolbar.style.whiteSpace = 'nowrap';
+
+let toolbarHTML = '';
+
+if (isImage) {
+toolbarHTML = `
+<button class="edit-btn" onclick="replaceImage('${element.id}')" style="background: #10b981; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 12px;">
+<i class="fas fa-image"></i> Changer
 </button>
-<button class="edit-btn" onclick="editStyle(this.parentElement.nextElementSibling)">
+<button class="edit-btn" onclick="editImageStyle('${element.id}')" style="background: #3b82f6; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 12px;">
 <i class="fas fa-palette"></i> Style
 </button>
-<button class="edit-btn" onclick="deleteElement(this.parentElement.nextElementSibling)">
+<button class="edit-btn" onclick="deleteElement('${element.id}')" style="background: #ef4444; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 12px;">
 <i class="fas fa-trash"></i> Suppr
 </button>
 `;
+} else if (isButton) {
+toolbarHTML = `
+<button class="edit-btn" onclick="editText('${element.id}')" style="background: #3b82f6; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 12px;">
+<i class="fas fa-edit"></i> Texte
+</button>
+<button class="edit-btn" onclick="editButtonLink('${element.id}')" style="background: #8b5cf6; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 12px;">
+<i class="fas fa-link"></i> Lien
+</button>
+<button class="edit-btn" onclick="editStyle('${element.id}')" style="background: #f59e0b; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 12px;">
+<i class="fas fa-palette"></i> Style
+</button>
+<button class="edit-btn" onclick="deleteElement('${element.id}')" style="background: #ef4444; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 12px;">
+<i class="fas fa-trash"></i> Suppr
+</button>
+`;
+} else {
+toolbarHTML = `
+<button class="edit-btn" onclick="editText('${element.id}')" style="background: #3b82f6; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 12px;">
+<i class="fas fa-edit"></i> Texte
+</button>
+<button class="edit-btn" onclick="editStyle('${element.id}')" style="background: #f59e0b; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 12px;">
+<i class="fas fa-palette"></i> Style
+</button>
+<button class="edit-btn" onclick="deleteElement('${element.id}')" style="background: #ef4444; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 12px;">
+<i class="fas fa-trash"></i> Suppr
+</button>
+`;
+}
 
+toolbar.innerHTML = toolbarHTML;
+
+// Positionner l'élément en relatif pour la barre d'outils
 element.style.position = 'relative';
 element.appendChild(toolbar);
+
+console.log('Barre d\'outils ajoutée pour:', element.id);
+}
+
+function replaceImage(elementId) {
+const element = document.getElementById(elementId);
+if (!element) return;
+
+addChatMessage('Pour remplacer cette image, utilise la commande <b>/image [description]</b> dans le chat et sélectionne "Remplacer une image existante".', 'bot');
+
+// Ouvrir le ChatGPT s'il est fermé
+if (!chatGPTOpen) {
+toggleChatGPT();
+}
+
+// Mettre l'élément en surbrillance
+element.style.border = '3px solid #10b981';
+element.style.animation = 'pulse-green 2s infinite';
+
+setTimeout(() => {
+element.style.border = '';
+element.style.animation = '';
+}, 5000);
+}
+
+function editImageStyle(elementId) {
+const element = document.getElementById(elementId);
+if (!element) return;
+
+const modal = document.createElement('div');
+modal.className = 'modal';
+modal.style.display = 'block';
+modal.innerHTML = `
+<div class="modal-content max-w-md">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-2xl font-bold">Style de l'image</h2>
+<button onclick="this.closest('.modal').remove()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+</div>
+<div class="space-y-4">
+<div>
+<label class="block text-sm font-bold mb-2">Largeur maximale</label>
+<select id="imageWidth" class="w-full p-3 border rounded">
+<option value="200px">Petite (200px)</option>
+<option value="400px">Moyenne (400px)</option>
+<option value="600px">Grande (600px)</option>
+<option value="100%">Pleine largeur</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-bold mb-2">Bordure</label>
+<select id="imageBorder" class="w-full p-3 border rounded">
+<option value="none">Aucune</option>
+<option value="2px solid #e5e7eb">Fine grise</option>
+<option value="4px solid #3b82f6">Bleue</option>
+<option value="4px solid #10b981">Verte</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-bold mb-2">Arrondi des coins</label>
+<select id="imageBorderRadius" class="w-full p-3 border rounded">
+<option value="0">Carré</option>
+<option value="8px">Légèrement arrondi</option>
+<option value="12px">Arrondi</option>
+<option value="50%">Cercle</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-bold mb-2">Ombre</label>
+<select id="imageShadow" class="w-full p-3 border rounded">
+<option value="none">Aucune</option>
+<option value="0 2px 8px rgba(0,0,0,0.1)">Légère</option>
+<option value="0 4px 12px rgba(0,0,0,0.15)">Moyenne</option>
+<option value="0 8px 25px rgba(0,0,0,0.2)">Forte</option>
+</select>
+</div>
+<button onclick="applyImageStyle('${elementId}'); this.closest('.modal').remove();" 
+        class="w-full bg-blue-500 text-white py-3 rounded hover:bg-blue-600">
+<i class="fas fa-paint-brush mr-2"></i>Appliquer le style
+</button>
+</div>
+</div>
+`;
+document.body.appendChild(modal);
+}
+
+function applyImageStyle(elementId) {
+const element = document.getElementById(elementId);
+const width = document.getElementById('imageWidth')?.value;
+const border = document.getElementById('imageBorder')?.value;
+const borderRadius = document.getElementById('imageBorderRadius')?.value;
+const shadow = document.getElementById('imageShadow')?.value;
+
+if (element) {
+if (width) element.style.maxWidth = width;
+if (border && border !== 'none') element.style.border = border;
+if (borderRadius) element.style.borderRadius = borderRadius;
+if (shadow && shadow !== 'none') element.style.boxShadow = shadow;
+
+updateCurrentPageData();
+showNotification('✅ Style d\'image appliqué !');
+}
+}
+
+function editButtonLink(elementId) {
+const element = document.getElementById(elementId);
+if (!element) return;
+
+const currentHref = element.href || element.getAttribute('href') || '#';
+const newHref = prompt('Nouvelle URL du lien:', currentHref);
+
+if (newHref !== null) {
+if (element.tagName === 'A') {
+element.href = newHref;
+} else {
+element.setAttribute('href', newHref);
+element.style.cursor = 'pointer';
+element.onclick = () => window.open(newHref, '_blank');
+}
+updateCurrentPageData();
+showNotification('✅ Lien du bouton modifié !');
+}
 }
 
 function editText(element) {
