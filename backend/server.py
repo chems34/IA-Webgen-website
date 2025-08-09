@@ -353,7 +353,7 @@ def generate_html_content(data: Dict[str, Any]) -> str:
         <div class="footer-content">
             <div class="footer-section">
                 <h3>{data.get('businessName', 'Mon Entreprise')}</h3>
-                <p>{data.get('description', 'Description de l\'entreprise')}</p>
+                <p>{data.get('description', 'Description de l' + chr(39) + 'entreprise')}</p>
             </div>
             {generate_footer_contact(data)}
         </div>
