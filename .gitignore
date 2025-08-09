@@ -1,50 +1,21 @@
-# Logs
+# IA WebGen Pro - Fichiers à ignorer
 *.log
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Dependency directories
 node_modules/
 __pycache__/
 *.py[cod]
-*$py.class
-
-# Environment variables
-.env
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# IDE
 .vscode/
 .idea/
-*.swp
-*.swo
-
-# OS
 .DS_Store
 Thumbs.db
-
-# Backend
-backend/__pycache__/
-backend/*.pyc
-backend/.pytest_cache/
-
-# Temporary files
-*.tmp
-*.temp
-*~
-
-# Build outputs
 build/
 dist/
-
-# Database
 *.db
-*.sqlite3
-
-# Backups
 *_backup.*
-index_backup.html
+*.tmp
+*.png
+*.jpg
+screenshots/
+.pytest_cache/
+yarn-error.log
