@@ -205,6 +205,48 @@
 </div>
 </div>
 
+<!-- Mini ChatGPT Toggle Button -->
+<div id="chatgptToggle" class="chatgpt-toggle" onclick="toggleChatGPT()">
+<i class="fas fa-robot"></i>
+</div>
+
+<!-- Mini ChatGPT Widget -->
+<div id="miniChatGPT" class="mini-chatgpt">
+<div class="chatgpt-header" onclick="toggleChatGPTSize()">
+<div>
+<h3 style="margin: 0; font-size: 16px;"><i class="fas fa-robot mr-2"></i>Assistant IA</h3>
+<p style="margin: 0; font-size: 12px; opacity: 0.8;">Recherche web & assistance</p>
+</div>
+<div>
+<button onclick="toggleChatGPTSize()" style="background: none; border: none; color: white; font-size: 16px;">
+<i id="chatgptSizeIcon" class="fas fa-minus"></i>
+</button>
+<button onclick="closeChatGPT()" style="background: none; border: none; color: white; font-size: 16px; margin-left: 10px;">
+<i class="fas fa-times"></i>
+</button>
+</div>
+</div>
+<div class="chatgpt-body">
+<div id="chatgptMessages" class="chatgpt-messages">
+<div class="message bot">
+<strong>🤖 Assistant IA</strong><br>
+Salut ! Je peux t'aider à :<br>
+• Modifier le site après prévisualisation<br>
+• Chercher des images : tapez "/image [description]"<br>
+• Répondre à tes questions<br>
+• Suggérer des améliorations<br><br>
+Comment puis-je t'aider ?
+</div>
+</div>
+<div class="chatgpt-input-area">
+<textarea id="chatgptInput" class="chatgpt-input" placeholder="Tapez votre message... (Ex: /image restaurant moderne)" rows="3"></textarea>
+<button onclick="sendChatGPTMessage()" style="margin-top: 10px; width: 100%; background: #3b82f6; color: white; border: none; padding: 10px; border-radius: 6px; cursor: pointer;">
+<i class="fas fa-paper-plane mr-2"></i>Envoyer
+</button>
+</div>
+</div>
+</div>
+
 <!-- Header -->
 <div class="gradient-bg text-white py-4 fade-in">
 <div class="container mx-auto px-4">
