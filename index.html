@@ -1882,16 +1882,60 @@ function makeElementsEditable() {
 const previewEl = document.getElementById('websitePreview');
 if (!previewEl) return;
 
-// Sélectionner tous les éléments éditables
-const editableSelectors = 'h1, h2, h3, h4, h5, h6, p, span, a, button, div[style*="text-align"], div[style*="color"]';
+console.log('Activation des éléments éditables');
+
+// Supprimer les anciens event listeners pour éviter les doublons
+removeEditableElements();
+
+// Sélectionner tous les éléments éditables avec des sélecteurs plus précis
+const editableSelectors = [
+'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+'p', 'span', 'div[data-editable="text"]',
+'a:not(nav a)', 'button',
+'img', '[data-editable="image"]',
+'[data-editable="button"]'
+].join(', ');
+
 const elements = previewEl.querySelectorAll(editableSelectors);
+let editableCount = 0;
 
 elements.forEach(element => {
-if (element.textContent.trim() && !element.querySelector('img') && !element.classList.contains('edit-toolbar')) {
+// Vérifier si l'élément a du contenu ou est une image
+const hasTextContent = element.textContent && element.textContent.trim().length > 0;
+const isImage = element.tagName === 'IMG' || element.hasAttribute('data-editable');
+const isButton = element.tagName === 'BUTTON' || element.hasAttribute('data-editable');
+
+if (hasTextContent || isImage || isButton) {
+// Éviter les éléments imbriqués (prendre le parent le plus proche)
+let isNested = false;
+let parent = element.parentElement;
+while (parent && parent !== previewEl) {
+if (parent.classList.contains('editable')) {
+isNested = true;
+break;
+}
+parent = parent.parentElement;
+}
+
+if (!isNested && !element.classList.contains('edit-toolbar')) {
 element.classList.add('editable');
-element.addEventListener('click', handleElementClick);
+element.addEventListener('click', handleElementClick, true);
+editableCount++;
+
+// Ajouter un attribut pour identifier le type
+if (element.tagName === 'IMG') {
+element.setAttribute('data-edit-type', 'image');
+} else if (element.tagName === 'BUTTON' || element.getAttribute('data-editable') === 'button') {
+element.setAttribute('data-edit-type', 'button');
+} else {
+element.setAttribute('data-edit-type', 'text');
+}
+}
 }
 });
+
+console.log(`${editableCount} éléments rendus éditables`);
+showNotification(`✅ ${editableCount} éléments éditables activés`);
 }
 
 function removeEditableElements() {
