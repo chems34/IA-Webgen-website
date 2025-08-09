@@ -2193,55 +2193,189 @@ showNotification('🗑️ Élément supprimé !');
 }
 
 function addNewSection() {
-const sectionType = prompt('Type de section à ajouter:\n1. Texte\n2. Image\n3. Bouton\n4. Titre\n\nEntrez le numéro (1-4):');
-const previewEl = document.getElementById('websitePreview');
+console.log('Ajout d\'une nouvelle section');
 
-let newElement;
-switch(sectionType) {
-case '1':
-const textContent = prompt('Contenu du texte:') || 'Nouveau texte';
-newElement = document.createElement('p');
-newElement.textContent = textContent;
-newElement.style.padding = '20px';
-break;
-case '2':
-newElement = document.createElement('div');
-newElement.innerHTML = `<img src="https://via.placeholder.com/300x200?text=Nouvelle+Image" alt="Nouvelle image" style="width: 100%; max-width: 300px; border-radius: 8px;">`;
-newElement.style.textAlign = 'center';
-newElement.style.padding = '20px';
-break;
-case '3':
-const buttonText = prompt('Texte du bouton:') || 'Nouveau bouton';
-newElement = document.createElement('div');
-newElement.innerHTML = `<button style="background: ${websiteData.primaryColor}; color: white; padding: 15px 30px; border: none; border-radius: 5px; font-size: 1.1rem; font-weight: bold; cursor: pointer;">${buttonText}</button>`;
-newElement.style.textAlign = 'center';
-newElement.style.padding = '20px';
-break;
-case '4':
-const titleText = prompt('Texte du titre:') || 'Nouveau titre';
-newElement = document.createElement('h2');
-newElement.textContent = titleText;
-newElement.style.fontSize = '2rem';
-newElement.style.fontWeight = 'bold';
-newElement.style.textAlign = 'center';
-newElement.style.padding = '20px';
-newElement.style.color = websiteData.primaryColor;
-break;
-default:
-showNotification('❌ Type de section non valide');
-return;
+const modal = document.createElement('div');
+modal.className = 'modal';
+modal.style.display = 'block';
+modal.innerHTML = `
+<div class="modal-content max-w-lg">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-2xl font-bold">Ajouter une nouvelle section</h2>
+<button onclick="this.closest('.modal').remove()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+</div>
+<div class="space-y-4">
+<div class="grid grid-cols-2 gap-4">
+<button onclick="createNewSection('text'); this.closest('.modal').remove();" 
+        class="bg-blue-500 text-white p-4 rounded hover:bg-blue-600 text-center">
+<i class="fas fa-font text-2xl mb-2"></i><br>
+<strong>Texte</strong><br>
+<small>Paragraphe ou contenu</small>
+</button>
+<button onclick="createNewSection('title'); this.closest('.modal').remove();" 
+        class="bg-green-500 text-white p-4 rounded hover:bg-green-600 text-center">
+<i class="fas fa-heading text-2xl mb-2"></i><br>
+<strong>Titre</strong><br>
+<small>En-tête ou sous-titre</small>
+</button>
+<button onclick="createNewSection('image'); this.closest('.modal').remove();" 
+        class="bg-purple-500 text-white p-4 rounded hover:bg-purple-600 text-center">
+<i class="fas fa-image text-2xl mb-2"></i><br>
+<strong>Image</strong><br>
+<small>Photo ou illustration</small>
+</button>
+<button onclick="createNewSection('button'); this.closest('.modal').remove();" 
+        class="bg-orange-500 text-white p-4 rounded hover:bg-orange-600 text-center">
+<i class="fas fa-mouse-pointer text-2xl mb-2"></i><br>
+<strong>Bouton</strong><br>
+<small>Lien ou action</small>
+</button>
+<button onclick="createNewSection('cards'); this.closest('.modal').remove();" 
+        class="bg-teal-500 text-white p-4 rounded hover:bg-teal-600 text-center">
+<i class="fas fa-th-large text-2xl mb-2"></i><br>
+<strong>Cartes</strong><br>
+<small>Services ou produits</small>
+</button>
+<button onclick="createNewSection('contact'); this.closest('.modal').remove();" 
+        class="bg-red-500 text-white p-4 rounded hover:bg-red-600 text-center">
+<i class="fas fa-envelope text-2xl mb-2"></i><br>
+<strong>Contact</strong><br>
+<small>Formulaire ou infos</small>
+</button>
+</div>
+</div>
+</div>
+`;
+document.body.appendChild(modal);
 }
 
-if (newElement) {
-// Ajouter à la fin du contenu de la page
+function createNewSection(type) {
+console.log('Création d\'une section:', type);
+const previewEl = document.getElementById('websitePreview');
 const mainContent = previewEl.querySelector('main') || previewEl;
+const sectionId = 'section-' + Date.now();
+
+let newElement = document.createElement('div');
+newElement.className = 'editable new-section';
+newElement.id = sectionId;
+newElement.style.padding = '40px 20px';
+newElement.style.margin = '20px 0';
+
+switch(type) {
+case 'text':
+const textContent = prompt('Contenu du texte:') || 'Nouveau paragraphe de contenu. Vous pouvez modifier ce texte en cliquant dessus en mode édition.';
+newElement.innerHTML = `
+<div style="max-width: 800px; margin: 0 auto;">
+<p style="font-size: 1.1rem; line-height: 1.8; color: #4b5563;" data-editable="text">${textContent}</p>
+</div>
+`;
+break;
+
+case 'title':
+const titleText = prompt('Texte du titre:') || 'Nouveau Titre';
+newElement.innerHTML = `
+<div style="text-align: center; margin-bottom: 30px;">
+<h2 style="font-size: 2.5rem; font-weight: bold; color: ${websiteData.primaryColor}; margin-bottom: 15px;" data-editable="text">${titleText}</h2>
+<div style="width: 80px; height: 4px; background: ${websiteData.primaryColor}; margin: 0 auto; border-radius: 2px;"></div>
+</div>
+`;
+break;
+
+case 'image':
+newElement.innerHTML = `
+<div style="text-align: center;">
+<img src="https://via.placeholder.com/600x400/e5e7eb/6b7280?text=Nouvelle+Image" 
+     alt="Nouvelle image" 
+     style="width: 100%; max-width: 600px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.1);"
+     data-editable="image">
+<p style="margin-top: 15px; color: #6b7280; font-style: italic;" data-editable="text">Description de l'image</p>
+</div>
+`;
+break;
+
+case 'button':
+const buttonText = prompt('Texte du bouton:') || 'Nouveau Bouton';
+const buttonUrl = prompt('URL du lien (optionnel):') || '#';
+newElement.innerHTML = `
+<div style="text-align: center;">
+<a href="${buttonUrl}" 
+   style="display: inline-block; background: ${websiteData.primaryColor}; color: white; padding: 15px 40px; 
+          border-radius: 8px; text-decoration: none; font-size: 1.1rem; font-weight: bold; 
+          box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: all 0.3s ease;"
+   data-editable="button">${buttonText}</a>
+</div>
+`;
+break;
+
+case 'cards':
+newElement.innerHTML = `
+<div style="max-width: 1200px; margin: 0 auto;">
+<h3 style="text-align: center; font-size: 2rem; font-weight: bold; margin-bottom: 40px; color: #1f2937;" data-editable="text">Nos Services</h3>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+${[1,2,3].map(i => `
+<div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center;">
+<div style="font-size: 3rem; margin-bottom: 20px;">⭐</div>
+<h4 style="font-size: 1.3rem; font-weight: bold; margin-bottom: 15px; color: #1f2937;" data-editable="text">Service ${i}</h4>
+<p style="color: #6b7280; line-height: 1.6;" data-editable="text">Description du service ${i}. Cliquez pour modifier ce texte.</p>
+</div>
+`).join('')}
+</div>
+</div>
+`;
+break;
+
+case 'contact':
+newElement.innerHTML = `
+<div style="max-width: 800px; margin: 0 auto; background: #f8fafc; padding: 40px; border-radius: 12px;">
+<h3 style="text-align: center; font-size: 2rem; font-weight: bold; margin-bottom: 30px; color: #1f2937;" data-editable="text">Contactez-nous</h3>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+<div>
+<div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+<div style="width: 50px; height: 50px; background: ${websiteData.primaryColor}; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">📞</div>
+<div>
+<h4 style="font-weight: bold; color: #1f2937;">Téléphone</h4>
+<p style="color: #6b7280;" data-editable="text">+33 1 23 45 67 89</p>
+</div>
+</div>
+<div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+<div style="width: 50px; height: 50px; background: ${websiteData.primaryColor}; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">✉️</div>
+<div>
+<h4 style="font-weight: bold; color: #1f2937;">Email</h4>
+<p style="color: #6b7280;" data-editable="text">contact@exemple.fr</p>
+</div>
+</div>
+</div>
+<div>
+<div style="background: white; padding: 20px; border-radius: 8px;">
+<h5 style="margin-bottom: 15px; font-weight: bold;">Formulaire de contact</h5>
+<form style="display: flex; flex-direction: column; gap: 15px;">
+<input type="text" placeholder="Votre nom" style="padding: 12px; border: 1px solid #d1d5db; border-radius: 6px;">
+<input type="email" placeholder="Votre email" style="padding: 12px; border: 1px solid #d1d5db; border-radius: 6px;">
+<textarea placeholder="Votre message" rows="4" style="padding: 12px; border: 1px solid #d1d5db; border-radius: 6px; resize: vertical;"></textarea>
+<button type="submit" style="background: ${websiteData.primaryColor}; color: white; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">Envoyer</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+`;
+break;
+}
+
+// Ajouter la nouvelle section
 mainContent.appendChild(newElement);
+
+// Actualiser les données et l'éditabilité
 updateCurrentPageData();
 if (editMode) {
 makeElementsEditable();
 }
-showNotification('✅ Nouvelle section ajoutée !');
-}
+
+showNotification(`✅ Section "${type}" ajoutée !`);
+console.log('Section créée:', type, sectionId);
+
+// Scroller vers la nouvelle section
+newElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 function updateCurrentPageData() {
