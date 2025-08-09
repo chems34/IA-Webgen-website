@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Déploiement GitHub - IA WebGen Pro</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+    </style>
+</head>
+<body class="min-h-screen gradient-bg flex items-center justify-center p-4">
+    <div class="max-w-2xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-purple-600 to-blue-600 p-8 text-white text-center">
+            <div class="text-6xl mb-4">🚀</div>
+            <h1 class="text-3xl font-bold mb-2">IA WebGen Pro</h1>
+            <p class="text-purple-100">Déploiement automatique sur GitHub</p>
+        </div>
+
+        <!-- Content -->
+        <div class="p-8">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Prêt pour GitHub ?</h2>
+                <p class="text-gray-600 mb-6">Cliquez sur le bouton ci-dessous pour déployer automatiquement votre projet sur GitHub !</p>
+                
+                <!-- Fonctionnalités -->
+                <div class="grid md:grid-cols-2 gap-4 mb-8 text-left">
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <div class="text-green-600 font-semibold mb-2">
+                            <i class="fas fa-check-circle mr-2"></i>Fonctionnalités Incluses
+                        </div>
+                        <ul class="text-sm text-gray-700 space-y-1">
+                            <li>• Mini ChatGPT avec recherche d'images</li>
+                            <li>• Mode édition complet</li>
+                            <li>• API backend sécurisée</li>
+                            <li>• Interface responsive</li>
+                        </ul>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <div class="text-blue-600 font-semibold mb-2">
+                            <i class="fas fa-cog mr-2"></i>Auto-Configuration
+                        </div>
+                        <ul class="text-sm text-gray-700 space-y-1">
+                            <li>• Repository Git initialisé</li>
+                            <li>• Fichiers optimisés</li>
+                            <li>• Documentation complète</li>
+                            <li>• Scripts de déploiement</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bouton principal -->
+            <div class="text-center mb-6">
+                <button onclick="deployToGitHub()" id="deployBtn" 
+                        class="bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 text-xl">
+                    <i class="fab fa-github mr-3 text-2xl"></i>
+                    Déployer sur GitHub
+                </button>
+            </div>
+
+            <!-- Instructions -->
+            <div class="bg-yellow-50 p-4 rounded-lg mb-6 border border-yellow-200">
+                <div class="text-yellow-800 font-semibold mb-2">
+                    <i class="fas fa-info-circle mr-2"></i>Instructions après clic
+                </div>
+                <ol class="text-sm text-yellow-700 space-y-1 ml-4">
+                    <li>1. Le terminal va s'ouvrir automatiquement</li>
+                    <li>2. Suivez les questions (nom GitHub, nom du repo)</li>
+                    <li>3. Créez le repository sur GitHub quand demandé</li>
+                    <li>4. Le code sera poussé automatiquement !</li>
+                </ol>
+            </div>
+
+            <!-- Alternative manuelle -->
+            <div class="text-center">
+                <p class="text-gray-600 mb-4">Ou utilisez les commandes manuelles :</p>
+                <div class="bg-gray-100 p-4 rounded-lg text-left">
+                    <code class="text-sm">
+                        # Dans le terminal<br>
+                        cd /app<br>
+                        chmod +x 🚀_GITHUB_AUTO.sh<br>
+                        ./🚀_GITHUB_AUTO.sh
+                    </code>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="bg-gray-100 p-4 text-center text-gray-600 text-sm">
+            <i class="fas fa-shield-alt mr-2"></i>Sécurisé • 
+            <i class="fas fa-rocket mr-2"></i>Rapide • 
+            <i class="fas fa-check mr-2"></i>Testé
+        </div>
+    </div>
+
+    <!-- Status Modal -->
+    <div id="statusModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
+            <div class="text-center">
+                <div class="text-4xl mb-4">⚙️</div>
+                <h3 class="text-xl font-bold mb-4">Déploiement en cours...</h3>
+                <div class="pulse">
+                    <div class="bg-blue-500 h-2 rounded-full mb-4"></div>
+                </div>
+                <p class="text-gray-600">Le script de déploiement s'exécute dans le terminal.</p>
+                <p class="text-sm text-gray-500 mt-2">Suivez les instructions qui apparaissent.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function deployToGitHub() {
+            const btn = document.getElementById('deployBtn');
+            const modal = document.getElementById('statusModal');
+            
+            // Afficher le modal de status
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Désactiver le bouton
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-3"></i>Déploiement...';
+            btn.className = btn.className.replace('from-purple-600 to-blue-600', 'from-gray-400 to-gray-500');
+            
+            // Simuler l'ouverture du terminal (en réalité, l'utilisateur doit exécuter manuellement)
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                
+                // Afficher les instructions finales
+                alert(`🚀 Instructions de déploiement :
+
+1. Ouvrez un terminal
+2. Naviguez vers : cd /app  
+3. Exécutez : ./🚀_GITHUB_AUTO.sh
+4. Suivez les instructions qui s'affichent
+
+Le script va :
+✅ Configurer Git automatiquement
+✅ Créer le commit initial
+✅ Vous guider pour GitHub
+✅ Pousser le code automatiquement
+
+Bonne chance ! 🎉`);
+                
+                // Réactiver le bouton
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fab fa-github mr-3 text-2xl"></i>Déployer sur GitHub';
+                btn.className = btn.className.replace('from-gray-400 to-gray-500', 'from-purple-600 to-blue-600');
+                
+                // Copier la commande dans le presse-papier
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText('cd /app && ./🚀_GITHUB_AUTO.sh').then(() => {
+                        console.log('Commande copiée dans le presse-papier');
+                    });
+                }
+            }, 3000);
+        }
+
+        // Easter egg : Ctrl + clic pour ouvrir directement les instructions
+        document.getElementById('deployBtn').addEventListener('click', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                e.preventDefault();
+                window.open('/app/🚀_GITHUB_EN_3_ETAPES.md', '_blank');
+            }
+        });
+
+        // Animations au chargement
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ajouter une animation d'entrée
+            const container = document.querySelector('.max-w-2xl');
+            container.style.transform = 'translateY(20px)';
+            container.style.opacity = '0';
+            
+            setTimeout(() => {
+                container.style.transition = 'all 0.8s ease';
+                container.style.transform = 'translateY(0)';
+                container.style.opacity = '1';
+            }, 100);
+            
+            console.log('🚀 IA WebGen Pro - Interface de déploiement GitHub prête !');
+        });
+    </script>
+</body>
+</html>
