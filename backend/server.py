@@ -852,6 +852,140 @@ window.iaWebgenUtils = {
 };
 """
 
+def generate_page_content(page: str, data: Dict[str, Any]) -> str:
+    """Génère le contenu HTML pour une page spécifique"""
+    base_template = f"""<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{page.title()} - {data.get('businessName', 'Mon Site Web')}</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="nav-logo">{data.get('businessName', 'Mon Site Web')}</h1>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Accueil</a>
+                </li>
+                {' '.join([f'<li class="nav-item"><a href="{p}.html" class="nav-link">{p.title()}</a></li>' for p in data.get('selectedPages', []) if p != 'accueil' and p != page])}
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Contenu principal -->
+    <main>
+        {generate_page_specific_content(page, data)}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>{data.get('businessName', 'Mon Entreprise')}</h3>
+                <p>{data.get('description', 'Description de l' + chr(39) + 'entreprise')}</p>
+            </div>
+            {generate_footer_contact(data)}
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 {data.get('businessName', 'Mon Entreprise')}. Tous droits réservés. Site créé par IA WebGen.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>"""
+    return base_template
+
+def generate_page_specific_content(page: str, data: Dict[str, Any]) -> str:
+    """Génère le contenu spécifique à chaque page"""
+    if page == 'apropos':
+        return f"""
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">À propos de {data.get('businessName', 'nous')}</h1>
+                <p class="hero-subtitle">Découvrez notre histoire et nos valeurs</p>
+            </div>
+        </section>
+        
+        <section class="section">
+            <div class="container">
+                <h2>Notre Histoire</h2>
+                <p>{data.get('description', 'Notre histoire et nos valeurs.')}</p>
+                {f'<div class="team-info"><h3>Notre Équipe</h3><p>{data.get("teamInfo", "")}</p></div>' if data.get('teamInfo') else ''}
+            </div>
+        </section>"""
+    
+    elif page == 'services':
+        return f"""
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Nos Services</h1>
+                <p class="hero-subtitle">Découvrez l'ensemble de nos prestations professionnelles</p>
+            </div>
+        </section>
+        
+        <section class="section">
+            <div class="container">
+                <h2>Ce que nous proposons</h2>
+                {f'<div class="services-detail"><p>{data.get("servicesDetail", "")}</p></div>' if data.get('servicesDetail') else ''}
+                <div class="services-grid">
+                    {generate_services_grid(data.get('siteType', 'default'))}
+                </div>
+            </div>
+        </section>"""
+    
+    elif page == 'contact':
+        return f"""
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Contactez-nous</h1>
+                <p class="hero-subtitle">Nous sommes là pour répondre à vos questions</p>
+            </div>
+        </section>
+        
+        <section class="section">
+            <div class="container">
+                <h2>Prenez contact</h2>
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <h3>Nos coordonnées</h3>
+                        {f'<p><i class="fas fa-phone"></i> {data.get("phone")}</p>' if data.get('phone') else ''}
+                        {f'<p><i class="fas fa-envelope"></i> {data.get("userEmail")}</p>' if data.get('userEmail') else ''}
+                        {f'<p><i class="fas fa-map-marker-alt"></i> {data.get("address")}</p>' if data.get('address') else ''}
+                    </div>
+                    <form class="contact-form">
+                        <h3>Envoyez-nous un message</h3>
+                        <input type="text" placeholder="Votre nom" required>
+                        <input type="email" placeholder="Votre email" required>
+                        <textarea placeholder="Votre message" required></textarea>
+                        <button type="submit" class="btn btn-primary">Envoyer</button>
+                    </form>
+                </div>
+            </div>
+        </section>"""
+    
+    else:
+        # Page générique
+        return f"""
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">{page.title()}</h1>
+                <p class="hero-subtitle">Page {page} de {data.get('businessName', 'notre site')}</p>
+            </div>
+        </section>
+        
+        <section class="section">
+            <div class="container">
+                <h2>Contenu de la page {page.title()}</h2>
+                <p>Cette page est en cours de développement. Revenez bientôt pour plus d'informations.</p>
+            </div>
+        </section>"""
+
 def generate_readme_content(data: Dict[str, Any]) -> str:
     """Génère le fichier README"""
     return f"""# {data.get('businessName', 'Mon Site Web')} - Site Web Professionnel
