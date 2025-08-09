@@ -2209,27 +2209,50 @@ response = responses[Math.floor(Math.random() * responses.length)];
 addChatMessage(response, 'bot');
 }
 
-// Recherche d'images avec Unsplash API (version de démo)
-function searchImages(query) {
+// Recherche d'images via API backend
+async function searchImages(query) {
 addChatMessage(`🔍 Recherche d'images pour: "${query}"...`, 'bot');
 
-// Simulation d'API - dans un vrai projet, utiliser l'API Unsplash
-setTimeout(() => {
-const demoImages = [
-`https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=300&h=200&fit=crop&q=80`,
-`https://images.unsplash.com/photo-1571197857330-8894d3da2c3b?w=300&h=200&fit=crop&q=80`,
-`https://images.unsplash.com/photo-1559329007-40df8d946775?w=300&h=200&fit=crop&q=80`,
-`https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=300&h=200&fit=crop&q=80`
-];
+try {
+const response = await fetch('http://localhost:8001/api/images/search', {
+method: 'POST',
+headers: {
+'Content-Type': 'application/json',
+},
+body: JSON.stringify({ query: query })
+});
 
+if (!response.ok) {
+throw new Error(`HTTP error! status: ${response.status}`);
+}
+
+const data = await response.json();
+console.log('Images reçues:', data);
+
+if (data.success && data.images && data.images.length > 0) {
 let imageResults = '<div class="image-search-result">';
-demoImages.forEach((url, index) => {
-imageResults += `<img src="${url}" alt="${query} ${index + 1}" onclick="selectSearchedImage('${url}', '${query}')">`;
+data.images.forEach((image, index) => {
+imageResults += `
+<div class="image-item" style="position: relative; border-radius: 8px; overflow: hidden;">
+<img src="${image.small_url}" alt="${image.alt_description}" 
+     style="width: 100%; height: 120px; object-fit: cover; cursor: pointer;"
+     onclick="selectSearchedImage('${image.url}', '${image.description}', '${image.id}')">
+<div class="image-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.7)); color: white; padding: 8px; font-size: 12px;">
+${image.description}
+</div>
+</div>
+`;
 });
 imageResults += '</div>';
 
-addChatMessage(`📸 Voic des images pour "${query}":<br>Clique sur une image pour l'utiliser dans ton site !<br><br>${imageResults}`, 'bot');
-}, 1500);
+addChatMessage(`📸 Images pour "${query}" :<br>Clique sur une image pour l'utiliser !<br><br>${imageResults}`, 'bot');
+} else {
+addChatMessage(`❌ Aucune image trouvée pour "${query}". Essayez un autre terme.`, 'bot');
+}
+} catch (error) {
+console.error('Erreur recherche d\'images:', error);
+addChatMessage(`❌ Erreur lors de la recherche d'images. Vérifiez que le serveur backend fonctionne.`, 'bot');
+}
 }
 
 function selectSearchedImage(imageUrl, description) {
