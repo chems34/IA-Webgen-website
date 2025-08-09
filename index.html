@@ -3084,6 +3084,37 @@ addChatMessage(`✅ Image remplacée avec succès !`, 'bot');
 showNotification('✅ Image remplacée !');
 }
 }
+
+// ========== FONCTIONS FINALES ==========
+function copyLink() {
+navigator.clipboard.writeText(window.location.href).then(() => {
+showNotification('✅ Lien copié dans le presse-papier !');
+});
+}
+
+// ========== FERMETURE MODALES ==========
+window.onclick = function(event) {
+const authModal = document.getElementById('authModal');
+if (event.target === authModal) {
+closeAuthModal();
+}
+
+// Fermer aussi les modals personnalisés
+if (event.target.classList.contains('modal')) {
+event.target.remove();
+}
+}
+
+// ========== GESTION DES ERREURS ==========
+window.addEventListener('error', function(e) {
+console.error('Erreur JavaScript:', e.error);
+});
+
+window.addEventListener('unhandledrejection', function(e) {
+console.error('Promise rejetée:', e.reason);
+});
+
+console.log('🎉 IA WebGen Pro - Toutes les fonctions chargées');
 </script>
 </body>
 </html>
