@@ -1,0 +1,33 @@
+{
+  "name": "ia-webgen-pro",
+  "version": "2.0.0",
+  "description": "Générateur de sites web automatisé avec IA, ChatGPT intégré et mode édition complet",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 3000",
+    "backend": "cd backend && python -m uvicorn server:app --host 0.0.0.0 --port 8001 --reload",
+    "dev": "concurrently \"npm run backend\" \"npm run start\"",
+    "test": "echo \"Tests intégrés - Voir README.md\" && exit 0"
+  },
+  "keywords": [
+    "ai",
+    "website-generator",
+    "chatgpt",
+    "image-search",
+    "web-editor",
+    "fastapi",
+    "tailwindcss"
+  ],
+  "author": "Votre Nom",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/votre-username/ia-webgen-pro.git"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  },
+  "engines": {
+    "python": ">=3.8"
+  }
+}
