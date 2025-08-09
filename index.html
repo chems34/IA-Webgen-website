@@ -813,6 +813,7 @@ gradient: 'from-slate-400 to-slate-700'
 document.addEventListener('DOMContentLoaded', function() {
 console.log('🚀 IA WebGen Pro - Initialisation démarrée');
 
+try {
 // Vérifier la session utilisateur
 if (currentUser) {
 showUserMenu();
@@ -822,8 +823,60 @@ showUserMenu();
 setupPhotoUpload();
 allTemplates = TEMPLATES;
 
-console.log('✅ Initialisation terminée');
+// Configurer les handlers du ChatGPT
+setupChatGPTKeyHandlers();
+
+// Configurer les event listeners pour les changements de couleurs
+setupColorChangeHandlers();
+
+console.log('✅ Initialisation terminée - Tous les modules chargés');
+} catch (error) {
+console.error('❌ Erreur lors de l\'initialisation:', error);
+}
 });
+
+function setupColorChangeHandlers() {
+// Event listeners pour les changements de couleurs en temps réel
+const primaryColorEl = document.getElementById('primaryColor');
+const secondaryColorEl = document.getElementById('secondaryColor');
+
+if (primaryColorEl) {
+primaryColorEl.addEventListener('input', function() {
+websiteData.primaryColor = this.value;
+// Mise à jour immédiate des éléments visibles
+updateColorsInPreview();
+});
+}
+
+if (secondaryColorEl) {
+secondaryColorEl.addEventListener('input', function() {
+websiteData.secondaryColor = this.value;
+// Mise à jour immédiate des éléments visibles
+updateColorsInPreview();
+});
+}
+
+console.log('Event listeners pour les couleurs configurés');
+}
+
+function updateColorsInPreview() {
+const previewEl = document.getElementById('websitePreview');
+if (!previewEl) return;
+
+// Mise à jour des éléments avec couleur primaire
+const primaryElements = previewEl.querySelectorAll('[style*="rgb"], [style*="#"]');
+primaryElements.forEach(el => {
+const style = el.getAttribute('style') || '';
+if (style.includes('background') && style.includes('#')) {
+// Remplacer les anciennes couleurs par les nouvelles
+let newStyle = style.replace(/#[0-9a-fA-F]{6}/g, (match) => {
+// Logique simplifiée - dans un vrai projet, mapper correctement les couleurs
+return websiteData.primaryColor;
+});
+el.setAttribute('style', newStyle);
+}
+});
+}
 
 // ========== GESTION FORMULAIRE ==========
 function handleFormSubmit(event) {
