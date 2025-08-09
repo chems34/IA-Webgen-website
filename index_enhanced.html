@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IA WebGen Pro - Créateur de Sites Web Automatisé avec Édition Avancée</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<style>
+.gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+.card-hover:hover { transform: translateY(-5px); transition: transform 0.3s ease; }
+.fade-in { animation: fadeIn 0.8s ease-in; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.preview-section { display: none; }
+.auth-section { display: none; }
+.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); }
+.modal-content { background-color: white; margin: 2% auto; padding: 20px; border-radius: 10px; width: 95%; max-width: 1200px; max-height: 95vh; overflow-y: auto; }
+.notification { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1001; display: none; }
+.share-widget { position: fixed; bottom: 20px; right: 20px; z-index: 100; }
+.quality-templates { display: none; }
+.photo-upload-area { border: 2px dashed #cbd5e0; border-radius: 8px; padding: 20px; text-align: center; transition: all 0.3s; }
+.photo-upload-area:hover { border-color: #3b82f6; background-color: #f0f9ff; }
+.photo-upload-area.drag-over { border-color: #10b981; background-color: #f0fdf4; }
+.template-card { cursor: pointer; transition: all 0.3s; border: 3px solid transparent; }
+.template-card:hover { transform: scale(1.02); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+.template-card.selected { border: 3px solid #10b981; background: #f0fdf4; }
+.premium-badge { position: absolute; top: -8px; right: -8px; background: linear-gradient(45deg, #ffd700, #ffed4e); color: #1f2937; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: bold; }
+.preview-frame { border: 2px solid #e5e7eb; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+.page-tab { padding: 8px 16px; margin: 2px; border-radius: 6px; cursor: pointer; transition: all 0.3s; background: #f3f4f6; }
+.page-tab.active { background: #3b82f6; color: white; }
+.page-tab:hover { background: #e5e7eb; }
+.page-tab.active:hover { background: #2563eb; }
+.checkbox-group { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+.checkbox-item { display: flex; align-items: center; padding: 8px; border: 1px solid #d1d5db; border-radius: 6px; cursor: pointer; transition: all 0.3s; }
+.checkbox-item:hover { background: #f9fafb; border-color: #3b82f6; }
+.checkbox-item input:checked + .checkbox-item { background: #eff6ff; border-color: #3b82f6; }
+
+/* ==== NOUVELLES STYLES POUR L'ÉDITION AVANCÉE ==== */
+.editor-panel { position: fixed; top: 0; right: -400px; width: 380px; height: 100vh; background: white; box-shadow: -4px 0 15px rgba(0,0,0,0.15); z-index: 2000; transition: right 0.3s ease; overflow-y: auto; }
+.editor-panel.open { right: 0; }
+.editor-toggle { position: fixed; top: 50%; right: 10px; transform: translateY(-50%); background: #3b82f6; color: white; border: none; padding: 12px; border-radius: 50%; cursor: pointer; z-index: 1999; font-size: 1.2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.editor-toggle.active { background: #10b981; right: 390px; }
+
+.editable-element { position: relative; transition: all 0.2s; }
+.editable-element:hover { outline: 2px dashed #3b82f6; outline-offset: 2px; }
+.edit-overlay { position: absolute; top: -35px; right: -2px; background: #3b82f6; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; opacity: 0; transition: opacity 0.2s; }
+.editable-element:hover .edit-overlay { opacity: 1; }
+
+.section-builder { border: 2px dashed #cbd5e0; border-radius: 12px; padding: 40px; text-align: center; margin: 20px 0; transition: all 0.3s; }
+.section-builder:hover { border-color: #3b82f6; background: #f0f9ff; }
+.section-builder.active { border-color: #10b981; background: #f0fdf4; }
+
+.image-selector { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 15px 0; }
+.image-option { border: 2px solid transparent; border-radius: 8px; overflow: hidden; cursor: pointer; transition: all 0.3s; }
+.image-option:hover { border-color: #3b82f6; transform: scale(1.02); }
+.image-option.selected { border-color: #10b981; }
+.image-option img { width: 100%; height: 100px; object-fit: cover; }
+
+.style-controls { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 15px 0; }
+.style-control { display: flex; flex-direction: column; }
+.style-control label { font-size: 0.9rem; font-weight: 600; margin-bottom: 5px; color: #374151; }
+.style-control input, .style-control select, .style-control textarea { padding: 8px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 0.9rem; }
+
+.command-input { background: #1f2937; color: #10b981; padding: 12px; border-radius: 8px; font-family: 'Courier New', monospace; margin: 15px 0; }
+.command-input input { background: transparent; border: none; color: inherit; width: 100%; outline: none; }
+
+/* Corrections de prix */
+.price-highlight { background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 2px 8px; border-radius: 4px; font-weight: bold; }
+.price-correction { text-decoration: line-through; color: #ef4444; margin-right: 8px; }
+
+/* Mobile responsive pour l'éditeur */
+@media (max-width: 768px) {
+    .editor-panel { width: 100%; right: -100%; }
+    .editor-toggle.active { right: 10px; }
+}
+</style>
+</head>
+<body class="font-sans">
+
+<!-- Panneau d'édition avancée -->
+<div id="editorPanel" class="editor-panel">
+    <div class="p-6 border-b bg-gradient-to-r from-blue-500 to-purple-600 text-white">
+        <h3 class="text-lg font-bold">🎨 Éditeur Avancé</h3>
+        <p class="text-sm opacity-90">Modifiez votre site en temps réel</p>
+    </div>
+    
+    <div class="p-4">
+        <!-- Mode d'édition -->
+        <div class="mb-6">
+            <label class="block text-sm font-bold mb-2">Mode d'édition</label>
+            <select id="editMode" onchange="changeEditMode()" class="w-full p-2 border rounded">
+                <option value="visual">👁️ Visuel (clic direct)</option>
+                <option value="command">💻 Commandes (avancé)</option>
+                <option value="sections">🔧 Ajout de sections</option>
+            </select>
+        </div>
+
+        <!-- Section commandes avancées -->
+        <div id="commandMode" class="hidden">
+            <h4 class="font-bold mb-3">Commandes avancées</h4>
+            <div class="command-input">
+                <input type="text" id="commandInput" placeholder="Ex: setText .hero-title 'Nouveau titre'" onkeypress="executeCommand(event)">
+            </div>
+            <div class="text-xs text-gray-600 mb-4">
+                <strong>Commandes disponibles :</strong><br>
+                • setText &lt;selector&gt; &lt;text&gt;<br>
+                • setHTML &lt;selector&gt; &lt;html&gt;<br>
+                • setImage &lt;selector&gt; &lt;url&gt;<br>
+                • setStyle &lt;selector&gt; &lt;property&gt; &lt;value&gt;
+            </div>
+            <button onclick="executeCommandManual()" class="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600">
+                ⚡ Exécuter la commande
+            </button>
+        </div>
+
+        <!-- Section ajout de sections -->
+        <div id="sectionMode" class="hidden">
+            <h4 class="font-bold mb-3">Ajouter une section</h4>
+            <div class="grid grid-cols-2 gap-2 mb-4">
+                <button onclick="addSection('hero')" class="bg-blue-100 p-3 rounded text-sm hover:bg-blue-200">🎯 Hero</button>
+                <button onclick="addSection('services')" class="bg-green-100 p-3 rounded text-sm hover:bg-green-200">⚙️ Services</button>
+                <button onclick="addSection('testimonials')" class="bg-purple-100 p-3 rounded text-sm hover:bg-purple-200">💬 Témoignages</button>
+                <button onclick="addSection('gallery')" class="bg-yellow-100 p-3 rounded text-sm hover:bg-yellow-200">🖼️ Galerie</button>
+                <button onclick="addSection('contact')" class="bg-red-100 p-3 rounded text-sm hover:bg-red-200">📞 Contact</button>
+                <button onclick="addSection('custom')" class="bg-gray-100 p-3 rounded text-sm hover:bg-gray-200">➕ Personnalisée</button>
+            </div>
+        </div>
+
+        <!-- Contrôles de style -->
+        <div id="styleControls" class="mb-6">
+            <h4 class="font-bold mb-3">🎨 Styles globaux</h4>
+            <div class="style-controls">
+                <div class="style-control">
+                    <label>Couleur principale</label>
+                    <input type="color" id="primaryColor" value="#3b82f6" onchange="updateGlobalStyle('primary', this.value)">
+                </div>
+                <div class="style-control">
+                    <label>Couleur secondaire</label>
+                    <input type="color" id="secondaryColor" value="#1e40af" onchange="updateGlobalStyle('secondary', this.value)">
+                </div>
+            </div>
+            
+            <div class="style-control mt-3">
+                <label>Police principale</label>
+                <select id="mainFont" onchange="updateGlobalStyle('font', this.value)">
+                    <option value="'Segoe UI', sans-serif">Segoe UI</option>
+                    <option value="'Arial', sans-serif">Arial</option>
+                    <option value="'Georgia', serif">Georgia</option>
+                    <option value="'Courier New', monospace">Courier New</option>
+                    <option value="'Impact', sans-serif">Impact</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Sélecteur d'images -->
+        <div id="imageSelector" class="mb-6">
+            <h4 class="font-bold mb-3">🖼️ Banque d'images</h4>
+            <input type="text" id="imageSearch" placeholder="Rechercher des images..." class="w-full p-2 border rounded mb-3" onkeypress="searchImages(event)">
+            <div id="imageResults" class="image-selector">
+                <!-- Les résultats d'images apparaîtront ici -->
+            </div>
+        </div>
+
+        <!-- Historique des modifications -->
+        <div id="historyControls" class="mb-6">
+            <h4 class="font-bold mb-3">↩️ Historique</h4>
+            <div class="flex gap-2">
+                <button onclick="undoChange()" class="flex-1 bg-gray-200 p-2 rounded hover:bg-gray-300">
+                    <i class="fas fa-undo"></i> Annuler
+                </button>
+                <button onclick="redoChange()" class="flex-1 bg-gray-200 p-2 rounded hover:bg-gray-300">
+                    <i class="fas fa-redo"></i> Refaire
+                </button>
+            </div>
+        </div>
+
+        <!-- Sauvegarde et exportation -->
+        <div class="border-t pt-4">
+            <div class="flex gap-2 mb-3">
+                <button onclick="saveChanges()" class="flex-1 bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
+                    💾 Sauvegarder
+                </button>
+                <button onclick="exportWebsite()" class="flex-1 bg-green-500 text-white p-2 rounded hover:bg-green-600">
+                    📤 Exporter
+                </button>
+            </div>
+            <button onclick="resetChanges()" class="w-full bg-red-100 text-red-700 p-2 rounded hover:bg-red-200">
+                🔄 Réinitialiser tout
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Bouton pour ouvrir/fermer l'éditeur -->
+<button id="editorToggle" class="editor-toggle" onclick="toggleEditor()">
+    <i class="fas fa-edit"></i>
+</button>
+
+<!-- Notification améliorée -->
+<div id="notification" class="notification">
+    <div id="notificationContent" class="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg">
+        <span id="notificationText">Message</span>
+    </div>
+</div>
+
+<!-- Widget de partage (conservé) -->
+<div class="share-widget">
+<div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full shadow-lg p-3 relative">
+<button onclick="toggleShareMenu()" class="flex items-center space-x-2 text-sm font-medium">
+<i class="fas fa-share-alt"></i>
+<span>Partager = -10%</span>
+</button>
+<div id="shareMenu" class="hidden absolute bottom-full right-0 mb-2 bg-white rounded-lg shadow-xl p-3 min-w-48">
+<p class="text-gray-800 text-xs font-bold mb-2">🎁 Partagez et économisez 10% !</p>
+<div class="flex gap-2">
+<button onclick="shareOnFacebook()" class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 text-xs">
+<i class="fab fa-facebook-f"></i>
+</button>
+<button onclick="shareOnTwitter()" class="bg-blue-400 text-white p-2 rounded hover:bg-blue-500 text-xs">
+<i class="fab fa-twitter"></i>
+</button>
+<button onclick="shareOnWhatsApp()" class="bg-green-500 text-white p-2 rounded hover:bg-green-600 text-xs">
+<i class="fab fa-whatsapp"></i>
+</button>
+<button onclick="copyLink()" class="bg-gray-600 text-white p-2 rounded hover:bg-gray-700 text-xs">
+<i class="fas fa-link"></i>
+</button>
+</div>
+<p class="text-gray-600 text-xs mt-2">Code: SHARE10</p>
+</div>
+</div>
+</div>
+
+<!-- Header -->
+<div class="gradient-bg text-white py-4 fade-in">
+<div class="container mx-auto px-4">
+<div class="flex justify-between items-center flex-wrap">
+<h1 class="text-2xl font-bold editable-element" data-editable="text">
+    🤖 IA WebGen Pro
+    <div class="edit-overlay">Cliquer pour modifier</div>
+</h1>
+<div class="flex items-center gap-4">
+<div class="text-sm">
+<span class="bg-green-500 px-3 py-1 rounded-full text-xs sm:text-sm editable-element" data-editable="text">
+✨ Nouveau: Sites multi-pages complets + Édition temps réel !
+<div class="edit-overlay">Modifier</div>
+</span>
+</div>
+<div id="authButtons" class="flex gap-2">
+<button onclick="showLogin()" class="bg-white bg-opacity-20 px-4 py-2 rounded text-sm hover:bg-opacity-30">
+<i class="fas fa-sign-in-alt"></i> Connexion
+</button>
+<button onclick="showRegister()" class="bg-green-500 px-4 py-2 rounded text-sm hover:bg-green-600">
+<i class="fas fa-user-plus"></i> S'inscrire
+</button>
+</div>
+<div id="userMenu" class="hidden">
+<span id="userName" class="text-sm mr-4"></span>
+<button onclick="logout()" class="bg-red-500 px-3 py-1 rounded text-sm hover:bg-red-600">
+<i class="fas fa-sign-out-alt"></i> Déconnexion
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Section principale -->
+<div id="mainSection">
+<!-- Hero Section -->
+<section class="gradient-bg text-white py-20 fade-in">
+<div class="container mx-auto px-4 text-center">
+<h2 class="text-3xl sm:text-5xl font-bold mb-6 editable-element" data-editable="text">
+🚀 Créez votre site web professionnel complet avec l'IA + Édition Avancée
+<div class="edit-overlay">Modifier le titre</div>
+</h2>
+<p class="text-lg sm:text-xl mb-8 opacity-90 editable-element" data-editable="text">
+Intelligence artificielle avancée + Sites multi-pages + Templates professionnels + Édition temps réel = Site parfait en 2-4h !
+<div class="edit-overlay">Modifier la description</div>
+</p>
+
+<!-- Ajouter un bandeau de nouveauté pour l'édition -->
+<div class="bg-green-500 bg-opacity-20 backdrop-filter backdrop-blur-lg rounded-lg p-4 mb-8 max-w-2xl mx-auto">
+<h3 class="text-lg font-bold mb-2">🎉 NOUVEAU : Édition Avancée en Temps Réel !</h3>
+<ul class="text-sm space-y-1 text-left">
+<li>✅ Modifiez tout : textes, images, couleurs, styles</li>
+<li>✅ Commandes avancées : setText, setImage, setHTML</li>
+<li>✅ Ajout de sections dynamiques</li>
+<li>✅ Historique des modifications (annuler/refaire)</li>
+<li>✅ Prévisualisation instantanée</li>
+</ul>
+</div>
+
+<div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-6 sm:p-8 max-w-4xl mx-auto">
+<h3 class="text-xl sm:text-2xl font-bold mb-6">🎯 Créer mon site professionnel complet</h3>
+<form id="websiteForm" class="space-y-6" onsubmit="handleFormSubmit(event)">
+<!-- Le reste du formulaire demeure identique... -->
+<!-- Informations de base -->
+<div class="grid md:grid-cols-2 gap-4">
+<input type="text" id="businessName" placeholder="Nom de votre entreprise"
+class="w-full p-3 rounded-lg text-gray-800 font-medium" required>
+<select id="siteType" class="w-full p-3 rounded-lg text-gray-800 font-medium" required>
+<option value="">Type de site</option>
+<option value="restaurant">🍽️ Restaurant</option>
+<option value="salon">💇 Salon de beauté</option>
+<option value="commerce">🏪 Commerce/Boutique</option>
+<option value="service">🔧 Service professionnel</option>
+<option value="medical">🏥 Cabinet médical</option>
+<option value="immobilier">🏠 Immobilier</option>
+<option value="hotel">🏨 Hôtel/Hébergement</option>
+<option value="fitness">💪 Salle de sport</option>
+<option value="location-voiture">🚗 Location de voiture</option>
+<option value="avocat">⚖️ Cabinet d'avocat</option>
+<option value="photographe">📸 Photographe</option>
+<option value="plombier">🔧 Plomberie</option>
+<option value="electricien">⚡ Électricien</option>
+<option value="garage">🔧 Garage automobile</option>
+<option value="artisan">🔨 Artisan</option>
+<option value="consultant">💼 Consultant</option>
+<option value="association">🤝 Association</option>
+<option value="autre">✨ Autre activité</option>
+</select>
+</div>
+
+<!-- Description détaillée -->
+<textarea id="description" placeholder="Décrivez votre activité, vos services et ce que vous souhaitez mettre en avant sur votre site..."
+class="w-full p-3 rounded-lg text-gray-800 font-medium h-24" required></textarea>
+
+<!-- Pages souhaitées -->
+<div class="bg-white bg-opacity-20 p-4 rounded-lg">
+<h4 class="text-white font-bold mb-3">📄 Pages à inclure dans votre site :</h4>
+<div class="checkbox-group">
+<label class="checkbox-item">
+<input type="checkbox" id="page-accueil" checked disabled class="mr-2">
+<span class="text-white text-sm">🏠 Accueil (obligatoire)</span>
+</label>
+<label class="checkbox-item">
+<input type="checkbox" id="page-apropos" checked class="mr-2">
+<span class="text-white text-sm">👥 À propos / Qui sommes-nous</span>
+</label>
+<label class="checkbox-item">
+<input type="checkbox" id="page-services" checked class="mr-2">
+<span class="text-white text-sm">⚙️ Services / Produits</span>
+</label>
+<label class="checkbox-item">
+<input type="checkbox" id="page-portfolio" class="mr-2">
+<span class="text-white text-sm">🎨 Portfolio / Réalisations</span>
+</label>
+<label class="checkbox-item">
+<input type="checkbox" id="page-equipe" class="mr-2">
+<span class="text-white text-sm">👨‍💼 Équipe</span>
+</label>
+<label class="checkbox-item">
+<input type="checkbox" id="page-temoignages" class="mr-2">
+<span class="text-white text-sm">💬 Témoignages clients</span>
+</label>
+<label class="checkbox-item">
+<input type="checkbox" id="page-blog" class="mr-2">
+<span class="text-white text-sm">📝 Blog / Actualités</span>
+</label>
+<label class="checkbox-item">
+<input type="checkbox" id="page-contact" checked class="mr-2">
+<span class="text-white text-sm">📞 Contact (obligatoire)</span>
+</label>
+</div>
+</div>
+
+<!-- Informations de contact -->
+<div class="grid md:grid-cols-2 gap-4">
+<input type="tel" id="phone" placeholder="Téléphone (01 23 45 67 89)"
+class="w-full p-3 rounded-lg text-gray-800 font-medium">
+<input type="email" id="userEmail" placeholder="Votre email professionnel"
+class="w-full p-3 rounded-lg text-gray-800 font-medium" required>
+</div>
+
+<div class="grid md:grid-cols-2 gap-4">
+<input type="text" id="address" placeholder="Adresse complète"
+class="w-full p-3 rounded-lg text-gray-800 font-medium">
+<input type="text" id="website" placeholder="Site web existant (optionnel)"
+class="w-full p-3 rounded-lg text-gray-800 font-medium">
+</div>
+
+<!-- Réseaux sociaux -->
+<div class="bg-white bg-opacity-20 p-4 rounded-lg">
+<h4 class="text-white font-bold mb-3">📱 Réseaux sociaux (optionnel) :</h4>
+<div class="grid md:grid-cols-2 gap-4">
+<input type="url" id="facebook" placeholder="https://facebook.com/votrepage"
+class="w-full p-3 rounded-lg text-gray-800 font-medium">
+<input type="url" id="instagram" placeholder="https://instagram.com/votrepage"
+class="w-full p-3 rounded-lg text-gray-800 font-medium">
+<input type="url" id="linkedin" placeholder="https://linkedin.com/company/votrepage"
+class="w-full p-3 rounded-lg text-gray-800 font-medium">
+<input type="url" id="twitter" placeholder="https://twitter.com/votrepage"
+class="w-full p-3 rounded-lg text-gray-800 font-medium">
+</div>
+</div>
+
+<!-- Upload de photos -->
+<div class="photo-upload-area" id="photoUploadArea">
+<div class="mb-4">
+<i class="fas fa-camera text-4xl text-gray-400 mb-2"></i>
+<h4 class="text-gray-800 font-bold text-lg mb-2">📸 Ajoutez vos photos (fortement recommandé)</h4>
+<p class="text-gray-600 text-sm mb-4">
+Glissez vos images ici ou cliquez pour sélectionner<br>
+<span class="text-xs">Photos de votre établissement, équipe, réalisations - JPG, PNG, WebP - Max 5 Mo par image</span>
+</p>
+<input type="file" id="photoInput" multiple accept="image/*" class="hidden">
+<button type="button" onclick="document.getElementById('photoInput').click()"
+class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-sm">
+<i class="fas fa-upload mr-2"></i>Choisir des photos
+</button>
+</div>
+<div id="photoPreview" class="grid grid-cols-3 gap-2 mt-4 hidden"></div>
+</div>
+
+<!-- Détails supplémentaires -->
+<div class="bg-white bg-opacity-20 p-4 rounded-lg">
+<h4 class="text-white font-bold mb-3">✨ Détails supplémentaires :</h4>
+<div class="space-y-3">
+<textarea id="teamInfo" placeholder="Présentez votre équipe (noms, rôles, expériences...)"
+class="w-full p-3 rounded-lg text-gray-800 font-medium h-20"></textarea>
+<textarea id="servicesDetail" placeholder="Détaillez vos services/produits avec tarifs si souhaité..."
+class="w-full p-3 rounded-lg text-gray-800 font-medium h-20"></textarea>
+<input type="text" id="slogan" placeholder="Votre slogan ou phrase d'accroche"
+class="w-full p-3 rounded-lg text-gray-800 font-medium">
+</div>
+</div>
+
+<button type="submit" class="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-bold py-4 px-6 rounded-lg transform hover:scale-105 transition-all duration-200 text-lg">
+🎨 GÉNÉRER MON SITE COMPLET AVEC ÉDITION AVANCÉE
+</button>
+</form>
+</div>
+</div>
+</section>
+
+<!-- Service Conciergerie avec prix corrigés -->
+<section class="py-16 bg-gray-50 fade-in">
+<div class="container mx-auto px-4">
+<div class="text-center mb-12">
+<h3 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4 editable-element" data-editable="text">
+🤖 IA Professionnelle + Service Conciergerie + Édition Avancée
+<div class="edit-overlay">Modifier</div>
+</h3>
+<p class="text-lg sm:text-xl text-gray-600 editable-element" data-editable="text">
+Notre IA crée des sites complets avec toutes les pages demandées + édition temps réel !
+<div class="edit-overlay">Modifier</div>
+</p>
+</div>
+<div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+<!-- Offre Site Seul -->
+<div class="bg-white rounded-lg shadow-lg p-6 sm:p-8 card-hover">
+<div class="text-center">
+<h4 class="text-xl sm:text-2xl font-bold text-gray-800 mb-4">📄 Site IA Pro Multi-Pages + Édition</h4>
+<div class="text-3xl sm:text-4xl font-bold text-blue-600 mb-4">
+<span class="price-correction">25€</span>
+<span class="price-highlight">15€</span>
+</div>
+<ul class="text-left space-y-2 mb-6 text-sm sm:text-base">
+<li>✅ Site multi-pages complet</li>
+<li>✅ <strong>🎨 Édition temps réel intégrée</strong></li>
+<li>✅ <strong>💻 Commandes avancées (setText, setImage)</strong></li>
+<li>✅ 7 thèmes gratuits + 3 premium (+5€)</li>
+<li>✅ Contenus professionnels rédigés</li>
+<li>✅ Intégration de vos photos</li>
+<li>✅ Formulaires fonctionnels</li>
+<li>✅ Responsive design</li>
+<li>✅ Optimisation SEO de base</li>
+<li>✅ Code source propre</li>
+<li>❌ Pas d'hébergement inclus</li>
+</ul>
+</div>
+</div>
+<!-- Offre Conciergerie -->
+<div class="bg-gradient-to-br from-green-500 to-blue-600 text-white rounded-lg shadow-lg p-6 sm:p-8 card-hover relative">
+<div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-orange-500 px-3 py-1 rounded-full text-xs sm:text-sm font-bold">
+🔥 LE PLUS POPULAIRE
+</div>
+<div class="text-center mt-4">
+<h4 class="text-xl sm:text-2xl font-bold mb-4">🤖 Conciergerie IA Complète + Édition Pro</h4>
+<div class="text-3xl sm:text-4xl font-bold mb-4">69€</div>
+<ul class="text-left space-y-2 mb-6 text-sm sm:text-base">
+<li>✅ <strong>Site multi-pages premium</strong></li>
+<li>✅ <strong>🎨 Édition avancée illimitée</strong></li>
+<li>✅ <strong>🛠️ Outils professionnels d'édition</strong></li>
+<li>✅ <strong>📧 Envoi automatique par email</strong></li>
+<li>✅ <strong>Tous les thèmes premium inclus</strong></li>
+<li>✅ <strong>Nom de domaine automatique</strong></li>
+<li>✅ <strong>Hébergement premium configuré</strong></li>
+<li>✅ <strong>Site en ligne en 2-4h maximum</strong></li>
+<li>✅ <strong>Optimisation SEO avancée</strong></li>
+<li>✅ <strong>Google Analytics intégré</strong></li>
+<li>✅ <strong>Support technique 6 mois</strong></li>
+<li>✅ <strong>Formation utilisateur incluse</strong></li>
+</ul>
+<div class="bg-yellow-400 text-gray-800 p-3 rounded-lg text-xs sm:text-sm font-bold mb-4">
+⏰ Site professionnel complet en ligne en 2-4h !<br>
+🎨 Personnalisation et édition illimitées incluses
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+<!-- Zone d'ajout de section -->
+<div id="sectionBuilder" class="section-builder hidden">
+<div class="text-center">
+<h3 class="text-2xl font-bold text-gray-600 mb-4">➕ Ajouter une nouvelle section</h3>
+<p class="text-gray-500 mb-6">Cliquez sur le type de section que vous souhaitez ajouter</p>
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
+<button onclick="insertSection('hero')" class="bg-blue-100 hover:bg-blue-200 p-4 rounded-lg">
+<i class="fas fa-star text-2xl text-blue-600 mb-2"></i>
+<div class="font-semibold">Hero Section</div>
+</button>
+<button onclick="insertSection('services')" class="bg-green-100 hover:bg-green-200 p-4 rounded-lg">
+<i class="fas fa-cogs text-2xl text-green-600 mb-2"></i>
+<div class="font-semibold">Services</div>
+</button>
+<button onclick="insertSection('testimonials')" class="bg-purple-100 hover:bg-purple-200 p-4 rounded-lg">
+<i class="fas fa-quote-left text-2xl text-purple-600 mb-2"></i>
+<div class="font-semibold">Témoignages</div>
+</button>
+<button onclick="insertSection('gallery')" class="bg-yellow-100 hover:bg-yellow-200 p-4 rounded-lg">
+<i class="fas fa-images text-2xl text-yellow-600 mb-2"></i>
+<div class="font-semibold">Galerie</div>
+</button>
+<button onclick="insertSection('team')" class="bg-red-100 hover:bg-red-200 p-4 rounded-lg">
+<i class="fas fa-users text-2xl text-red-600 mb-2"></i>
+<div class="font-semibold">Équipe</div>
+</button>
+<button onclick="insertSection('contact')" class="bg-indigo-100 hover:bg-indigo-200 p-4 rounded-lg">
+<i class="fas fa-envelope text-2xl text-indigo-600 mb-2"></i>
+<div class="font-semibold">Contact</div>
+</button>
+<button onclick="insertSection('features')" class="bg-pink-100 hover:bg-pink-200 p-4 rounded-lg">
+<i class="fas fa-check-circle text-2xl text-pink-600 mb-2"></i>
+<div class="font-semibold">Fonctionnalités</div>
+</button>
+<button onclick="insertSection('custom')" class="bg-gray-100 hover:bg-gray-200 p-4 rounded-lg">
+<i class="fas fa-plus text-2xl text-gray-600 mb-2"></i>
+<div class="font-semibold">Personnalisée</div>
+</button>
+</div>
+<button onclick="hideSectionBuilder()" class="mt-6 bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600">
+Annuler
+</button>
+</div>
+</div>
+
+<!-- Sections existantes conservées... -->
+<!-- Section Templates (conservée identique) -->
+<section id="qualityTemplates" class="quality-templates py-16 bg-gray-50">
+<div class="container mx-auto px-4">
+<div class="text-center mb-12">
+<h3 class="text-3xl font-bold text-gray-800 mb-4">🎨 Choisissez votre thème professionnel</h3>
+<p class="text-xl text-gray-600">7 thèmes gratuits + 3 thèmes premium à 5€</p>
+<button onclick="goBackToMain()" class="mt-4 bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600">
+<i class="fas fa-arrow-left mr-2"></i>Modifier les informations
+</button>
+</div>
+<div id="templateGrid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+<!-- Les templates seront générés ici -->
+</div>
+<div class="text-center mt-8">
+<button onclick="proceedWithSelectedTemplate()" id="continueBtn"
+class="bg-green-500 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+<i class="fas fa-eye mr-2"></i>VOIR LA PRÉVISUALISATION COMPLÈTE + ÉDITION
+</button>
+</div>
+</div>
+</section>
+
+<!-- Section Prévisualisation avec édition intégrée -->
+<section id="previewSection" class="preview-section min-h-screen bg-gray-100 py-8">
+<div class="container mx-auto px-4">
+<div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+<div class="flex justify-between items-center mb-4">
+<h2 class="text-2xl font-bold text-gray-800">
+🎉 Prévisualisation + Édition : <span id="previewBusinessName"></span>
+</h2>
+<div class="flex gap-3">
+<button onclick="toggleEditMode()" id="editModeBtn" class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600">
+<i class="fas fa-edit mr-2"></i>Mode Édition: OFF
+</button>
+<button onclick="goBackToTemplates()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+<i class="fas fa-palette mr-2"></i>Changer de thème
+</button>
+<button onclick="goBackToMain()" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+<i class="fas fa-edit mr-2"></i>Modifier infos
+</button>
+</div>
+</div>
+
+<!-- Navigation des pages -->
+<div class="mb-6">
+<div class="flex flex-wrap gap-2 justify-center" id="pageNavigation">
+<!-- Les onglets des pages seront générés ici -->
+</div>
+</div>
+
+<div class="grid lg:grid-cols-3 gap-8">
+<!-- Aperçu du site -->
+<div class="lg:col-span-2">
+<h3 class="text-lg font-bold mb-4">📱 Aperçu de votre site complet (éditable en temps réel)</h3>
+<div id="websitePreview" class="preview-frame bg-white overflow-auto" style="height: 600px;">
+<div style="padding: 50px; text-align: center; color: #6b7280;">
+<i class="fas fa-spinner fa-spin" style="font-size: 3rem; margin-bottom: 20px;"></i>
+<p style="font-size: 1.2rem;">Génération de votre site complet en cours...</p>
+<p style="font-size: 0.9rem; margin-top: 10px;">Création des pages, intégration des contenus et outils d'édition...</p>
+</div>
+</div>
+</div>
+
+<!-- Options de personnalisation (améliorées) -->
+<div>
+<h3 class="text-lg font-bold mb-4">✏️ Personnalisez votre site (temps réel)</h3>
+<div class="space-y-4">
+<div>
+<label class="block text-sm font-bold mb-2">Couleur principale</label>
+<input type="color" id="primaryColor" value="#3b82f6" class="w-full h-10 rounded" onchange="updatePreview()">
+</div>
+<div>
+<label class="block text-sm font-bold mb-2">Couleur secondaire</label>
+<input type="color" id="secondaryColor" value="#1e40af" class="w-full h-10 rounded" onchange="updatePreview()">
+</div>
+<div>
+<label class="block text-sm font-bold mb-2">Titre principal</label>
+<input type="text" id="mainTitle" class="w-full p-3 border rounded-lg" onchange="updatePreview()">
+</div>
+<div>
+<label class="block text-sm font-bold mb-2">Slogan/Sous-titre</label>
+<textarea id="subtitle" class="w-full p-3 border rounded-lg h-20" onchange="updatePreview()"></textarea>
+</div>
+
+<!-- NOUVEAUX CONTRÔLES D'ÉDITION -->
+<div class="border-t pt-4">
+<h4 class="font-bold mb-3">🔧 Outils d'édition avancés</h4>
+<div class="space-y-2">
+<button onclick="activateElementSelection()" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
+📍 Sélectionner un élément à modifier
+</button>
+<button onclick="showImageSelector()" class="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600">
+🖼️ Changer une image
+</button>
+<button onclick="addNewSection()" class="w-full bg-purple-500 text-white py-2 rounded hover:bg-purple-600">
+➕ Ajouter une section
+</button>
+</div>
+</div>
+
+<button onclick="updatePreview()" class="w-full bg-blue-500 text-white py-3 rounded hover:bg-blue-600">
+🔄 Mettre à jour l'aperçu
+</button>
+</div>
+
+<!-- Choix de l'offre avec prix corrigés -->
+<div class="mt-8 border-t pt-6">
+<h3 class="text-lg font-bold mb-4">💳 Finaliser votre commande</h3>
+<div id="templateCostInfo" class="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+<!-- Info sur le coût du template -->
+</div>
+<div class="space-y-4">
+<div class="border rounded-lg p-4 cursor-pointer hover:bg-blue-50" onclick="selectOffer('site')">
+<div class="flex justify-between items-center">
+<div>
+<h4 class="font-bold">📄 Site Multi-Pages Pro + Édition</h4>
+<p class="text-sm text-gray-600">Site complet + Édition temps réel + Code source + Formation</p>
+</div>
+<div class="text-right">
+<div class="font-bold text-blue-600" id="sitePrice">
+<span class="price-correction">25€</span>
+<span class="price-highlight">15€</span>
+</div>
+<input type="radio" name="offer" value="site" class="offer-radio mt-1">
+</div>
+</div>
+</div>
+<div class="border rounded-lg p-4 cursor-pointer hover:bg-green-50 border-green-500" onclick="selectOffer('conciergerie')">
+<div class="flex justify-between items-center">
+<div>
+<h4 class="font-bold">🤖 Conciergerie IA Complète + Édition Pro - 69€ ⭐</h4>
+<p class="text-sm text-gray-600">Site + Édition pro + Domaine + Hébergement + Support 6 mois + Envoi automatique</p>
+</div>
+<div class="text-right">
+<div class="font-bold text-green-600">69€</div>
+<input type="radio" name="offer" value="conciergerie" class="offer-radio mt-1" checked>
+</div>
+</div>
+</div>
+</div>
+<button id="payButton" onclick="processPayment()" class="w-full mt-6 bg-green-500 text-white py-4 px-6 rounded-lg font-bold text-lg hover:bg-green-600 transform hover:scale-105 transition-all">
+💳 COMMANDER MAINTENANT - 69€ + ÉDITION PRO
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Modals existantes conservées... -->
+<!-- Modal d'authentification -->
+<div id="authModal" class="modal">
+<div class="modal-content">
+<div class="flex justify-between items-center mb-6">
+<h2 id="authModalTitle" class="text-2xl font-bold">Connexion</h2>
+<button onclick="closeAuthModal()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+</div>
+<!-- Connexion -->
+<div id="loginForm" class="auth-section">
+<form onsubmit="login(event)" class="space-y-4">
+<div>
+<label class="block text-sm font-bold mb-2">Email</label>
+<input type="email" id="loginEmail" class="w-full p-3 border rounded-lg" required>
+</div>
+<div>
+<label class="block text-sm font-bold mb-2">Mot de passe</label>
+<input type="password" id="loginPassword" class="w-full p-3 border rounded-lg" required>
+</div>
+<button type="submit" class="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600">
+Se connecter
+</button>
+</form>
+<p class="mt-4 text-center">
+<a href="#" onclick="showRegisterForm()" class="text-blue-500 hover:underline">Pas de compte ? S'inscrire</a>
+</p>
+</div>
+<!-- Inscription -->
+<div id="registerForm" class="auth-section">
+<form onsubmit="register(event)" class="space-y-4">
+<div>
+<label class="block text-sm font-bold mb-2">Nom complet</label>
+<input type="text" id="registerName" class="w-full p-3 border rounded-lg" required>
+</div>
+<div>
+<label class="block text-sm font-bold mb-2">Email</label>
+<input type="email" id="registerEmail" class="w-full p-3 border rounded-lg" required>
+</div>
+<div>
+<label class="block text-sm font-bold mb-2">Mot de passe</label>
+<input type="password" id="registerPassword" class="w-full p-3 border rounded-lg" required>
+</div>
+<button type="submit" class="w-full bg-green-500 text-white py-3 rounded-lg hover:bg-green-600">
+S'inscrire
+</button>
+</form>
+<p class="mt-4 text-center">
+<a href="#" onclick="showLoginForm()" class="text-blue-500 hover:underline">Déjà un compte ? Se connecter</a>
+</p>
+</div>
+</div>
+</div>
+
+<!-- SCRIPT PRINCIPAL AVEC NOUVELLES FONCTIONNALITÉS -->
+<script>
+// Variables globales (conservées + nouvelles)
+let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+let currentOffer = 'conciergerie';
+let websiteData = {};
+let selectedTemplate = null;
+let uploadedPhotos = [];
+let allTemplates = [];
+let currentPage = 'accueil';
+let generatedPages = {};
+
+// ========== NOUVELLES VARIABLES POUR L'ÉDITION ==========
+let editorOpen = false;
+let editMode = 'visual'; // 'visual', 'command', 'sections'
+let selectedElement = null;
+let editHistory = [];
+let editHistoryIndex = -1;
+let isEditModeActive = false;
+let currentSiteId = null;
+let modifications = [];
+
+// Configuration API
+const API_BASE_URL = 'http://localhost:8001';
+
+console.log('🚀 IA WebGen Pro - Version Édition Avancée initialisée');
+</script>
+</body>
+</html>
