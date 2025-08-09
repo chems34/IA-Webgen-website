@@ -1853,6 +1853,428 @@ if (event.target === authModal) {
 closeAuthModal();
 }
 }
+
+// ========== MODE ÉDITION ==========
+function toggleEditMode() {
+editMode = !editMode;
+const previewEl = document.getElementById('websitePreview');
+const editModeBtn = document.getElementById('editModeBtn');
+const editModeStatus = document.getElementById('editModeStatus');
+
+if (editMode) {
+previewEl.classList.add('edit-mode');
+editModeStatus.textContent = 'Activé';
+editModeBtn.classList.remove('bg-purple-500');
+editModeBtn.classList.add('bg-orange-500');
+makeElementsEditable();
+showNotification('✏️ Mode édition activé ! Cliquez sur les éléments pour les modifier.');
+} else {
+previewEl.classList.remove('edit-mode');
+editModeStatus.textContent = 'Désactivé';
+editModeBtn.classList.remove('bg-orange-500');
+editModeBtn.classList.add('bg-purple-500');
+removeEditableElements();
+showNotification('✅ Mode édition désactivé.');
+}
+}
+
+function makeElementsEditable() {
+const previewEl = document.getElementById('websitePreview');
+if (!previewEl) return;
+
+// Sélectionner tous les éléments éditables
+const editableSelectors = 'h1, h2, h3, h4, h5, h6, p, span, a, button, div[style*="text-align"], div[style*="color"]';
+const elements = previewEl.querySelectorAll(editableSelectors);
+
+elements.forEach(element => {
+if (element.textContent.trim() && !element.querySelector('img') && !element.classList.contains('edit-toolbar')) {
+element.classList.add('editable');
+element.addEventListener('click', handleElementClick);
+}
+});
+}
+
+function removeEditableElements() {
+const editableElements = document.querySelectorAll('.editable');
+editableElements.forEach(element => {
+element.classList.remove('editable');
+element.removeEventListener('click', handleElementClick);
+});
+
+// Supprimer les barres d'outils existantes
+const toolbars = document.querySelectorAll('.edit-toolbar');
+toolbars.forEach(toolbar => toolbar.remove());
+}
+
+function handleElementClick(event) {
+if (!editMode) return;
+event.preventDefault();
+event.stopPropagation();
+
+// Supprimer les barres d'outils existantes
+const existingToolbars = document.querySelectorAll('.edit-toolbar');
+existingToolbars.forEach(toolbar => toolbar.remove());
+
+const element = event.target;
+showEditToolbar(element);
+}
+
+function showEditToolbar(element) {
+const toolbar = document.createElement('div');
+toolbar.className = 'edit-toolbar';
+toolbar.innerHTML = `
+<button class="edit-btn" onclick="editText(this.parentElement.nextElementSibling)">
+<i class="fas fa-edit"></i> Texte
+</button>
+<button class="edit-btn" onclick="editStyle(this.parentElement.nextElementSibling)">
+<i class="fas fa-palette"></i> Style
+</button>
+<button class="edit-btn" onclick="deleteElement(this.parentElement.nextElementSibling)">
+<i class="fas fa-trash"></i> Suppr
+</button>
+`;
+
+element.style.position = 'relative';
+element.appendChild(toolbar);
+}
+
+function editText(element) {
+const currentText = element.textContent;
+const newText = prompt('Modifier le texte:', currentText);
+if (newText !== null && newText !== currentText) {
+element.textContent = newText;
+updateCurrentPageData();
+showNotification('✅ Texte modifié !');
+}
+}
+
+function editStyle(element) {
+const modal = document.createElement('div');
+modal.className = 'modal';
+modal.style.display = 'block';
+modal.innerHTML = `
+<div class="modal-content max-w-md">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-2xl font-bold">Modifier le Style</h2>
+<button onclick="this.closest('.modal').remove()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+</div>
+<div class="space-y-4">
+<div>
+<label class="block text-sm font-bold mb-2">Couleur du texte</label>
+<input type="color" id="textColor" class="w-full h-10 rounded" value="#000000">
+</div>
+<div>
+<label class="block text-sm font-bold mb-2">Couleur de fond</label>
+<input type="color" id="bgColor" class="w-full h-10 rounded" value="#ffffff">
+</div>
+<div>
+<label class="block text-sm font-bold mb-2">Taille de police</label>
+<select id="fontSize" class="w-full p-3 border rounded">
+<option value="0.8rem">Petit</option>
+<option value="1rem" selected>Normal</option>
+<option value="1.2rem">Grand</option>
+<option value="1.5rem">Très Grand</option>
+<option value="2rem">Énorme</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-bold mb-2">Alignement</label>
+<select id="textAlign" class="w-full p-3 border rounded">
+<option value="left">Gauche</option>
+<option value="center">Centré</option>
+<option value="right">Droite</option>
+</select>
+</div>
+<button onclick="applyStyles('${element.id || 'temp-' + Date.now()}')" class="w-full bg-blue-500 text-white py-3 rounded hover:bg-blue-600">
+Appliquer les styles
+</button>
+</div>
+</div>
+`;
+document.body.appendChild(modal);
+
+// Assigner un ID temporaire si nécessaire
+if (!element.id) {
+element.id = 'temp-' + Date.now();
+}
+}
+
+function applyStyles(elementId) {
+const element = document.getElementById(elementId);
+const textColor = document.getElementById('textColor').value;
+const bgColor = document.getElementById('bgColor').value;
+const fontSize = document.getElementById('fontSize').value;
+const textAlign = document.getElementById('textAlign').value;
+
+element.style.color = textColor;
+element.style.backgroundColor = bgColor;
+element.style.fontSize = fontSize;
+element.style.textAlign = textAlign;
+
+document.querySelector('.modal').remove();
+updateCurrentPageData();
+showNotification('✅ Style appliqué !');
+}
+
+function deleteElement(element) {
+if (confirm('Êtes-vous sûr de vouloir supprimer cet élément ?')) {
+element.remove();
+updateCurrentPageData();
+showNotification('🗑️ Élément supprimé !');
+}
+}
+
+function addNewSection() {
+const sectionType = prompt('Type de section à ajouter:\n1. Texte\n2. Image\n3. Bouton\n4. Titre\n\nEntrez le numéro (1-4):');
+const previewEl = document.getElementById('websitePreview');
+
+let newElement;
+switch(sectionType) {
+case '1':
+const textContent = prompt('Contenu du texte:') || 'Nouveau texte';
+newElement = document.createElement('p');
+newElement.textContent = textContent;
+newElement.style.padding = '20px';
+break;
+case '2':
+newElement = document.createElement('div');
+newElement.innerHTML = `<img src="https://via.placeholder.com/300x200?text=Nouvelle+Image" alt="Nouvelle image" style="width: 100%; max-width: 300px; border-radius: 8px;">`;
+newElement.style.textAlign = 'center';
+newElement.style.padding = '20px';
+break;
+case '3':
+const buttonText = prompt('Texte du bouton:') || 'Nouveau bouton';
+newElement = document.createElement('div');
+newElement.innerHTML = `<button style="background: ${websiteData.primaryColor}; color: white; padding: 15px 30px; border: none; border-radius: 5px; font-size: 1.1rem; font-weight: bold; cursor: pointer;">${buttonText}</button>`;
+newElement.style.textAlign = 'center';
+newElement.style.padding = '20px';
+break;
+case '4':
+const titleText = prompt('Texte du titre:') || 'Nouveau titre';
+newElement = document.createElement('h2');
+newElement.textContent = titleText;
+newElement.style.fontSize = '2rem';
+newElement.style.fontWeight = 'bold';
+newElement.style.textAlign = 'center';
+newElement.style.padding = '20px';
+newElement.style.color = websiteData.primaryColor;
+break;
+default:
+showNotification('❌ Type de section non valide');
+return;
+}
+
+if (newElement) {
+// Ajouter à la fin du contenu de la page
+const mainContent = previewEl.querySelector('main') || previewEl;
+mainContent.appendChild(newElement);
+updateCurrentPageData();
+if (editMode) {
+makeElementsEditable();
+}
+showNotification('✅ Nouvelle section ajoutée !');
+}
+}
+
+function updateCurrentPageData() {
+const previewEl = document.getElementById('websitePreview');
+if (previewEl && currentPage) {
+generatedPages[currentPage] = previewEl.innerHTML;
+}
+}
+
+// ========== MINI CHATGPT ==========
+function toggleChatGPT() {
+const chatgpt = document.getElementById('miniChatGPT');
+const toggle = document.getElementById('chatgptToggle');
+
+chatGPTOpen = !chatGPTOpen;
+if (chatGPTOpen) {
+chatgpt.style.display = 'flex';
+toggle.style.display = 'none';
+} else {
+chatgpt.style.display = 'none';
+toggle.style.display = 'flex';
+}
+}
+
+function closeChatGPT() {
+chatGPTOpen = false;
+document.getElementById('miniChatGPT').style.display = 'none';
+document.getElementById('chatgptToggle').style.display = 'flex';
+}
+
+function toggleChatGPTSize() {
+const chatgpt = document.getElementById('miniChatGPT');
+const icon = document.getElementById('chatgptSizeIcon');
+
+chatGPTMinimized = !chatGPTMinimized;
+if (chatGPTMinimized) {
+chatgpt.classList.add('minimized');
+icon.className = 'fas fa-plus';
+} else {
+chatgpt.classList.remove('minimized');
+icon.className = 'fas fa-minus';
+}
+}
+
+function sendChatGPTMessage() {
+const input = document.getElementById('chatgptInput');
+const message = input.value.trim();
+if (!message) return;
+
+// Ajouter le message utilisateur
+addChatMessage(message, 'user');
+input.value = '';
+
+// Traiter le message
+setTimeout(() => {
+processChatGPTMessage(message);
+}, 1000);
+}
+
+function addChatMessage(message, sender) {
+const messagesContainer = document.getElementById('chatgptMessages');
+const messageEl = document.createElement('div');
+messageEl.className = `message ${sender}`;
+
+if (sender === 'user') {
+messageEl.innerHTML = message;
+} else {
+messageEl.innerHTML = `<strong>🤖 Assistant IA</strong><br>${message}`;
+}
+
+messagesContainer.appendChild(messageEl);
+messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+function processChatGPTMessage(message) {
+const lowerMessage = message.toLowerCase();
+
+// Commande de recherche d'image
+if (message.startsWith('/image ')) {
+const query = message.substring(7);
+searchImages(query);
+return;
+}
+
+// Réponses contextuelles
+let response = '';
+
+if (lowerMessage.includes('aide') || lowerMessage.includes('help')) {
+response = `Je peux t'aider avec :<br>
+• <b>/image [description]</b> - Chercher des images<br>
+• Questions sur l'édition du site<br>
+• Suggestions d'amélioration<br>
+• Conseils de design<br><br>
+Que veux-tu faire ?`;
+} else if (lowerMessage.includes('édition') || lowerMessage.includes('modifier')) {
+response = `Pour modifier ton site :<br>
+1. Active le <b>Mode Édition</b> dans le panneau de droite<br>
+2. Clique sur n'importe quel élément pour le modifier<br>
+3. Utilise les boutons d'édition qui apparaissent<br>
+4. Tu peux changer les textes, couleurs, styles<br><br>
+Veux-tu que j'active le mode édition pour toi ?`;
+} else if (lowerMessage.includes('couleur') || lowerMessage.includes('color')) {
+response = `Pour changer les couleurs :<br>
+• Utilise les sélecteurs de couleur à droite<br>
+• En mode édition, clique sur un élément puis "Style"<br>
+• Je peux te suggérer des palettes de couleurs<br><br>
+Quelle couleur préfères-tu ? Bleu, vert, rouge, violet ?`;
+} else if (lowerMessage.includes('image')) {
+response = `Pour ajouter/modifier des images :<br>
+• Utilise <b>/image [description]</b> pour chercher<br>
+• En mode édition, clique sur une image existante<br>
+• Ajoute une nouvelle section "Image"<br><br>
+Exemple: <b>/image restaurant moderne</b>`;
+} else if (lowerMessage.includes('section')) {
+response = `Tu peux ajouter des sections :<br>
+• Texte - paragraphes et contenu<br>
+• Image - photos et illustrations<br>
+• Bouton - liens et actions<br>
+• Titre - en-têtes et sous-titres<br><br>
+Clique sur "Ajouter une section" à droite !`;
+} else {
+// Réponses génériques intelligentes
+const responses = [
+`C'est une excellente question ! Peux-tu me donner plus de détails sur ce que tu cherches ?`,
+`Je vois que tu travailles sur ton site. Comment puis-je t'aider à l'améliorer ?`,
+`Bonne idée ! Pour cela, je recommande d'utiliser le mode édition. Veux-tu que je t'explique comment faire ?`,
+`Intéressant ! N'hésite pas à expérimenter avec les couleurs et les styles. Ça peut transformer complètement l'apparence !`,
+`Super ! Si tu veux ajouter du contenu visuel, utilise la commande <b>/image [description]</b> pour trouver des images.`
+];
+response = responses[Math.floor(Math.random() * responses.length)];
+}
+
+addChatMessage(response, 'bot');
+}
+
+// Recherche d'images avec Unsplash API (version de démo)
+function searchImages(query) {
+addChatMessage(`🔍 Recherche d'images pour: "${query}"...`, 'bot');
+
+// Simulation d'API - dans un vrai projet, utiliser l'API Unsplash
+setTimeout(() => {
+const demoImages = [
+`https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=300&h=200&fit=crop&q=80`,
+`https://images.unsplash.com/photo-1571197857330-8894d3da2c3b?w=300&h=200&fit=crop&q=80`,
+`https://images.unsplash.com/photo-1559329007-40df8d946775?w=300&h=200&fit=crop&q=80`,
+`https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=300&h=200&fit=crop&q=80`
+];
+
+let imageResults = '<div class="image-search-result">';
+demoImages.forEach((url, index) => {
+imageResults += `<img src="${url}" alt="${query} ${index + 1}" onclick="selectSearchedImage('${url}', '${query}')">`;
+});
+imageResults += '</div>';
+
+addChatMessage(`📸 Voic des images pour "${query}":<br>Clique sur une image pour l'utiliser dans ton site !<br><br>${imageResults}`, 'bot');
+}, 1500);
+}
+
+function selectSearchedImage(imageUrl, description) {
+// Demander où placer l'image
+const placement = prompt(`Où veux-tu utiliser cette image ?\n1. Remplacer une image existante\n2. Ajouter une nouvelle section image\n\nTape 1 ou 2:`);
+
+if (placement === '1') {
+// Mode édition requis pour remplacer
+if (!editMode) {
+addChatMessage(`Pour remplacer une image, active d'abord le <b>Mode Édition</b> puis clique sur l'image à remplacer !`, 'bot');
+return;
+}
+addChatMessage(`Image copiée ! En mode édition, clique sur l'image que tu veux remplacer.`, 'bot');
+// Stocker l'URL pour remplacement
+window.selectedImageForReplacement = imageUrl;
+} else if (placement === '2') {
+// Ajouter directement
+const previewEl = document.getElementById('websitePreview');
+const newElement = document.createElement('div');
+newElement.innerHTML = `<img src="${imageUrl}" alt="${description}" style="width: 100%; max-width: 400px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">`;
+newElement.style.textAlign = 'center';
+newElement.style.padding = '20px';
+
+const mainContent = previewEl.querySelector('main') || previewEl;
+mainContent.appendChild(newElement);
+updateCurrentPageData();
+if (editMode) {
+makeElementsEditable();
+}
+addChatMessage(`✅ Image ajoutée à ton site !`, 'bot');
+}
+}
+
+// Gérer l'envoi avec Entrée
+document.addEventListener('DOMContentLoaded', function() {
+const chatInput = document.getElementById('chatgptInput');
+if (chatInput) {
+chatInput.addEventListener('keypress', function(e) {
+if (e.key === 'Enter' && !e.shiftKey) {
+e.preventDefault();
+sendChatGPTMessage();
+}
+});
+}
+});
 </script>
 </body>
 </html>
