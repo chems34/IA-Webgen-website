@@ -2053,21 +2053,135 @@ element.id = 'temp-' + Date.now();
 }
 }
 
-function applyStyles(elementId) {
+function editStyle(element) {
+console.log('Édition du style pour:', element);
+
+// Assigner un ID si nécessaire
+if (!element.id) {
+element.id = 'editable-' + Date.now();
+}
+
+const modal = document.createElement('div');
+modal.className = 'modal';
+modal.style.display = 'block';
+modal.innerHTML = `
+<div class="modal-content max-w-md">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-2xl font-bold">Modifier le Style</h2>
+<button onclick="this.closest('.modal').remove()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+</div>
+<div class="space-y-4">
+<div>
+<label class="block text-sm font-bold mb-2">Couleur du texte</label>
+<input type="color" id="textColor" class="w-full h-10 rounded" value="${rgbToHex(getComputedStyle(element).color) || '#000000'}">
+</div>
+<div>
+<label class="block text-sm font-bold mb-2">Couleur de fond</label>
+<input type="color" id="bgColor" class="w-full h-10 rounded" value="${rgbToHex(getComputedStyle(element).backgroundColor) || '#ffffff'}">
+</div>
+<div>
+<label class="block text-sm font-bold mb-2">Taille de police</label>
+<select id="fontSize" class="w-full p-3 border rounded">
+<option value="0.8rem">Petit</option>
+<option value="1rem" selected>Normal</option>
+<option value="1.2rem">Grand</option>
+<option value="1.5rem">Très Grand</option>
+<option value="2rem">Énorme</option>
+<option value="2.5rem">Gigantesque</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-bold mb-2">Alignement</label>
+<select id="textAlign" class="w-full p-3 border rounded">
+<option value="left">Gauche</option>
+<option value="center">Centré</option>
+<option value="right">Droite</option>
+<option value="justify">Justifié</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-bold mb-2">Espacement</label>
+<select id="padding" class="w-full p-3 border rounded">
+<option value="0">Aucun</option>
+<option value="10px">Petit</option>
+<option value="20px" selected>Normal</option>
+<option value="30px">Grand</option>
+<option value="40px">Très Grand</option>
+</select>
+</div>
+<button onclick="applyStyleChanges('${element.id}'); this.closest('.modal').remove();" 
+        class="w-full bg-blue-500 text-white py-3 rounded hover:bg-blue-600">
+<i class="fas fa-paint-brush mr-2"></i>Appliquer les styles
+</button>
+</div>
+</div>
+`;
+document.body.appendChild(modal);
+
+// Pré-remplir les valeurs actuelles
+setTimeout(() => {
+const currentFontSize = getComputedStyle(element).fontSize;
+const currentTextAlign = getComputedStyle(element).textAlign;
+const currentPadding = getComputedStyle(element).padding.split(' ')[0];
+
+const fontSizeSelect = document.getElementById('fontSize');
+const textAlignSelect = document.getElementById('textAlign');
+const paddingSelect = document.getElementById('padding');
+
+if (fontSizeSelect) {
+Array.from(fontSizeSelect.options).forEach(option => {
+if (option.value === currentFontSize) option.selected = true;
+});
+}
+if (textAlignSelect) textAlignSelect.value = currentTextAlign;
+if (paddingSelect) {
+Array.from(paddingSelect.options).forEach(option => {
+if (option.value === currentPadding) option.selected = true;
+});
+}
+}, 100);
+}
+
+function applyStyleChanges(elementId) {
 const element = document.getElementById(elementId);
-const textColor = document.getElementById('textColor').value;
-const bgColor = document.getElementById('bgColor').value;
-const fontSize = document.getElementById('fontSize').value;
-const textAlign = document.getElementById('textAlign').value;
+if (!element) {
+showNotification('❌ Élément introuvable');
+return;
+}
 
-element.style.color = textColor;
-element.style.backgroundColor = bgColor;
-element.style.fontSize = fontSize;
-element.style.textAlign = textAlign;
+const textColor = document.getElementById('textColor')?.value;
+const bgColor = document.getElementById('bgColor')?.value;
+const fontSize = document.getElementById('fontSize')?.value;
+const textAlign = document.getElementById('textAlign')?.value;
+const padding = document.getElementById('padding')?.value;
 
-document.querySelector('.modal').remove();
+console.log('Application des styles:', {textColor, bgColor, fontSize, textAlign, padding});
+
+// Appliquer les styles
+if (textColor) element.style.color = textColor;
+if (bgColor && bgColor !== '#ffffff') element.style.backgroundColor = bgColor;
+if (fontSize) element.style.fontSize = fontSize;
+if (textAlign) element.style.textAlign = textAlign;
+if (padding) element.style.padding = padding;
+
+// Sauvegarder
 updateCurrentPageData();
-showNotification('✅ Style appliqué !');
+showNotification('✅ Styles appliqués !');
+console.log('Styles appliqués à:', elementId);
+}
+
+// Fonction utilitaire pour convertir RGB en HEX
+function rgbToHex(rgb) {
+if (!rgb || rgb === 'rgba(0, 0, 0, 0)' || rgb === 'transparent') return '#ffffff';
+
+const result = rgb.match(/\d+/g);
+if (!result) return '#000000';
+
+const r = parseInt(result[0]);
+const g = parseInt(result[1]);
+const b = parseInt(result[2]);
+
+return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 
 function deleteElement(element) {
