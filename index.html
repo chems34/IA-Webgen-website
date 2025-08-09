@@ -2255,35 +2255,43 @@ addChatMessage(`❌ Erreur lors de la recherche d'images. Vérifiez que le serve
 }
 }
 
-function selectSearchedImage(imageUrl, description) {
-// Demander où placer l'image
-const placement = prompt(`Où veux-tu utiliser cette image ?\n1. Remplacer une image existante\n2. Ajouter une nouvelle section image\n\nTape 1 ou 2:`);
+function selectSearchedImage(imageUrl, description, imageId) {
+console.log('Image sélectionnée:', imageUrl, description, imageId);
 
-if (placement === '1') {
-// Mode édition requis pour remplacer
-if (!editMode) {
-addChatMessage(`Pour remplacer une image, active d'abord le <b>Mode Édition</b> puis clique sur l'image à remplacer !`, 'bot');
-return;
-}
-addChatMessage(`Image copiée ! En mode édition, clique sur l'image que tu veux remplacer.`, 'bot');
-// Stocker l'URL pour remplacement
-window.selectedImageForReplacement = imageUrl;
-} else if (placement === '2') {
-// Ajouter directement
-const previewEl = document.getElementById('websitePreview');
-const newElement = document.createElement('div');
-newElement.innerHTML = `<img src="${imageUrl}" alt="${description}" style="width: 100%; max-width: 400px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">`;
-newElement.style.textAlign = 'center';
-newElement.style.padding = '20px';
-
-const mainContent = previewEl.querySelector('main') || previewEl;
-mainContent.appendChild(newElement);
-updateCurrentPageData();
-if (editMode) {
-makeElementsEditable();
-}
-addChatMessage(`✅ Image ajoutée à ton site !`, 'bot');
-}
+// Demander où placer l'image avec options plus claires
+const modal = document.createElement('div');
+modal.className = 'modal';
+modal.style.display = 'block';
+modal.innerHTML = `
+<div class="modal-content max-w-md">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-2xl font-bold">Utiliser cette image</h2>
+<button onclick="this.closest('.modal').remove()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+</div>
+<div class="mb-4">
+<img src="${imageUrl}" alt="${description}" style="width: 100%; border-radius: 8px; max-height: 200px; object-fit: cover;">
+<p class="text-sm text-gray-600 mt-2">${description}</p>
+</div>
+<div class="space-y-3">
+<button onclick="applyImageToElement('${imageUrl}', '${description}', 'replace'); this.closest('.modal').remove();" 
+        class="w-full bg-blue-500 text-white py-3 px-4 rounded hover:bg-blue-600 text-left">
+<i class="fas fa-exchange-alt mr-2"></i>Remplacer une image existante
+<div class="text-xs opacity-75">Clique ensuite sur l'image à remplacer</div>
+</button>
+<button onclick="applyImageToElement('${imageUrl}', '${description}', 'add'); this.closest('.modal').remove();" 
+        class="w-full bg-green-500 text-white py-3 px-4 rounded hover:bg-green-600 text-left">
+<i class="fas fa-plus mr-2"></i>Ajouter comme nouvelle section
+<div class="text-xs opacity-75">Ajoute l'image en bas de la page</div>
+</button>
+<button onclick="applyImageToElement('${imageUrl}', '${description}', 'background'); this.closest('.modal').remove();" 
+        class="w-full bg-purple-500 text-white py-3 px-4 rounded hover:bg-purple-600 text-left">
+<i class="fas fa-image mr-2"></i>Utiliser comme arrière-plan
+<div class="text-xs opacity-75">Applique à la section hero</div>
+</button>
+</div>
+</div>
+`;
+document.body.appendChild(modal);
 }
 
 // Gérer l'envoi avec Entrée
