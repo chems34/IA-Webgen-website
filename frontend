@@ -1,0 +1,2 @@
+# Dans le répertoire racine
+python -m http.server 3000
