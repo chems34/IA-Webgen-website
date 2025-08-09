@@ -2294,18 +2294,117 @@ modal.innerHTML = `
 document.body.appendChild(modal);
 }
 
-// Gérer l'envoi avec Entrée
-document.addEventListener('DOMContentLoaded', function() {
-const chatInput = document.getElementById('chatgptInput');
-if (chatInput) {
-chatInput.addEventListener('keypress', function(e) {
-if (e.key === 'Enter' && !e.shiftKey) {
-e.preventDefault();
-sendChatGPTMessage();
+function applyImageToElement(imageUrl, description, mode) {
+console.log('Application de l\'image:', mode, imageUrl);
+
+if (mode === 'add') {
+// Ajouter une nouvelle section
+const previewEl = document.getElementById('websitePreview');
+const newElement = document.createElement('div');
+newElement.className = 'editable image-section';
+newElement.style.padding = '20px';
+newElement.style.textAlign = 'center';
+newElement.innerHTML = `
+<img src="${imageUrl}" alt="${description}" 
+     style="width: 100%; max-width: 400px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);"
+     data-editable="image">
+<p style="margin-top: 15px; color: #6b7280; font-style: italic;" data-editable="text">${description}</p>
+`;
+
+const mainContent = previewEl.querySelector('main') || previewEl;
+mainContent.appendChild(newElement);
+updateCurrentPageData();
+if (editMode) {
+makeElementsEditable();
+}
+addChatMessage(`✅ Image ajoutée comme nouvelle section !`, 'bot');
+
+} else if (mode === 'background') {
+// Appliquer comme arrière-plan
+const heroSection = document.querySelector('[style*="background"]');
+if (heroSection) {
+const currentStyle = heroSection.getAttribute('style') || '';
+const newStyle = currentStyle.replace(/background[^;]*;?/g, '') + 
+                 `background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('${imageUrl}'); background-size: cover; background-position: center;`;
+heroSection.setAttribute('style', newStyle);
+updateCurrentPageData();
+addChatMessage(`✅ Image appliquée comme arrière-plan !`, 'bot');
+} else {
+addChatMessage(`❌ Aucune section d'arrière-plan trouvée.`, 'bot');
+}
+
+} else if (mode === 'replace') {
+// Mode remplacement - stocker l'URL et attendre le clic
+window.selectedImageForReplacement = imageUrl;
+window.selectedImageDescription = description;
+
+if (!editMode) {
+// Activer le mode édition automatiquement
+toggleEditMode();
+}
+
+addChatMessage(`✅ Image prête ! Clique maintenant sur l'image que tu veux remplacer (bordures bleues pointillées).`, 'bot');
+
+// Ajouter un indicateur visuel
+const style = document.createElement('style');
+style.id = 'image-replacement-style';
+style.innerHTML = `
+.editable img:not([data-replacement-ready]) {
+border: 3px solid #10b981 !important;
+cursor: pointer !important;
+animation: pulse-green 2s infinite;
+}
+@keyframes pulse-green {
+0%, 100% { border-color: #10b981; }
+50% { border-color: #34d399; }
+}
+`;
+document.head.appendChild(style);
+
+// Ajouter des event listeners aux images
+setTimeout(() => {
+const images = document.querySelectorAll('.editable img');
+images.forEach(img => {
+if (!img.dataset.replacementReady) {
+img.dataset.replacementReady = 'true';
+img.addEventListener('click', handleImageReplacement);
 }
 });
+}, 500);
 }
+}
+
+function handleImageReplacement(event) {
+event.preventDefault();
+event.stopPropagation();
+
+const img = event.target;
+const newUrl = window.selectedImageForReplacement;
+const newDescription = window.selectedImageDescription;
+
+if (newUrl) {
+// Remplacer l'image
+img.src = newUrl;
+img.alt = newDescription;
+
+// Nettoyer
+delete window.selectedImageForReplacement;
+delete window.selectedImageDescription;
+const style = document.getElementById('image-replacement-style');
+if (style) style.remove();
+
+// Supprimer les event listeners
+const images = document.querySelectorAll('.editable img');
+images.forEach(img => {
+img.removeEventListener('click', handleImageReplacement);
+delete img.dataset.replacementReady;
 });
+
+updateCurrentPageData();
+addChatMessage(`✅ Image remplacée avec succès !`, 'bot');
+showNotification('✅ Image remplacée !');
+}
+}
 </script>
 </body>
 </html>
