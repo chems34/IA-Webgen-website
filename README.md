@@ -1,4 +1,4 @@
-# 🚀 IA WebGen Pro - Générateur de Sites Web avec IA
+# 🚀 IA WebGen Pro - Générateur de Sites Web avec IA   
 
 **Version 2.0 avec ChatGPT intégré et mode édition complet**
 
